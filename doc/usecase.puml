@@ -1,0 +1,67 @@
+@startuml
+
+left to right direction
+skinparam actorStyle awesome
+
+:Visiteur: as Guest
+:Utilisateur: as User
+:Administrateur: as Admin
+
+package Compte {
+    (S'identifier) as Signin
+    (Créer un compte) as Signup
+    (Se déconnecter) as Signout
+    (Consulter son profil) as SeeProfile
+    (Gérer son profil) as ManageProfile
+}
+
+package Cours {
+    (Rechercher des cours) as SearchCourses
+    (Consulter le détail d'un cours) as SeeCourseContent
+    (Ajouter un cours aux favoris) as AddCourseToFavorites
+    (Donner une note) as GiveRating
+}
+
+package Exercice {
+    (Voir le contenu d'un exercice) as SeeExerciseContent
+    (Commencer un exercice) as StartExercise
+    (Voir les exercices terminés) as SeeFinishedExercises
+    (Voir les exercices en cours) as SeeCurrentExercises
+}
+
+package Administration {
+    (Gérer les utilisateurs) as ManageUsers
+    (Gérer les cours) as ManageCourses
+    (Gérer les exercices) as ManageExercises
+}
+
+Signout ..> Signin : <<include>>
+SeeProfile ..> Signin : <<include>>
+ManageProfile ..> Signin : <<include>>
+AddCourseToFavorites ..> Signin : <<include>>
+Exercice ..> Signin : <<include>>
+Administration ..> Signin : <<include>>
+
+
+Guest --> Signin
+Guest --> Signup
+Guest --> SearchCourses
+Guest --> SeeCourseContent
+
+
+User --|> Guest : <<extends>>
+
+User --> Exercice
+User --> SeeProfile
+User --> Signout
+User --> ManageProfile
+User --> AddCourseToFavorites
+User --> GiveRating
+
+
+Admin --|> User : <<extends>>
+
+Admin --> Administration
+
+
+@enduml
