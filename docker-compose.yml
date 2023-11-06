@@ -31,8 +31,6 @@ services:
       - codelab
     depends_on:
       - db
-    volumes:
-      - ./data:/var/lib/pgadmin
 
 networks:
   codelab:
