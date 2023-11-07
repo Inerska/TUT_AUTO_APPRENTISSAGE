@@ -7,6 +7,7 @@
 !define BROKER_COLOR Gray
 
 title __Plateforme d'apprentissage du code__\n
+footer © 2023 - Codelab - Alexis GRIDEL, Samuel POMIN, Théo PELLIZZARI, Vincent BRACH, Maxime CARLIER
 
 component "Interface utilisateur" as UI #UI_COLOR {
   component [NextJS] as nextjs
