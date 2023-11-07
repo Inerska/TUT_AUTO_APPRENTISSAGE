@@ -7,26 +7,32 @@ skinparam actorStyle awesome
 :Utilisateur: as User
 :Administrateur: as Admin
 
-package Compte {
+package Connexion {
     (S'identifier) as Signin
     (Créer un compte) as Signup
     (Se déconnecter) as Signout
+}
+
+package Profil {
     (Consulter son profil) as SeeProfile
     (Gérer son profil) as ManageProfile
+    (Consulter les cours favoris) as SeeFavoriteCourses
+    (Voir les cours terminés) as SeeFinishedCourses
 }
 
 package Cours {
     (Rechercher des cours) as SearchCourses
     (Consulter le détail d'un cours) as SeeCourseContent
+    (Commencer un cours) as StartCourse
     (Ajouter un cours aux favoris) as AddCourseToFavorites
+    (Finir un cours) as FinishCourse
     (Donner une note) as GiveRating
 }
 
 package Exercice {
-    (Voir le contenu d'un exercice) as SeeExerciseContent
-    (Commencer un exercice) as StartExercise
-    (Voir les exercices terminés) as SeeFinishedExercises
-    (Voir les exercices en cours) as SeeCurrentExercises
+    (Faire un exercice) as DoExercise
+    (Créer un exercice) as CreateExercise
+    (Finir un exercice) as FinishExercice
 }
 
 package Administration {
@@ -35,33 +41,59 @@ package Administration {
     (Gérer les exercices) as ManageExercises
 }
 
-Signout ..> Signin : <<include>>
-SeeProfile ..> Signin : <<include>>
-ManageProfile ..> Signin : <<include>>
-AddCourseToFavorites ..> Signin : <<include>>
-Exercice ..> Signin : <<include>>
-Administration ..> Signin : <<include>>
+package Experience {
+    (Gagner de l'expérience) as GainExperience
+    (Gagner un niveau) as GainLevel
+    (Gagner des badges) as GainBadges
+    (Voir son expérience) as SeeExperience
+    (Voir son niveau) as SeeLevel
+}
+
+
+Signin <.. User
+Signup <.. Signin
+Signin <.. Signout
+
+SeeProfile <.. ManageProfile
+SeeProfile <.. SeeFavoriteCourses
+SeeProfile <.. SeeFinishedCourses
+
+SearchCourses <.. SeeCourseContent
+SeeCourseContent <.. AddCourseToFavorites
+SeeCourseContent <.. StartCourse
+StartCourse <.. FinishCourse
+FinishCourse <.. GiveRating
+
+DoExercise <.. FinishExercice
+FinishExercice <.. FinishCourse
+
+GainExperience <.. GainLevel
+GainLevel <.. GainBadges
+GainExperience <.. SeeExperience
+GainLevel <.. SeeLevel
+
 
 
 Guest --> Signin
 Guest --> Signup
 Guest --> SearchCourses
-Guest --> SeeCourseContent
 
 
-User --|> Guest : <<extends>>
+User --|> Guest
 
-User --> Exercice
+
 User --> SeeProfile
-User --> Signout
-User --> ManageProfile
-User --> AddCourseToFavorites
-User --> GiveRating
+User --> GainExperience
+
+User --> CreateExercise
+User --> DoExercise
 
 
-Admin --|> User : <<extends>>
+Admin --|> User
 
-Admin --> Administration
+Admin --> ManageCourses
+Admin --> ManageExercises
+Admin --> ManageUsers
 
 
 @enduml
