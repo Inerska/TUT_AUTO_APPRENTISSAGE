@@ -1,4 +1,0 @@
-quarkus.datasource.password=
-quarkus.datasource.db-kind=
-quarkus.datasource.jdbc.url=jdbc:(driver)://(host):(port)/(database)
-quarkus.datasource.username=

@@ -29,3 +29,5 @@ gradle-app.setting
 data
 
 application.properties
+# Ignore Gradle build output directory
+build

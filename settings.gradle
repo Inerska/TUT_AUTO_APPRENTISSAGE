@@ -1,0 +1,4 @@
+rootProject.name = "codelab"
+include "codelab-infrastructure"
+include "codelab-domain"
+include "codelab-quarkus"

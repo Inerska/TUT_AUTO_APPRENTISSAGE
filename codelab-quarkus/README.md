@@ -1,4 +1,4 @@
-# codelab
+# codelab-quarkus
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
@@ -43,7 +43,7 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 ./gradlew build -Dquarkus.package.type=native -Dquarkus.native.container-build=true
 ```
 
-You can then execute your native executable with: `./build/codelab-1.0.0-SNAPSHOT-runner`
+You can then execute your native executable with: `./build/codelab-quarkus-1.0.0-SNAPSHOT-runner`
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/gradle-tooling.
 
@@ -52,6 +52,7 @@ If you want to learn more about building native executables, please consult http
 - Hibernate Validator ([guide](https://quarkus.io/guides/validation)): Validate object properties (field, getter) and method parameters for your beans (REST, CDI, Jakarta Persistence)
 - RESTEasy Reactive ([guide](https://quarkus.io/guides/resteasy-reactive)): A Jakarta REST implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
 - Hibernate ORM with Panache ([guide](https://quarkus.io/guides/hibernate-orm-panache)): Simplify your persistence code for Hibernate ORM via the active record or the repository pattern
+- JDBC Driver - PostgreSQL ([guide](https://quarkus.io/guides/datasource)): Connect to the PostgreSQL database via JDBC
 
 ## Provided Code
 
