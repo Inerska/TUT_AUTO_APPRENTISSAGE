@@ -1,5 +1,6 @@
 @startuml
 
+title Diagramme de cas d'utilisation
 left to right direction
 skinparam actorStyle awesome
 
