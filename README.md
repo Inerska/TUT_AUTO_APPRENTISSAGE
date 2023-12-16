@@ -4,4 +4,4 @@
 - [Samuel POMIN](https://github.com/Leonarddoo)
 - Maxime CARLIER
 - Vincent BRACH
-- Théo PELLIZZARI
+- [Théo PELLIZZARI](https://github.com/pellizza1u)
