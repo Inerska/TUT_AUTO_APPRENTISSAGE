@@ -32,6 +32,15 @@ services:
     depends_on:
       - db
 
+  webclient:
+    container_name: codelab_webclient
+    build:
+      context: ./codelab-nextjs
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+
 networks:
   codelab:
     driver: bridge
