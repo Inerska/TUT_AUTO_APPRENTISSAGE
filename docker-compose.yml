@@ -6,8 +6,9 @@ services:
   api_quarkus:
     container_name: codelab_api_quarkus
     build:
-      context: codelab-spring
+      context: codelab-quarkus
       dockerfile: src/main/docker/Dockerfile.native
+    image: quarkus/codelab-quarkus
     restart: unless-stopped
     ports:
       - "8080:8080"
