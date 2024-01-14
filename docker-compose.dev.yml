@@ -8,10 +8,11 @@ services:
     build:
       context: codelab-quarkus
       dockerfile: src/main/docker/Dockerfile.development
-    image: quarkus/codelab-quarkus
     restart: unless-stopped
     ports:
       - "8070:8080"
+    environment:
+      - quarkus.http.host=0.0.0.0
     volumes:
       - ./codelab-quarkus:/app
     networks:
