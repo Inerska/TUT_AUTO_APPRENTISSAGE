@@ -3,6 +3,21 @@ name: codelab
 
 services:
 
+  api_quarkus:
+    container_name: codelab_api_quarkus
+    build:
+      context: codelab-spring
+      dockerfile: src/main/docker/Dockerfile.native
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./codelab-quarkus:/app
+    networks:
+      - codelab
+    depends_on:
+      - db
+
   db:
     image: postgres:16
     container_name: codelab_postgres

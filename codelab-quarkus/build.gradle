@@ -1,7 +1,6 @@
 plugins {
     id 'java'
-    id 'io.quarkus' version "$quarkusPlatformVersion"
-    id 'org.kordamp.gradle.jandex' version '1.1.0'
+    id 'io.quarkus'
 }
 
 repositories {
@@ -10,21 +9,14 @@ repositories {
 }
 
 dependencies {
-
-    implementation project(":codelab-domain")
-
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
-    implementation 'io.quarkus:quarkus-hibernate-validator'
-    implementation 'io.quarkus:quarkus-resteasy-reactive'
-    implementation 'io.quarkus:quarkus-hibernate-orm-panache'
-    implementation 'io.quarkus:quarkus-jdbc-postgresql'
     implementation 'io.quarkus:quarkus-arc'
-    implementation 'io.quarkus:quarkus-hibernate-orm'
+    implementation 'io.quarkus:quarkus-resteasy-reactive'
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'
 }
 
-group 'org.arobase'
+group 'org.acme'
 version '1.0.0-SNAPSHOT'
 
 java {
