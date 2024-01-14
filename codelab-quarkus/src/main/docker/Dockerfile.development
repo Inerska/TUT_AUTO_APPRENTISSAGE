@@ -1,0 +1,9 @@
+FROM gradle:jdk21-alpine
+
+WORKDIR /app
+
+COPY --chown=gradle:gradle . /app
+
+EXPOSE 8080
+
+CMD ["./gradlew", "--no-daemon", "quarkusDev", "-Dquarkus.http.host=http//localhost:8080"]

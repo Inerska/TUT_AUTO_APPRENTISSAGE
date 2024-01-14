@@ -1,6 +1,7 @@
 # TUT_AUTO_APPRENTISSAGE
 
 ## Set up
+## Production
 ### Build the API native image
 ```bash
 cd codelab-quarkus
@@ -21,4 +22,10 @@ cd ..
 
 ```bash
 docker-compose up -d --build
+```
+
+## Development
+### Run the docker-compose
+```bash
+docker-compose -f docker-compose.dev.yml up --build
 ```
