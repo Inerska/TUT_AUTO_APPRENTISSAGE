@@ -15,6 +15,12 @@ cd codelab-quarkus
 docker build -f src/main/docker/Dockerfile.native -t quarkus/codelab-quarkus .
 ```
 
+### Install dependencies of front
+```bash
+cd codelab-nextjs
+npm i
+```
+
 ### Run the docker-compose
 ```bash
 cd ..
@@ -25,6 +31,13 @@ docker-compose up -d --build
 ```
 
 ## Development
+
+### Install dependencies of front
+```bash
+cd codelab-nextjs
+npm i
+```
+
 ### Run the docker-compose
 ```bash
 docker-compose -f docker-compose.dev.yml up --build
