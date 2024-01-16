@@ -1,15 +1,7 @@
-FROM ubuntu:latest
-
-RUN apt-get update && apt-get install -y openjdk-21-jdk
-
-RUN apt-get install -y wget unzip && \
-    wget https://services.gradle.org/distributions/gradle-7.4.2-bin.zip && \
-    unzip gradle-7.4.2-bin.zip -d /opt && \
-    rm gradle-7.4.2-bin.zip && \
-    ln -s /opt/gradle-7.4.2/bin/gradle /usr/bin/gradle
+FROM gradle:jdk21
 
 WORKDIR /app
 
-COPY . /app
+COPY --chown=gradle:gradle . /app
 
 CMD ["./gradlew", "--no-daemon", "quarkusDev"]
