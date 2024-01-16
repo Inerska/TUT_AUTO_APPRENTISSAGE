@@ -1,4 +1,4 @@
-FROM gradle:jdk21-alpine
+FROM gradle:jdk21
 
 WORKDIR /app
 
