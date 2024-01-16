@@ -9,6 +9,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'io.quarkus:quarkus-smallrye-reactive-messaging-rabbitmq'
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation 'io.quarkus:quarkus-arc'
     implementation 'io.quarkus:quarkus-resteasy-reactive'
@@ -16,7 +17,7 @@ dependencies {
     testImplementation 'io.rest-assured:rest-assured'
 }
 
-group 'org.acme'
+group 'org.arobase'
 version '1.0.0-SNAPSHOT'
 
 java {
