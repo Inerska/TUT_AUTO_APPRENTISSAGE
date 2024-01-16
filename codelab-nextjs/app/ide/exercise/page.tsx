@@ -90,7 +90,7 @@ export default function Page() {
                         </Select>
                     </div>
             <Editor
-                height="calc(100vh - 200px)"
+                height="calc(100vh - 500px)"
                 language={currentLanguage}
                 defaultValue="//TODO: Write your code here"
                 theme={currentTheme}
