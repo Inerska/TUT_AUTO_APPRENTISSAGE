@@ -1,19 +1,13 @@
 package org.arobase.infrastructure.persistence.entity;
 
-import jakarta.persistence.*;
+import io.quarkus.mongodb.panache.PanacheMongoEntity;
+import io.quarkus.mongodb.panache.common.MongoEntity;
 
 /**
  * The exercice entity.
  */
-@Entity
-public class Exercice {
-
-    /**
-     * The id of the exercice.
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+@MongoEntity(collection = "exercices")
+public class Exercice extends PanacheMongoEntity {
 
     /**
      * The tilted of the exercice.
