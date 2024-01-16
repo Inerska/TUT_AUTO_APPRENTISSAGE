@@ -39,7 +39,6 @@ public class AccountController {
     }
 
     /**
-     * b
      * Get all accounts.
      * 
      * @return The list of accounts.

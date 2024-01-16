@@ -26,6 +26,11 @@ public class ExerciceController {
         this.logger = logger;
     }
 
+    /**
+     * Get all exercices.
+     * 
+     * @return The list of exercices.
+     */
     @GET
     public Uni<List<Exercice>> getExercices() {
 
@@ -34,6 +39,12 @@ public class ExerciceController {
         return exerciceRepository.listAll();
     }
 
+    /**
+     * Get an exercice by its id.
+     * 
+     * @param id The id of the exercice.
+     * @return The exercice.
+     */
     @GET
     @Path("/{id}")
     public Uni<Response> getExerciceById(@QueryParam("id") Long id) {
