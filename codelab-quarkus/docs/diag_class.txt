@@ -1,0 +1,50 @@
+@startuml
+
+skin rose
+
+title Classes - Class Diagram
+
+class Account {
+- id : long
+- username : String
+- password : String
+- name : String
+- surname : String
+- email : String
+- role : RoleType
+- finishedLessons : List<Leson>
+- startedLessons : List<StartedLessons>
+  }
+
+enum RoleType {
+USER
+ADMIN
+}
+
+class Lesson {
+- id : long
+- name : String
+- description : String
+- difficulty : int
+- exercices : List<Exercice>
+  }
+
+class StartedLessons extends Lesson {
+- lastExercice : Exercice
+  }
+
+
+class Exercice {
+- int : long
+- lesson : Lesson
+- titled : String
+- correctionFilePath : String
+  }
+
+Account "*" --> "*" Lesson
+Account "*" --> "1" RoleType
+Account "*" --> "*" StartedLessons
+Lesson "1" -- "*" Exercice
+
+
+@enduml
