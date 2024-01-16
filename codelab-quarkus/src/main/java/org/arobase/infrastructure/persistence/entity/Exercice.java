@@ -1,9 +1,6 @@
 package org.arobase.infrastructure.persistence.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 /**
  * The exercice entity.
@@ -19,17 +16,12 @@ public class Exercice {
     private int id;
 
     /**
-     * The name of the exercice.
-     */
-    private Lesson lesson;
-
-    /**
-     * The name of the exercice.
+     * The tilted of the exercice.
      */
     private String tilted;
 
     /**
-     * The name of the exercice.
+     * The path of the correction file
      */
     private String correctionFilePath;
 }

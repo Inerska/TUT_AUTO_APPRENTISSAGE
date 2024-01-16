@@ -1,10 +1,7 @@
 package org.arobase.infrastructure.persistence.entity;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -12,7 +9,7 @@ import java.util.List;
  * The account entity.
  */
 @Entity
-public class Account extends PanacheEntity {
+public class Account {
 
     /**
      * The id of the account.
@@ -54,11 +51,13 @@ public class Account extends PanacheEntity {
     /**
      * The finished lessons of the account.
      */
+    @OneToMany
     private List<Lesson> finishedLessons;
 
     /**
      * The started lessons of the account.
      */
+    @OneToMany
     private List<StartedLesson> startedLessons;
 
 }
