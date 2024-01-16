@@ -59,6 +59,7 @@ services:
       - "3005:3000"
     volumes:
       - ./codelab-nextjs:/app
+      - /codelab-nextjs/node_modules
 
 networks:
   codelab-dev:

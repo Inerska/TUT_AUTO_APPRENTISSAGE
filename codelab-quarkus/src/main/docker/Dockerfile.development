@@ -4,4 +4,5 @@ WORKDIR /app
 
 COPY --chown=gradle:gradle . /app
 
-CMD ["./gradlew", "--no-daemon", "quarkusDev"]
+CMD ["gradle", "--no-daemon", "quarkusDev", "-Dquarkus.http.host=0.0.0.0"]
+
