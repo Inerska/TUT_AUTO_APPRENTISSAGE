@@ -3,6 +3,21 @@ name: codelab-development
 
 services:
 
+  api_auth-dev:
+    container_name: codelab_api_auth
+    build:
+      context: codelab-auth
+      dockerfile: src/main/docker/Dockerfile.development
+    restart: unless-stopped
+    ports:
+      - "8082:8080"
+    volumes:
+      - ./codelab-auth:/app
+    networks:
+      - codelab-dev
+    depends_on:
+      - db-dev
+
   api_quarkus-dev:
     container_name: codelab_api_quarkus
     build:
