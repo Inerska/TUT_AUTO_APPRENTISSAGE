@@ -15,7 +15,7 @@ public class Lesson {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     /**
      * The name of the lesson.

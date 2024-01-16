@@ -13,7 +13,7 @@ public class Exercice {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     /**
      * The tilted of the exercice.

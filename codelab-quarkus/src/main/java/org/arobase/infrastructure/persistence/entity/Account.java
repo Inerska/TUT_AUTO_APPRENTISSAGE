@@ -15,7 +15,7 @@ public class Account {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     /**
      * The username of the account.
