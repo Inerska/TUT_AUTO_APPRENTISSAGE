@@ -1,5 +1,6 @@
 package org.arobase.domain.docker.service;
 
+import io.smallrye.mutiny.Uni;
 import org.arobase.domain.model.ExerciceRequest;
 
 /**
@@ -13,5 +14,5 @@ public interface DockerExecutionService {
      * @param exerciceRequest the exercice request
      * @return the result
      */
-    String executeCode(final ExerciceRequest exerciceRequest);
+    Uni<String> executeCode(final ExerciceRequest exerciceRequest);
 }

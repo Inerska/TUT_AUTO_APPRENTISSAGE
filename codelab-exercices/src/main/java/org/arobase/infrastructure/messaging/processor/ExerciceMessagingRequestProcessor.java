@@ -17,10 +17,7 @@ public final class ExerciceMessagingRequestProcessor implements MessagingRequest
     private final DockerExecutionService dockerExecutionService;
     private final Logger logger;
 
-    public ExerciceMessagingRequestProcessor(
-            ExerciceService exerciceService,
-            DockerExecutionService dockerExecutionService,
-            Logger logger) {
+    public ExerciceMessagingRequestProcessor(ExerciceService exerciceService, DockerExecutionService dockerExecutionService, Logger logger) {
         this.exerciceService = exerciceService;
         this.dockerExecutionService = dockerExecutionService;
         this.logger = logger;
@@ -36,15 +33,14 @@ public final class ExerciceMessagingRequestProcessor implements MessagingRequest
 
         exerciceService.processExerciceResultById(request.getExerciceResultObjectId());
 
-        try {
-            final var exerciceResponse = dockerExecutionService.executeCode(request);
-
+        dockerExecutionService.executeCode(request).subscribe().with(exerciceResponse -> {
             exerciceService.updateExerciceResult(request.getExerciceResultObjectId(), "COMPLETED", exerciceResponse);
             logger.info("Exercice " + request + " processed.");
-        } catch (final Exception e) {
-            exerciceService.updateExerciceResult(request.getExerciceResultObjectId(), "ERROR", e.getMessage());
-            logger.error("Error processing exercice " + request, e);
-        }
+        }, failure -> {
+            exerciceService.updateExerciceResult(request.getExerciceResultObjectId(), "ERROR", failure.getMessage());
+            logger.error("Error processing exercice " + request, failure);
+        });
     }
+
 
 }
