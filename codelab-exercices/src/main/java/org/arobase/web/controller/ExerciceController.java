@@ -26,6 +26,7 @@ public class ExerciceController {
     }
 
     @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     public Response submitExercice(ExerciceRequest exerciceRequest) {
         logger.info("POST /api/v1/exercices/ for language" + exerciceRequest.getLanguage() + " called.");
 
