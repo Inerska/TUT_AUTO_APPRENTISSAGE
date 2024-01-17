@@ -1,20 +1,20 @@
 package org.arobase.infrastructure.docker.service;
 
+import com.github.dockerjava.api.command.PullImageResultCallback;
+import com.github.dockerjava.api.model.Image;
 import com.github.dockerjava.core.DefaultDockerClientConfig;
-import com.github.dockerjava.core.DockerClientBuilder;
-import com.github.dockerjava.core.DockerClientConfig;
 import com.github.dockerjava.core.DockerClientImpl;
 import com.github.dockerjava.httpclient5.ApacheDockerHttpClient;
-import com.github.dockerjava.jaxrs.JerseyDockerHttpClient;
-import com.github.dockerjava.transport.DockerHttpClient;
+import com.mongodb.client.model.MongoTimeUnit;
 import jakarta.enterprise.context.ApplicationScoped;
-import org.arobase.domain.model.ExerciceRequest;
 import org.arobase.domain.docker.service.DockerExecutionService;
 import org.arobase.domain.docker.service.DockerQueueImageResolverFactory;
+import org.arobase.domain.model.ExerciceRequest;
 import org.jboss.logging.Logger;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.List;
 
 @ApplicationScoped
 public final class DockerExecutionServiceImpl implements DockerExecutionService {
@@ -44,6 +44,11 @@ public final class DockerExecutionServiceImpl implements DockerExecutionService 
             logger.info("Docker client created.");
             final var dockerContainerImage = dockerQueueImageFactory.resolve(exerciceRequest.getLanguage())
                     .orElseThrow(() -> new IllegalArgumentException("No docker image found for language " + exerciceRequest.getLanguage()));
+            List<Image> images = dockerClient.listImagesCmd().withImageNameFilter(dockerContainerImage).exec();
+
+            if (images.isEmpty()) {
+                dockerClient.pullImageCmd(dockerContainerImage).start().awaitCompletion();
+            }
             logger.info("Docker container image resolved: " + dockerContainerImage);
             final var createContainerResponse = dockerClient.createContainerCmd(dockerContainerImage)
                     .exec();
@@ -61,6 +66,8 @@ public final class DockerExecutionServiceImpl implements DockerExecutionService 
         } catch (final IOException e) {
             e.printStackTrace();
             return "Error while executing " + e.getMessage();
+        } catch (InterruptedException e) {
+                throw new RuntimeException(e);
         }
     }
 }

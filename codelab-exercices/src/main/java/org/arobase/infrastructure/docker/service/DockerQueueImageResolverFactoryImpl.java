@@ -15,7 +15,7 @@ public class DockerQueueImageResolverFactoryImpl implements DockerQueueImageReso
     public Optional<String> resolve(final String language) {
         return switch (language) {
             case "java" -> Optional.of("openjdk:11");
-            case "python" -> Optional.of("python:3.9");
+            case "python" -> Optional.of("python:latest");
             default -> Optional.empty();
         };
     }
