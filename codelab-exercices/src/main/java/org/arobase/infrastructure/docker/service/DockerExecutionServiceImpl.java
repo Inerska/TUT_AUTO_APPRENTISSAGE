@@ -14,6 +14,7 @@ import org.arobase.domain.docker.service.DockerQueueImageResolverFactory;
 import org.jboss.logging.Logger;
 
 import java.io.IOException;
+import java.net.URI;
 
 @ApplicationScoped
 public final class DockerExecutionServiceImpl implements DockerExecutionService {
@@ -34,7 +35,7 @@ public final class DockerExecutionServiceImpl implements DockerExecutionService 
 
         final var dockerClientConfig = DefaultDockerClientConfig.createDefaultConfigBuilder().build();
         final var dockerClientHttpClient = new ApacheDockerHttpClient.Builder()
-                .dockerHost(dockerClientConfig.getDockerHost())
+                .dockerHost(URI.create("unix:///var/run/docker.sock"))
                 .sslConfig(dockerClientConfig.getSSLConfig())
                 .build();
 

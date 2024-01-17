@@ -28,6 +28,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./codelab-exercices:/app
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - codelab-dev
     ports:
