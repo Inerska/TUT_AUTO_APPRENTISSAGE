@@ -1,6 +1,6 @@
 package org.arobase.domain.messaging.processor;
 
-import org.arobase.domain.model.MessagingRequest;
+import org.arobase.domain.model.request.MessagingRequest;
 
 /**
  * Messaging request processor.

@@ -2,24 +2,30 @@ package org.arobase.infrastructure.persistence.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.NotFoundException;
-import org.arobase.domain.model.ExerciceSubmitRequest;
+import jakarta.ws.rs.core.Response;
+import org.arobase.domain.model.request.ExerciceCreateRequest;
+import org.arobase.domain.model.request.ExerciceSubmitRequest;
+import org.arobase.infrastructure.persistence.entity.Exercice;
 import org.arobase.infrastructure.persistence.entity.ExerciceResults;
 import org.arobase.infrastructure.persistence.repository.ExerciceResultsRepository;
 import org.bson.types.ObjectId;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
+import org.jboss.logging.Logger;
 
 import java.util.Optional;
 
 @ApplicationScoped
 public final class ExerciceService {
     private final ExerciceResultsRepository exerciceResultsRepository;
+    private final Logger logger;
 
     @Channel("exercice-submitted")
     Emitter<ExerciceSubmitRequest> exerciceEmitter;
 
-    public ExerciceService(ExerciceResultsRepository exerciceResultsRepository) {
+    public ExerciceService(ExerciceResultsRepository exerciceResultsRepository, Logger logger) {
         this.exerciceResultsRepository = exerciceResultsRepository;
+        this.logger = logger;
     }
 
     /**
@@ -58,8 +64,7 @@ public final class ExerciceService {
      * @param id the exercice result object id
      */
     public void processExerciceResultById(final String id) {
-        final var exerciceResult = exerciceResultsRepository.findByIdOptional(new ObjectId(id))
-                .orElseThrow(() -> new NotFoundException("Exercice result not found."));
+        final var exerciceResult = exerciceResultsRepository.findByIdOptional(new ObjectId(id)).orElseThrow(() -> new NotFoundException("Exercice result not found."));
 
         exerciceResult.status = "PROCESSING";
         exerciceResult.persistOrUpdate();
@@ -74,11 +79,33 @@ public final class ExerciceService {
      */
 
     public void updateExerciceResult(final String id, final String status, final String result) {
-        final var exerciceResult = exerciceResultsRepository.findByIdOptional(new ObjectId(id))
-                .orElseThrow(() -> new NotFoundException("Exercice result not found."));
+        final var exerciceResult = exerciceResultsRepository.findByIdOptional(new ObjectId(id)).orElseThrow(() -> new NotFoundException("Exercice result not found."));
 
         exerciceResult.status = status;
         exerciceResult.result = result;
         exerciceResult.persistOrUpdate();
     }
+
+    /**
+     * Create an exercice.
+     *
+     * @param exerciceCreateRequest the exercice create request
+     * @return the response
+     */
+    public Response createExercice(final ExerciceCreateRequest exerciceCreateRequest) {
+        final var exercice = new Exercice();
+        exercice.author = exerciceCreateRequest.getAuthor();
+        exercice.testCode = exerciceCreateRequest.getTestCode();
+
+        try {
+            exercice.persist();
+
+            return Response.ok().build();
+        } catch (final Exception e) {
+            logger.error("Error while creating exercice.", e);
+
+            return Response.serverError().build();
+        }
+    }
 }
+

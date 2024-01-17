@@ -1,7 +1,7 @@
 package org.arobase.domain.docker.service;
 
 import io.smallrye.mutiny.Uni;
-import org.arobase.domain.model.ExerciceSubmitRequest;
+import org.arobase.domain.model.request.ExerciceSubmitRequest;
 
 /**
  * Service for docker execution.

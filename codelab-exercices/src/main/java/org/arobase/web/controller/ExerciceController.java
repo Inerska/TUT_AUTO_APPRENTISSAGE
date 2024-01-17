@@ -4,7 +4,8 @@ import io.vertx.core.json.JsonObject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.arobase.domain.model.ExerciceSubmitRequest;
+import org.arobase.domain.model.request.ExerciceCreateRequest;
+import org.arobase.domain.model.request.ExerciceSubmitRequest;
 import org.arobase.infrastructure.persistence.service.ExerciceService;
 import org.jboss.logging.Logger;
 
@@ -23,6 +24,7 @@ public class ExerciceController {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response submitExercice(ExerciceSubmitRequest exerciceSubmitRequest) {
+
         logger.info("POST /api/v1/exercices/ for language" + exerciceSubmitRequest.getLanguage() + " called.");
 
         final var exerciceResultObjectId = exerciceService.submitExercice(exerciceSubmitRequest);
@@ -31,6 +33,18 @@ public class ExerciceController {
         response.put("feedback", "Exercice submitted successfully.");
 
         return Response.ok(response).build();
+    }
+
+    @POST
+    @Path("/create")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createExercice(ExerciceCreateRequest exerciceCreateRequest) {
+
+        logger.info("POST /api/v1/exercices/create for language" + exerciceCreateRequest.getLanguage() + " called.");
+
+        //TODO: validator
+
+        return exerciceService.createExercice(exerciceCreateRequest);
     }
 
     @GET

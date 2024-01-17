@@ -2,7 +2,7 @@ package org.arobase.infrastructure.messaging.processor;
 
 import org.arobase.domain.docker.service.DockerExecutionService;
 import org.arobase.domain.messaging.processor.MessagingRequestProcessor;
-import org.arobase.domain.model.ExerciceSubmitRequest;
+import org.arobase.domain.model.request.ExerciceSubmitRequest;
 import org.arobase.infrastructure.persistence.entity.Exercice;
 import org.arobase.infrastructure.persistence.service.ExerciceService;
 import org.eclipse.microprofile.reactive.messaging.Incoming;

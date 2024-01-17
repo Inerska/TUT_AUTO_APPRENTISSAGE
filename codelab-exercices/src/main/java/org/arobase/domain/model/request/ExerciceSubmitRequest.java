@@ -1,4 +1,4 @@
-package org.arobase.domain.model;
+package org.arobase.domain.model.request;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 

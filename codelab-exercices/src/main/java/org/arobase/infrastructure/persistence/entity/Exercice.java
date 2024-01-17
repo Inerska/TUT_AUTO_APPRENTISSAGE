@@ -14,15 +14,15 @@ public final class Exercice extends PanacheMongoEntity {
     /**
      * The test code.
      */
-    private String testCode;
+    public String testCode;
 
     /**
      * The author.
      */
-    private String author;
+    public String author;
 
     /**
      * Created at.
      */
-    private LocalTime createdAt;
+    public LocalTime createdAt;
 }

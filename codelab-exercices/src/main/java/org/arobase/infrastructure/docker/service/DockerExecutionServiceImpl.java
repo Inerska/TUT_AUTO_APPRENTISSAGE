@@ -7,7 +7,7 @@ import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.arobase.domain.docker.service.DockerExecutionService;
 import org.arobase.domain.docker.service.DockerQueueImageResolverFactory;
-import org.arobase.domain.model.ExerciceSubmitRequest;
+import org.arobase.domain.model.request.ExerciceSubmitRequest;
 import org.jboss.logging.Logger;
 
 import java.io.IOException;
