@@ -65,27 +65,6 @@ services:
     depends_on:
       - api_exercices-mongodb
 
-  api_exercices-rabbitmq:
-    image: rabbitmq:3-alpine
-    container_name: codelab_api_exercices_rabbitmq
-    restart: unless-stopped
-    ports:
-      - "5672:5672"
-    networks:
-      - codelab-dev
-
-  api_exercices-rabbitmq-ui:
-    image: rabbitmq:3-management-alpine
-    container_name: codelab_api_exercices_rabbitmq_ui
-    restart: unless-stopped
-    environment:
-      RABBITMQ_DEFAULT_USER: codelab
-      RABBITMQ_DEFAULT_PASS: codelab
-    ports:
-      - "15673:15672"
-    networks:
-      - codelab-dev
-
   db-dev:
     image: postgres:16
     container_name: codelab_postgres
