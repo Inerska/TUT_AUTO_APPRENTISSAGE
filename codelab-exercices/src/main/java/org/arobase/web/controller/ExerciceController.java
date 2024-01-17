@@ -1,17 +1,12 @@
 package org.arobase.web.controller;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.arobase.domain.model.ExerciceRequest;
-import org.arobase.infrastructure.persistence.entity.ExerciceResults;
+import org.arobase.domain.model.ExerciceSubmitRequest;
 import org.arobase.infrastructure.persistence.service.ExerciceService;
 import org.jboss.logging.Logger;
-
-import java.util.List;
 
 @Path("/api/v1/exercices")
 @Produces(MediaType.APPLICATION_JSON)
@@ -27,10 +22,10 @@ public class ExerciceController {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response submitExercice(ExerciceRequest exerciceRequest) {
-        logger.info("POST /api/v1/exercices/ for language" + exerciceRequest.getLanguage() + " called.");
+    public Response submitExercice(ExerciceSubmitRequest exerciceSubmitRequest) {
+        logger.info("POST /api/v1/exercices/ for language" + exerciceSubmitRequest.getLanguage() + " called.");
 
-        final var exerciceResultObjectId = exerciceService.submitExercice(exerciceRequest);
+        final var exerciceResultObjectId = exerciceService.submitExercice(exerciceSubmitRequest);
         final var response = new JsonObject();
         response.put("id", exerciceResultObjectId.toString());
         response.put("feedback", "Exercice submitted successfully.");

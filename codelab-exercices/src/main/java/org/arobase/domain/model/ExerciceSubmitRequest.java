@@ -6,16 +6,16 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  * Represents an exercice request.
  */
 @JsonSerialize
-public class ExerciceRequest implements MessagingRequest {
+public class ExerciceSubmitRequest implements MessagingRequest {
     private final String code;
     private final String language;
-    private final String title;
+    private final String exerciceId;
     private String exerciceResultObjectId;
 
-    public ExerciceRequest(String code, String language, String title, String exerciceResultObjectId) {
+    public ExerciceSubmitRequest(String code, String language, String exerciceId, String exerciceResultObjectId) {
         this.code = code;
         this.language = language;
-        this.title = title;
+        this.exerciceId = exerciceId;
         this.exerciceResultObjectId = exerciceResultObjectId;
     }
 
@@ -32,7 +32,7 @@ public class ExerciceRequest implements MessagingRequest {
         return "ExerciceRequest{" +
                 "code='" + code + '\'' +
                 ", language='" + language + '\'' +
-                ", title='" + title + '\'' +
+                ", id='" + exerciceId + '\'' +
                 '}';
     }
 
@@ -44,7 +44,7 @@ public class ExerciceRequest implements MessagingRequest {
         return language;
     }
 
-    public String getTitle() {
-        return title;
+    public String getExerciceId() {
+        return exerciceId;
     }
 }

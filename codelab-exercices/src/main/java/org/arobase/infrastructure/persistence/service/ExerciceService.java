@@ -2,7 +2,7 @@ package org.arobase.infrastructure.persistence.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.NotFoundException;
-import org.arobase.domain.model.ExerciceRequest;
+import org.arobase.domain.model.ExerciceSubmitRequest;
 import org.arobase.infrastructure.persistence.entity.ExerciceResults;
 import org.arobase.infrastructure.persistence.repository.ExerciceResultsRepository;
 import org.bson.types.ObjectId;
@@ -16,7 +16,7 @@ public final class ExerciceService {
     private final ExerciceResultsRepository exerciceResultsRepository;
 
     @Channel("exercice-submitted")
-    Emitter<ExerciceRequest> exerciceEmitter;
+    Emitter<ExerciceSubmitRequest> exerciceEmitter;
 
     public ExerciceService(ExerciceResultsRepository exerciceResultsRepository) {
         this.exerciceResultsRepository = exerciceResultsRepository;
@@ -28,7 +28,7 @@ public final class ExerciceService {
      * @param exercice the exercice to submit
      * @return the exercice result object
      */
-    public ObjectId submitExercice(ExerciceRequest exercice) {
+    public ObjectId submitExercice(ExerciceSubmitRequest exercice) {
 
         final var exerciceResult = new ExerciceResults();
         exerciceResult.status = "SUBMITTED";
