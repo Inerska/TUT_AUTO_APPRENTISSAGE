@@ -7,6 +7,7 @@ import org.arobase.domain.model.request.ExerciceCreateRequest;
 import org.arobase.domain.model.request.ExerciceSubmitRequest;
 import org.arobase.infrastructure.persistence.entity.Exercice;
 import org.arobase.infrastructure.persistence.entity.ExerciceResults;
+import org.arobase.infrastructure.persistence.repository.ExerciceRepository;
 import org.arobase.infrastructure.persistence.repository.ExerciceResultsRepository;
 import org.bson.types.ObjectId;
 import org.eclipse.microprofile.reactive.messaging.Channel;
@@ -18,13 +19,15 @@ import java.util.Optional;
 @ApplicationScoped
 public final class ExerciceService {
     private final ExerciceResultsRepository exerciceResultsRepository;
+    private final ExerciceRepository exerciceRepository;
     private final Logger logger;
 
     @Channel("exercice-submitted")
     Emitter<ExerciceSubmitRequest> exerciceEmitter;
 
-    public ExerciceService(ExerciceResultsRepository exerciceResultsRepository, Logger logger) {
+    public ExerciceService(ExerciceResultsRepository exerciceResultsRepository, ExerciceRepository exerciceRepository, Logger logger) {
         this.exerciceResultsRepository = exerciceResultsRepository;
+        this.exerciceRepository = exerciceRepository;
         this.logger = logger;
     }
 
@@ -106,6 +109,18 @@ public final class ExerciceService {
 
             return Response.serverError().build();
         }
+    }
+
+    /**
+     * Get test code by exercice id.
+     *
+     * @param id the exercice id
+     * @return the test code
+     */
+    public String getTestCodeByExerciceId(final String id) {
+        final var exercice = exerciceRepository.findByIdOptional(new ObjectId(id)).orElseThrow(() -> new NotFoundException("Exercice not found."));
+
+        return exercice.testCode;
     }
 }
 
