@@ -4,45 +4,28 @@ name: codelab-development
 services:
 
   api_auth-dev:
-    container_name: codelab_api_auth
+    container_name: codelab_auth_api
     build:
       context: codelab-auth
       dockerfile: src/main/docker/Dockerfile.development
     restart: unless-stopped
     ports:
-      - "8082:8080"
+      - "8080:8080"
     volumes:
       - ./codelab-auth:/app
     networks:
       - codelab-dev
     depends_on:
-      - db-dev
+      - db_auth-dev
 
-  api_quarkus-dev:
-    container_name: codelab_api_quarkus
-    build:
-      context: codelab-quarkus
-      dockerfile: src/main/docker/Dockerfile.development
-    restart: unless-stopped
-    ports:
-      - "8080:8080"
-    environment:
-      - quarkus.http.host=0.0.0.0
-    volumes:
-      - ./codelab-quarkus:/app
-    networks:
-      - codelab-dev
-    depends_on:
-      - db-dev
-
-  db-dev:
+  db_auth-dev:
     image: postgres:16
-    container_name: codelab_postgres
+    container_name: codelab_auth_postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: codelab
-      POSTGRES_PASSWORD: codelab
-      POSTGRES_DB: codelab
+      POSTGRES_USER: codelab-auth
+      POSTGRES_PASSWORD: codelab-auth
+      POSTGRES_DB: codelab-auth
     ports:
       - "5432:5432"
     volumes:
@@ -50,19 +33,14 @@ services:
     networks:
       - codelab-dev
 
-  db_ui-dev:
-    image: dpage/pgadmin4
-    container_name: codelab_pgadmin
+  adminer-auth:
+    image: adminer
+    container_name: codelab_adminer
     restart: unless-stopped
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
     ports:
-      - "5050:80"
+      - "8081:8080"
     networks:
-      - codelab-dev
-    depends_on:
-      - db-dev
+        - codelab-dev
 
   webclient-dev:
     container_name: codelab_webclient
