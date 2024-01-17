@@ -1,6 +1,8 @@
 package org.arobase.infrastructure.docker.service;
 
 import com.github.dockerjava.api.DockerClient;
+import com.github.dockerjava.api.async.ResultCallback;
+import com.github.dockerjava.api.model.Frame;
 import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientImpl;
 import com.github.dockerjava.core.command.ExecStartResultCallback;
@@ -11,12 +13,14 @@ import jakarta.enterprise.context.ApplicationScoped;
 import org.arobase.domain.docker.service.DockerExecutionService;
 import org.arobase.domain.docker.service.DockerQueueImageResolverFactory;
 import org.arobase.domain.model.request.ExerciceSubmitRequest;
-import org.arobase.infrastructure.docker.callback.StringBuilderExecStartResultCallback;
 import org.arobase.infrastructure.persistence.service.ExerciceService;
 import org.jboss.logging.Logger;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.net.URI;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @ApplicationScoped
 public final class DockerExecutionServiceImpl implements DockerExecutionService {
@@ -74,7 +78,7 @@ public final class DockerExecutionServiceImpl implements DockerExecutionService 
     }
 
     private Uni<String> executeCommandInContainer(DockerClient dockerClient, String containerId, String command) {
-        return Uni.createFrom().emitter(emitter -> {
+        return Uni.createFrom().emitter(Unchecked.consumer(emitter -> {
             try {
                 String execId = dockerClient.execCreateCmd(containerId)
                         .withAttachStdout(true)
@@ -83,16 +87,46 @@ public final class DockerExecutionServiceImpl implements DockerExecutionService 
                         .exec()
                         .getId();
 
+                final var stringBuilder = new StringBuilder();
+                CompletableFuture<Boolean> future = new CompletableFuture<>();
                 dockerClient.execStartCmd(execId)
-                        .exec(new ExecStartResultCallback(System.out, System.err))
-                        .awaitCompletion();
+                        .exec(new ResultCallback<Frame>() {
 
-                emitter.complete("fini");
-                ;
+                            @Override
+                            public void onStart(Closeable closeable) {
+
+                            }
+
+                            @Override
+                            public void onNext(Frame object) {
+                                stringBuilder.append(new String(object.getPayload()));
+                            }
+
+                            @Override
+                            public void onError(Throwable throwable) {
+                                future.completeExceptionally(throwable);
+                            }
+
+                            @Override
+                            public void onComplete() {
+                                future.complete(true);
+                            }
+
+                            @Override
+                            public void close() throws IOException {
+
+                            }
+                        });
+
+                        future.get();
+
+                emitter.complete(stringBuilder.toString());
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 emitter.fail(e);
+            } catch (ExecutionException e) {
+                throw new RuntimeException(e);
             }
-        });
+        }));
     }
 }
