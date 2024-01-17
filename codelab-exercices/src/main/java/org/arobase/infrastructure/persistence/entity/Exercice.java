@@ -3,19 +3,26 @@ package org.arobase.infrastructure.persistence.entity;
 import io.quarkus.mongodb.panache.PanacheMongoEntity;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 
+import java.time.LocalTime;
+
 /**
  * The exercice entity.
  */
 @MongoEntity(collection = "exercices")
-public class Exercice extends PanacheMongoEntity {
+public final class Exercice extends PanacheMongoEntity {
 
     /**
-     * The tilte of the exercice.
+     * The test code.
      */
-    private String tilte;
+    private String testCode;
 
     /**
-     * The path of the correction file
+     * The author.
      */
-    private String correctionFilePath;
+    private String author;
+
+    /**
+     * Created at.
+     */
+    private LocalTime createdAt;
 }
