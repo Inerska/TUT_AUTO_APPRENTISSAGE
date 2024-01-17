@@ -39,7 +39,7 @@ public class ExerciceController {
 
     @GET
     @Path("/{id}/results")
-    public Response getExerciceResultById(String id) {
+    public Response getExerciceResultById(@PathParam("id") String id) {
         logger.info("GET /api/v1/exercices/" + id + "/results called.");
 
         final var exerciceResult = exerciceService.getExerciceResultById(id)
