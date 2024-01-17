@@ -1,12 +1,17 @@
 package org.arobase.web.controller;
 
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import io.vertx.core.json.Json;
+import io.vertx.core.json.JsonObject;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import org.arobase.infrastructure.persistence.entity.Exercice;
+import jakarta.ws.rs.core.Response;
+import org.arobase.domain.model.ExerciceRequest;
+import org.arobase.infrastructure.persistence.entity.ExerciceResults;
 import org.arobase.infrastructure.persistence.service.ExerciceService;
 import org.jboss.logging.Logger;
+
+import java.util.List;
 
 @Path("/api/v1/exercices")
 @Produces(MediaType.APPLICATION_JSON)
@@ -21,11 +26,25 @@ public class ExerciceController {
     }
 
     @POST
-    @Path("/{name: [a-zA-Z0-9]+}")
-    @Produces(MediaType.SERVER_SENT_EVENTS)
-    public void submitExercice(String name) {
-        logger.info("POST /api/v1/exercices/" + name + " called.");
+    public Response submitExercice(ExerciceRequest exerciceRequest) {
+        logger.info("POST /api/v1/exercices/ for language" + exerciceRequest.getLanguage() + " called.");
 
-        exerciceService.submitExercice(name);
+        final var exerciceResultObjectId = exerciceService.submitExercice(exerciceRequest);
+        final var response = new JsonObject();
+        response.put("id", exerciceResultObjectId.toString());
+        response.put("feedback", "Exercice submitted successfully.");
+
+        return Response.ok(response).build();
+    }
+
+    @GET
+    @Path("/{id}/results")
+    public Response getExerciceResultById(String id) {
+        logger.info("GET /api/v1/exercices/" + id + "/results called.");
+
+        final var exerciceResult = exerciceService.getExerciceResultById(id)
+                .orElseThrow(() -> new NotFoundException("Exercice result not found."));
+
+        return Response.ok(exerciceResult).build();
     }
 }

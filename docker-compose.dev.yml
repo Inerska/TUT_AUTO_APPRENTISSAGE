@@ -35,7 +35,6 @@ services:
     environment:
       - quarkus.http.host=0.0.0.0
     depends_on:
-      - api_exercices-rabbitmq
       - api_exercices-mongodb
 
   api_exercices-mongodb:

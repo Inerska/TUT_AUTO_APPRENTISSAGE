@@ -1,9 +1,13 @@
 package org.arobase.domain.messaging.processor;
 
+import org.arobase.domain.model.MessagingRequest;
+
 /**
- * Marker interface for messaging request processors.
+ * Messaging request processor.
+ *
+ * @param <TObjectRequest> the type of the request
  */
-public interface MessagingRequestProcessor<T> {
+public interface MessagingRequestProcessor<TObjectRequest extends MessagingRequest> {
 
     /**
      * Process the request and return the result.
@@ -11,5 +15,5 @@ public interface MessagingRequestProcessor<T> {
      * @param request the request
      * @return the result
      */
-    T process(final String request);
+    void process(final TObjectRequest request);
 }

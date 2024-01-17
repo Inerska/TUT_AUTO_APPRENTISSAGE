@@ -10,9 +10,9 @@ import io.quarkus.mongodb.panache.common.MongoEntity;
 public class Exercice extends PanacheMongoEntity {
 
     /**
-     * The tilted of the exercice.
+     * The tilte of the exercice.
      */
-    private String tilted;
+    private String tilte;
 
     /**
      * The path of the correction file
