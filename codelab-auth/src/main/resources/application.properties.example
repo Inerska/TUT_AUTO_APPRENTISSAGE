@@ -1,0 +1,9 @@
+mp.jwt.verify.publickey.location=publicKey.pem
+quarkus.native.resources.includes=publicKey.pem
+smallrye.jwt.sign.key.location=privateKey.pem
+
+quarkus.datasource.username =
+quarkus.datasource.password =
+quarkus.datasource.reactive.url =
+
+quarkus.hibernate-orm.database.generation=update
