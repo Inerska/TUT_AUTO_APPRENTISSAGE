@@ -11,17 +11,31 @@ import org.arobase.infrastructure.authentication.service.AuthService;
 import org.arobase.infrastructure.persistance.entity.UserCredential;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
+/**
+ * The auth controller.
+ */
 @Path("/auth")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class AuthController {
 
+    /**
+     * The auth service.
+     */
     @Inject
     AuthService authService;
 
+    /**
+     * The json web token.
+     */
     @Inject
     JsonWebToken jwt;
 
+    /**
+     * The register method.
+     * @param userCredential The user credential.
+     * @return The jwt token.
+     */
     @POST
     @Path("/register")
     @PermitAll
@@ -30,6 +44,11 @@ public class AuthController {
         return authService.register(userCredential.getUsername(), userCredential.getPassword());
     }
 
+    /**
+     * The login method.
+     * @param username The username of the account.
+     * @return The jwt token.
+     */
     @POST
     @Path("/login")
     @PermitAll
@@ -38,6 +57,10 @@ public class AuthController {
         return authService.login(username);
     }
 
+    /**
+     * The me method.
+     * @return The username of the account.
+     */
     @GET
     @Path("/me")
     @RolesAllowed({"USER", "ADMIN"})
@@ -52,6 +75,10 @@ public class AuthController {
         }
     }
 
+    /**
+     * The admin method.
+     * @return The username of the account.
+     */
     @GET
     @Path("/admin")
     @RolesAllowed("ADMIN")

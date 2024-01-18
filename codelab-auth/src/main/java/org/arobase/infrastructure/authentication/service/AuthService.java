@@ -8,13 +8,24 @@ import jakarta.inject.Singleton;
 import org.arobase.infrastructure.persistance.entity.Account;
 import org.arobase.infrastructure.persistance.repository.AccountRepository;
 
+/**
+ * The auth service.
+ */
 @Singleton
 @WithSession
 public class AuthService {
 
+    /**
+     * The account repository.
+     */
     @Inject
     AccountRepository accountRepository;
 
+    /**
+     * The login method.
+     * @param username The username of the account.
+     * @return The jwt token.
+     */
     public Uni<String> login(String username) {
         return accountRepository.find("username", username)
                 .firstResult()
@@ -22,6 +33,12 @@ public class AuthService {
                 .onItem().transform(this::generateJwt);
     }
 
+    /**
+     * The register method.
+     * @param username The username of the account.
+     * @param password The password of the account.
+     * @return The jwt token.
+     */
     public Uni<String> register(String username, String password) {
         Uni<Account> accountUni = accountRepository.find("username", username)
                 .firstResult()
@@ -34,6 +51,11 @@ public class AuthService {
         return accountUni.onItem().transform(this::generateJwt);
     }
 
+    /**
+     * The generateJwt method.
+     * @param account The account.
+     * @return The jwt token.
+     */
     private String generateJwt(Account account){
         return Jwt.upn(account.getUsername())
                 .claim("account", account)
