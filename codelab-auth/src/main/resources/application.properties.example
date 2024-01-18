@@ -2,8 +2,8 @@ mp.jwt.verify.publickey.location=publicKey.pem
 quarkus.native.resources.includes=publicKey.pem
 smallrye.jwt.sign.key.location=privateKey.pem
 
-quarkus.datasource.username =
-quarkus.datasource.password =
-quarkus.datasource.reactive.url =
+quarkus.datasource.username = (username)
+quarkus.datasource.password = (password)
+quarkus.datasource.reactive.url = postgresql://(host):(port)/(database)
 
 quarkus.hibernate-orm.database.generation=update
