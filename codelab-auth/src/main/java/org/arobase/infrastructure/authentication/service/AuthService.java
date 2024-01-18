@@ -7,6 +7,9 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.arobase.infrastructure.persistance.entity.Account;
 import org.arobase.infrastructure.persistance.repository.AccountRepository;
+import org.jboss.logging.Logger;
+import org.jboss.resteasy.reactive.ResponseStatus;
+import org.slf4j.LoggerFactory;
 
 /**
  * The auth service.
@@ -15,11 +18,17 @@ import org.arobase.infrastructure.persistance.repository.AccountRepository;
 @WithSession
 public class AuthService {
 
+    private final Logger logger;
+
     /**
      * The account repository.
      */
     @Inject
     AccountRepository accountRepository;
+
+    public AuthService(Logger logger) {
+        this.logger = logger;
+    }
 
     /**
      * The login method.
@@ -27,6 +36,9 @@ public class AuthService {
      * @return The jwt token.
      */
     public Uni<String> login(String username) {
+
+        logger.info("trying to login with username: " + username);
+
         return accountRepository.find("username", username)
                 .firstResult()
                 .onItem().ifNull().failWith(() -> new RuntimeException("Account not found"))
@@ -43,10 +55,9 @@ public class AuthService {
         Uni<Account> accountUni = accountRepository.find("username", username)
                 .firstResult()
                 .onItem().ifNotNull().failWith(() -> new RuntimeException("Account already exists"))
-                .onItem().ifNull().continueWith(() -> {
+                .onItem().ifNull().switchTo(() -> {
                     Account account = new Account(username, password);
-                    accountRepository.persistAndFlush(account);
-                    return account;
+                    return accountRepository.persistAndFlush(account);
                 });
         return accountUni.onItem().transform(this::generateJwt);
     }
