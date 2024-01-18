@@ -1,4 +1,4 @@
-package org.arobase.web;
+package org.arobase.web.controller;
 
 import io.quarkus.hibernate.reactive.panache.common.WithSession;
 import io.smallrye.mutiny.Uni;
@@ -7,6 +7,7 @@ import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import org.arobase.infrastructure.authentication.service.AuthService;
 import org.arobase.infrastructure.persistance.entity.UserCredential;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 

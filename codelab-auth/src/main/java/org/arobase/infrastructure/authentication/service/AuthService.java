@@ -1,4 +1,4 @@
-package org.arobase.web;
+package org.arobase.infrastructure.authentication.service;
 
 import io.quarkus.hibernate.reactive.panache.common.WithSession;
 import io.smallrye.jwt.build.Jwt;
