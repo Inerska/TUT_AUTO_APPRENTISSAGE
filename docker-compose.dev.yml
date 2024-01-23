@@ -2,7 +2,6 @@ version: "3.7"
 name: codelab-development
 
 services:
-
   api_auth-dev:
     container_name: codelab_auth_api
     build:
@@ -13,8 +12,24 @@ services:
       - "8080:8080"
     volumes:
       - ./codelab-auth:/app
+
+  api_exercices-dev:
+    container_name: codelab_api_exercices
+    build:
+      context: codelab-exercices
+      dockerfile: src/main/docker/Dockerfile.development
+    restart: unless-stopped
+    volumes:
+      - ./codelab-exercices:/app
+      - /var/run/docker.sock:/var/run/docker.sock
+
     networks:
       - codelab-dev
+    ports:
+      - "8081:8080"
+    environment:
+      - quarkus.http.host=0.0.0.0
+      - TESTCONTAINERS_RYUK_DISABLED=true
     depends_on:
       - db_auth-dev
 
@@ -26,12 +41,18 @@ services:
       POSTGRES_USER: codelab-auth
       POSTGRES_PASSWORD: codelab-auth
       POSTGRES_DB: codelab-auth
+
+  api_exercices-mongodb:
+    container_name: codelab_api_exercices_mongodb
+    image: mongo:7
+    restart: unless-stopped
     ports:
-      - "5432:5432"
-    volumes:
-      - ./data:/var/lib/postgresql/data
+      - "27017:27017"
     networks:
       - codelab-dev
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=codelab
+      - MONGO_INITDB_ROOT_PASSWORD=codelab
 
   adminer-auth:
     image: adminer
