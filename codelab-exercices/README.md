@@ -1,56 +1,68 @@
-# codelab-exercices
+# Service Exercice
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+Ce service est conçu pour gérer les exercices de programmation, y compris leur soumission, création, et la récupération des résultats. Il offre une API REST pour interagir avec l'application.
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+## Configuration
 
-## Running the application in dev mode
+Avant de lancer le service, assurez-vous de configurer correctement le fichier `application.properties` :
 
-You can run your application in dev mode that enables live coding using:
-```shell script
-./gradlew quarkusDev
+```
+quarkus.mongodb.connection-string = mongodb://(user):(pass)@(host):27017
+quarkus.mongodb.database = (db)
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
+Remplacez `(user)`, `(pass)`, `(host)` et `(db)` par vos informations de connexion MongoDB.
 
-## Packaging and running the application
+## Points de terminaison de l'API
 
-The application can be packaged using:
-```shell script
-./gradlew build
-```
-It produces the `quarkus-run.jar` file in the `build/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `build/quarkus-app/lib/` directory.
+### Soumettre un Exercice
 
-The application is now runnable using `java -jar build/quarkus-app/quarkus-run.jar`.
+- **URL** : `/api/v1/exercices`
+- **Méthode** : `POST`
+- **Description** : Soumet l'exercice pour l'évaluation.
+- **Corps de la Requête** :
+  ```json
+  {
+    "language": "python",
+    "code": "def hello() -> str:\n    return \"Hello world\"",
+    "exerciceId": "65a855d58f3b59165d67b7f3"
+  }
+  ```
+- **Réponse** :
+  ```json
+  {
+    "id": "65aa55334516d71f4b905ab7",
+    "feedback": "Exercice submitted successfully."
+  }
+  ```
 
-If you want to build an _über-jar_, execute the following command:
-```shell script
-./gradlew build -Dquarkus.package.type=uber-jar
-```
+### Créer un Exercice
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar build/*-runner.jar`.
+- **URL** : `/api/v1/exercices/create`
+- **Méthode** : `POST`
+- **Description** : Crée un nouvel exercice.
+- **Corps de la Requête** :
+  ```json
+  {
+    "language": "python",
+    "testCode": "import unittest\n\nfrom main import hello\n\nclass TestHelloFunction(unittest.TestCase):\n\n    def test_hello_returns_correct_message(self):\n        self.assertEqual(hello(), \"Hello world\", \"Should be 'Hello world'\")\n\n    def test_hello_returns_correct_message_case(self):\n        self.assertEqual(hello(), \"Hello world\", \"Should be 'Hello world'\")\n\n    def test_hello_returns_correct_message_type(self):\n        self.assertEqual(type(hello()), str, \"Should be a string\")\n\n    def test_hello_returns_correct_message_length(self):\n        self.assertEqual(len(hello()), 11, \"Should be 11 characters\")\n\n\nif __name__ == \"__main__\":\n    unittest.main()",
+    "author": "Alexis Gridel"
+  }
+  ```
 
-## Creating a native executable
+### Récupérer les Résultats de l'Exercice
 
-You can create a native executable using: 
-```shell script
-./gradlew build -Dquarkus.package.type=native
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using: 
-```shell script
-./gradlew build -Dquarkus.package.type=native -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./build/codelab-exercices-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/gradle-tooling.
-
-## Provided Code
-
-### RESTEasy Reactive
-
-Easily start your Reactive RESTful Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+- **URL** : `/api/v1/exercices/:id/results`
+- **Méthode** : `GET`
+- **Description** : Récupère les résultats de l'exercice spécifié.
+- **Réponse** :
+  ```json
+  {
+    "id": "65aa55334516d71f4b905ab7",
+    "status": "COMPLETED",
+    "result": "FF..\n...[details des tests]...\n",
+    "timestamp": "2024-01-19T10:55:47.642",
+    "errorDetails": null,
+    "additionalInfo": null
+  }
+  ```
