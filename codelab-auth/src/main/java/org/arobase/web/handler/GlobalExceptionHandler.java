@@ -29,13 +29,11 @@ public class GlobalExceptionHandler implements ExceptionMapper<Throwable> {
     @Override
     public Response toResponse(Throwable exception) {
 
-        System.out.println(requestContext.getUriInfo().getPath());
-
         if (requestContext.getUriInfo().getPath().startsWith("/auth")) {
             if (exception instanceof WebApplicationException) {
                 return ((WebApplicationException) exception).getResponse();
             } else if (exception instanceof NullPointerException) {
-                return Response.status(Response.Status.BAD_REQUEST.getStatusCode()).entity(new JsonObject().put("message", "Missing element")).build();
+                return Response.status(Response.Status.BAD_REQUEST.getStatusCode()).entity(new JsonObject().put("message", exception.getMessage())).build();
             }
 
         }
