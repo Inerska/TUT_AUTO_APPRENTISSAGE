@@ -1,4 +1,4 @@
-package org.arobase.domain.exception;
+package org.arobase.infrastructure.exception;
 
 import io.vertx.core.json.JsonObject;
 import jakarta.ws.rs.WebApplicationException;
