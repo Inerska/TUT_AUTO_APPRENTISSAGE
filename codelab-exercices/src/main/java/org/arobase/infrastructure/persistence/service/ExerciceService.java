@@ -41,7 +41,12 @@ public final class ExerciceService {
 
         final var exerciceResult = new ExerciceResults();
         exerciceResult.status = "SUBMITTED";
-        exerciceResult.persist();
+        try {
+            exerciceResult.persist();
+        } catch (final Exception e) {
+            logger.error("Error while persisting exercice result.", e);
+            throw new RuntimeException("Error while persisting exercice result.");
+        }
 
         exercice.setExerciceResultObjectId(exerciceResult.id.toString());
 
@@ -67,6 +72,7 @@ public final class ExerciceService {
      * @param id the exercice result object id
      */
     public void processExerciceResultById(final String id) {
+        logger.info("Processing exercice result " + id + "...");
         final var exerciceResult = exerciceResultsRepository.findByIdOptional(new ObjectId(id)).orElseThrow(() -> new NotFoundException("Exercice result not found."));
 
         exerciceResult.status = "PROCESSING";
