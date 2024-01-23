@@ -12,6 +12,8 @@ services:
       - "8080:8080"
     volumes:
       - ./codelab-auth:/app
+    networks:
+      - codelab-dev
 
   api_exercices-dev:
     container_name: codelab_api_exercices
@@ -40,6 +42,10 @@ services:
       POSTGRES_USER: codelab-auth
       POSTGRES_PASSWORD: codelab-auth
       POSTGRES_DB: codelab-auth
+    volumes:
+      - ./auth_data:/var/lib/postgresql/data
+    networks:
+      - codelab-dev
 
   api_exercices-mongodb:
     container_name: codelab_api_exercices_mongodb
@@ -60,7 +66,7 @@ services:
     ports:
       - "8089:8080"
     networks:
-        - codelab-dev
+      - codelab-dev
 
   webclient-dev:
     container_name: codelab_webclient
