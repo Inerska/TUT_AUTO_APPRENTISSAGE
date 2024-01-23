@@ -75,16 +75,25 @@ public class AuthService {
 
         Objects.requireNonNull(account.getUsername(), "username field is required");
         Objects.requireNonNull(account.getPassword(), "password field is required");
+        Objects.requireNonNull(account.getConfirmPassword(), "confirmPassword field is required");
+        Objects.requireNonNull(account.getName(), "name field is required");
+        Objects.requireNonNull(account.getSurname(), "surname field is required");
+        Objects.requireNonNull(account.getEmail(), "email field is required");
 
         LOGGER.info(account.getUsername() + " try to register.");
 
         Uni<Account> accountUni = accountRepository.find("username", account.getUsername())
                 .firstResult()
                 .onItem().ifNotNull().failWith(() -> new AuthentificationException(Response.Status.CONFLICT, "Account already exists"))
-                .onItem().ifNull().switchTo(() -> {
-                    Account newAccount = new Account(account.getUsername(), hashedPasswordService.hashPassword(account.getPassword()));
+                .onItem().ifNull().switchTo(Unchecked.supplier(() -> {
+
+                    if(!account.getPassword().equals(account.getConfirmPassword())){
+                        throw new AuthentificationException(Response.Status.BAD_REQUEST, "Password and confirmPassword must be equals");
+                    }
+
+                    Account newAccount = new Account(account.getUsername(), hashedPasswordService.hashPassword(account.getPassword()), account.getName(), account.getSurname(), account.getEmail());
                     return accountRepository.persistAndFlush(newAccount);
-                });
+                }));
 
         return accountUni.onItem().transform(this::generateJwt);
     }
