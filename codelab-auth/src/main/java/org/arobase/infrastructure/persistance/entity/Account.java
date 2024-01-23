@@ -1,7 +1,6 @@
 package org.arobase.infrastructure.persistance.entity;
 
 import jakarta.persistence.*;
-import net.bytebuddy.asm.Advice;
 
 /**
  * The account entity.
@@ -27,6 +26,12 @@ public class Account {
     private String password;
 
     /**
+     * The confirmation password of the account.
+     */
+    @Transient
+    private String confirmPassword;
+
+    /**
      * The name of the account.
      */
     private String name;
@@ -40,6 +45,8 @@ public class Account {
      * The email of the account.
      */
     private String email;
+
+    private String phone;
 
     public Account(){};
 
