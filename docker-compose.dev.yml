@@ -72,13 +72,13 @@ services:
     container_name: codelab_webclient
     build:
       context: ./codelab-nextjs
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.development
     restart: unless-stopped
     ports:
       - "3005:3000"
     volumes:
       - ./codelab-nextjs:/app
-      - /codelab-nextjs/node_modules
+      - /app/node_modules
 
 networks:
   codelab-dev:
