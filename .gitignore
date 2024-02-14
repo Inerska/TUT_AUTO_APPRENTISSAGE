@@ -33,3 +33,6 @@ data
 application.properties
 # Ignore Gradle build output directory
 build
+
+# Ignore JWT pem files
+*.pem
