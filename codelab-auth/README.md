@@ -7,17 +7,17 @@
 2. Générez une clé privée RSA de 2048 bits :
 
 ```bash
-openssl genrsa -out rsaPrivateKey.pem 2048
+openssl genrsa -out privateKey.pem 2048
 ```
 
 3. Créez une clé publique à partir de la clé privée générée :
 ```bash
-openssl rsa -pubout -in rsaPrivateKey.pem -out publicKey.pem
+openssl rsa -pubout -in privateKey.pem -out publicKey.pem
 ```
 
 4. Convertissez la clé privée au format PKCS#8 :
 ```bash
-openssl pkcs8 -topk8 -nocrypt -inform pem -in rsaPrivateKey.pem -outform
+openssl pkcs8 -topk8 -nocrypt -inform pem -in privateKey.pem -outform
 ```
 
 
