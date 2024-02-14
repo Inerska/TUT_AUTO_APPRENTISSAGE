@@ -1,6 +1,0 @@
-# datasource configuration
-quarkus.datasource.username =
-quarkus.datasource.password =
-quarkus.datasource.reactive.url =
-
-quarkus.hibernate-orm.database.generation =
