@@ -109,7 +109,7 @@ public final class ExerciceService {
         try {
             exercice.persist();
 
-            return Response.ok().build();
+            return Response.ok(exercice.id).build();
         } catch (final Exception e) {
             logger.error("Error while creating exercice.", e);
 
