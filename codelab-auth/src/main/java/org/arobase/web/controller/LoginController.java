@@ -15,7 +15,7 @@ import org.arobase.infrastructure.dto.LoginCredentialsDTO;
 import org.arobase.infrastructure.service.AuthService;
 import org.arobase.infrastructure.service.BodyValidatorService;
 
-@Path("/auth")
+@Path("/auth/login")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class LoginController {
@@ -39,12 +39,15 @@ public class LoginController {
      * @return The jwt token.
      */
     @POST
-    @Path("/login")
     @PermitAll
     @WithSession
     public Uni<Response> login(final LoginCredentialsDTO loginCredentials) {
         bodyValidatorService.validateBody(loginCredentials);
         return authService.login(loginCredentials)
-                .map(jwt -> Response.ok().entity(new JsonObject().put("token", jwt)).build());
+                .map(account -> Response.ok().entity(
+                        new JsonObject()
+                                .put("access-token", account.getAccessToken())
+                                .put("refresh-token", account.getRefreshToken())
+                ).build());
     }
 }

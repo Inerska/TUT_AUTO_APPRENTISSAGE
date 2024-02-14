@@ -1,6 +1,5 @@
 package org.arobase.infrastructure.persistance.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 /**
@@ -14,53 +13,46 @@ public class Account {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private int id;
 
     /**
      * The username of the account.
      */
+    @Column
     private String username;
-
-    /**
-     * The password of the account.
-     */
-    private String password;
-
-    /**
-     * The confirmation password of the account.
-     */
-    @Transient
-    @JsonProperty("confirm-password")
-    private String confirmPassword;
-
-    /**
-     * The name of the account.
-     */
-    private String name;
-
-    /**
-     * The surname of the account.
-     */
-    private String surname;
 
     /**
      * The email of the account.
      */
-    private String email;
+    @Column
+    private String mail;
 
     /**
-     * The phone of the account.
+     * The password of the account.
      */
-    private String phone;
+    @Column
+    private String password;
+
+    /**
+     * The access token of the account.
+     */
+    @Column(name = "access_token", columnDefinition = "TEXT")
+    private String accessToken;
+
+    /**
+     * The refresh token of the account.
+     */
+    @Column(name = "refresh_token")
+    private String refreshToken;
 
     public Account(){}
 
-    public Account(String username, String password, String name, String surname, String email) {
+    public Account(String username, String mail, String password, String accessToken, String refreshToken) {
         this.username = username;
+        this.mail = mail;
         this.password = password;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
     }
 
     /**
@@ -72,6 +64,14 @@ public class Account {
     }
 
     /**
+     * The getter of the email.
+     * @return The email.
+     */
+    public String getMail() {
+        return mail;
+    }
+
+    /**
      * The getter of the password.
      * @return The password.
      */
@@ -79,35 +79,19 @@ public class Account {
         return password;
     }
 
-    /**
-     * The getter of the confirmation password.
-     * @return The confirmation password.
-     */
-    public String getConfirmPassword() {
-        return confirmPassword;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    /**
-     * The getter of the name.
-     * @return The name.
-     */
-    public String getName() {
-        return name;
+    public String getRefreshToken() {
+        return refreshToken;
     }
 
-    /**
-     * The getter of the surname.
-     * @return The surname.
-     */
-    public String getSurname() {
-        return surname;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
-    /**
-     * The getter of the email.
-     * @return The email.
-     */
-    public String getEmail() {
-        return email;
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }

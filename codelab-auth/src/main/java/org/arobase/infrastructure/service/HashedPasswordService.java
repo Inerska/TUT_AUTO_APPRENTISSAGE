@@ -1,4 +1,4 @@
-package org.arobase.infrastructure.authentication.service;
+package org.arobase.infrastructure.service;
 
 import jakarta.inject.Singleton;
 import org.mindrot.jbcrypt.BCrypt;

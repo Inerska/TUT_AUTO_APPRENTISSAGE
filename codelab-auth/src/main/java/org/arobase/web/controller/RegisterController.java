@@ -11,12 +11,11 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.arobase.infrastructure.service.BodyValidatorService;
 import org.arobase.infrastructure.dto.RegisterCredentialsDTO;
 import org.arobase.infrastructure.service.AuthService;
-import org.jboss.logging.Logger;
+import org.arobase.infrastructure.service.BodyValidatorService;
 
-@Path("/auth")
+@Path("/auth/register")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class RegisterController {
@@ -40,12 +39,14 @@ public class RegisterController {
      * @return The jwt token.
      */
     @POST
-    @Path("/register")
     @PermitAll
-    @WithSession
     public Uni<Response> register(final RegisterCredentialsDTO registerCredentials) {
         bodyValidatorService.validateBody(registerCredentials);
         return authService.register(registerCredentials)
-                .map(jwt -> Response.ok().entity(new JsonObject().put("token", jwt)).build());
+                .map(account -> Response.ok().entity(
+                        new JsonObject()
+                                .put("access-token", account.getAccessToken())
+                                .put("refresh-token", account.getRefreshToken())
+                ).build());
     }
 }
