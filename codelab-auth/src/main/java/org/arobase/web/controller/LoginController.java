@@ -15,6 +15,9 @@ import org.arobase.infrastructure.dto.LoginCredentialsDTO;
 import org.arobase.infrastructure.service.AuthService;
 import org.arobase.infrastructure.service.BodyValidatorService;
 
+/**
+ * The login controller.
+ */
 @Path("/auth/login")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)

@@ -16,12 +16,6 @@ public class Account {
     private int id;
 
     /**
-     * The username of the account.
-     */
-    @Column
-    private String username;
-
-    /**
      * The email of the account.
      */
     @Column
@@ -47,8 +41,7 @@ public class Account {
 
     public Account(){}
 
-    public Account(String username, String mail, String password, String accessToken, String refreshToken) {
-        this.username = username;
+    public Account(String mail, String password, String accessToken, String refreshToken) {
         this.mail = mail;
         this.password = password;
         this.accessToken = accessToken;
@@ -56,41 +49,49 @@ public class Account {
     }
 
     /**
-     * The getter of the username.
-     * @return The username.
-     */
-    public String getUsername() {
-        return username;
-    }
-
-    /**
-     * The getter of the email.
-     * @return The email.
+     * The mail getter.
+     * @return The mail.
      */
     public String getMail() {
         return mail;
     }
 
     /**
-     * The getter of the password.
+     * The password getter.
      * @return The password.
      */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * The access token getter.
+     * @return The access token.
+     */
     public String getAccessToken() {
         return accessToken;
     }
 
+    /**
+     * The refresh token getter.
+     * @return The refresh token.
+     */
     public String getRefreshToken() {
         return refreshToken;
     }
 
+    /**
+     * The access token setter.
+     * @param accessToken The access token.
+     */
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
 
+    /**
+     * The refresh token setter.
+     * @param refreshToken The refresh token.
+     */
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }

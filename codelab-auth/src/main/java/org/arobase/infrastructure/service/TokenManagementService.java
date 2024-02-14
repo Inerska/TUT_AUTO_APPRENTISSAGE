@@ -8,6 +8,9 @@ import java.security.SecureRandom;
 import java.time.Instant;
 import java.util.Base64;
 
+/**
+ * The token management service.
+ */
 @Singleton
 public class TokenManagementService {
 

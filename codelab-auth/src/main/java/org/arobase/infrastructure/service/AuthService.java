@@ -85,7 +85,7 @@ public class AuthService {
                     String hashedPassword = hashedPasswordService.hashPassword(registerCredentials.password());
                     TokensDTO tokens = tokenManagementService.getTokens(registerCredentials.mail());
 
-                    Account newAccount = new Account(registerCredentials.username(), registerCredentials.mail(), hashedPassword, tokens.accessToken(), tokens.refreshToken());
+                    Account newAccount = new Account(registerCredentials.mail(), hashedPassword, tokens.accessToken(), tokens.refreshToken());
 
 
                     return accountRepository.persistAndFlush(newAccount);

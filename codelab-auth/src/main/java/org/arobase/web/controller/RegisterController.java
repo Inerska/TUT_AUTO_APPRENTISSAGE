@@ -1,6 +1,5 @@
 package org.arobase.web.controller;
 
-import io.quarkus.hibernate.reactive.panache.common.WithSession;
 import io.smallrye.mutiny.Uni;
 import io.vertx.core.json.JsonObject;
 import jakarta.annotation.security.PermitAll;
@@ -15,6 +14,9 @@ import org.arobase.infrastructure.dto.RegisterCredentialsDTO;
 import org.arobase.infrastructure.service.AuthService;
 import org.arobase.infrastructure.service.BodyValidatorService;
 
+/**
+ * The register controller.
+ */
 @Path("/auth/register")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
