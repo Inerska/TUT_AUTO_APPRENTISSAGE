@@ -1,6 +1,4 @@
 version: "3.7"
-name: codelab-development
-
 services:
   api_auth-dev:
     container_name: codelab_auth_api
@@ -8,10 +6,12 @@ services:
       context: codelab-auth
       dockerfile: src/main/docker/Dockerfile.development
     restart: unless-stopped
-    ports:
-      - "8080:8080"
     volumes:
       - ./codelab-auth:/app
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api-auth-dev.rule=Host(`auth.codelab.local`)"
+      - "traefik.http.services.api-auth-dev.loadbalancer.server.port=8080"
     networks:
       - codelab-dev
 
@@ -24,10 +24,12 @@ services:
     volumes:
       - ./codelab-exercices:/app
       - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api-exercices-dev.rule=Host(`exercices.codelab.local`)"
+      - "traefik.http.services.api-exercices-dev.loadbalancer.server.port=8080"
     networks:
       - codelab-dev
-    ports:
-      - "8081:8080"
     environment:
       - quarkus.http.host=0.0.0.0
       - TESTCONTAINERS_RYUK_DISABLED=true
@@ -48,25 +50,27 @@ services:
       - codelab-dev
 
   api_exercices-mongodb:
-    container_name: codelab_api_exercices_mongodb
     image: mongo:7
+    container_name: codelab_api_exercices_mongodb
     restart: unless-stopped
-    ports:
-      - "27017:27017"
     networks:
       - codelab-dev
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=codelab
-      - MONGO_INITDB_ROOT_PASSWORD=codelab
+      MONGO_INITDB_ROOT_USERNAME: codelab
+      MONGO_INITDB_ROOT_PASSWORD: codelab
 
   adminer-auth:
     image: adminer
     container_name: codelab_adminer
     restart: unless-stopped
-    ports:
-      - "8089:8080"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.adminer-auth.rule=Host(`adminer.codelab.local`)"
+      - "traefik.http.services.adminer-auth.loadbalancer.server.port=8080"
     networks:
       - codelab-dev
+    ports:
+      - "8089:8080"
 
   webclient-dev:
     container_name: codelab_webclient
@@ -74,11 +78,32 @@ services:
       context: ./codelab-nextjs
       dockerfile: Dockerfile.development
     restart: unless-stopped
-    ports:
-      - "3005:3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.webclient-dev.rule=Host(`webclient.codelab.local`)"
+      - "traefik.http.services.webclient-dev.loadbalancer.server.port=3000"
+    networks:
+      - codelab-dev
     volumes:
       - ./codelab-nextjs:/app
       - /app/node_modules
+
+  traefik:
+    image: "traefik:v2.5"
+    container_name: codelab_traefik
+    restart: unless-stopped
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "81:80" 
+      - "8082:8080" 
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - codelab-dev
 
 networks:
   codelab-dev:
