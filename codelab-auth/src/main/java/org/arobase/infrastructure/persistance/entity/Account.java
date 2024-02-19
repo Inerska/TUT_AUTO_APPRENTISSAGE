@@ -28,6 +28,12 @@ public class Account {
     private String password;
 
     /**
+     * The profile id of the account.
+     */
+    @Column
+    private int profileId;
+
+    /**
      * The access token of the account.
      */
     @Column(name = "access_token", columnDefinition = "TEXT")
@@ -41,9 +47,10 @@ public class Account {
 
     public Account(){}
 
-    public Account(String mail, String password, String accessToken, String refreshToken) {
+    public Account(String mail, String password, int profileId, String accessToken, String refreshToken) {
         this.mail = mail;
         this.password = password;
+        this.profileId = profileId;
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
     }
@@ -62,6 +69,14 @@ public class Account {
      */
     public String getPassword() {
         return password;
+    }
+
+    /**
+     * The id getter.
+     * @return The id.
+     */
+    public int getProfileId() {
+        return profileId;
     }
 
     /**

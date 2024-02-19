@@ -51,6 +51,7 @@ public class LoginController {
                         new JsonObject()
                                 .put("access-token", account.getAccessToken())
                                 .put("refresh-token", account.getRefreshToken())
+                                .put("profile-id", account.getProfileId())
                 ).build());
     }
 }
