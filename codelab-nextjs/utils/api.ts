@@ -15,7 +15,7 @@ export const submitExercise = (data: SubmitExerciseBody) =>
 	axios.post<SubmitExerciseResponse>(`${BASE_URL}/exercise`, data, CONFIG);
 
 export const createExercise = (data: CreateExerciseBody) =>
-	axios.post<CreateExerciseResponse>(`${BASE_URL}/exercise`, data, CONFIG);
+	axios.post<CreateExerciseResponse>(`${BASE_URL}/exercise/create`, data, CONFIG);
 
 export const getResultsExercise = (id: string) =>
 	axios.get<GetResultsExerciceResponse>(`${BASE_URL}/exercise/${id}/results`, CONFIG);
