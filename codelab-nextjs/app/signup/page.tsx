@@ -57,7 +57,7 @@ export default function SignupPage() {
 			<HeaderComponent />
 			<main className="min-h-screen bg-lite-quinary dark:bg-dark-primary flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
 				<div className="max-w-md w-full space-y-8 bg-white p-6 rounded-lg shadow-md">
-					<h1 className="mt-6 text-center text-3xl font-extrabold text-lite-primary dark:text-dark-quaternary">Se connecter</h1>
+					<h1 className="mt-6 text-center text-3xl font-extrabold text-lite-primary dark:text-dark-quaternary">S'inscrire</h1>
 					{error && <div className="text-red-500 text-center">{error}</div>} {/* Affiche l'erreur si présente */}
 					<form className="mt-8 space-y-6" onSubmit={handleSubmit}>
 						<div className="relative">
