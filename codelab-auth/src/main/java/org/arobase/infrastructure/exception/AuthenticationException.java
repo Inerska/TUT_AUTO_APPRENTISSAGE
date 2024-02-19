@@ -7,16 +7,20 @@ import jakarta.ws.rs.core.Response;
 /**
  * The authentification exception.
  */
-public class AuthentificationException extends WebApplicationException {
+public class AuthenticationException extends WebApplicationException {
 
     /**
      * The constructor.
      * @param status The status.
      * @param message The message.
      */
-    public AuthentificationException(Response.Status status, String message) {
+    public AuthenticationException(Response.Status status, String message) {
         super(Response.status(status)
-                .entity(new JsonObject().put("message", message))
+                .entity(
+                        new JsonObject()
+                                .put("code", status.getStatusCode())
+                                .put("message", message)
+                )
                 .build());
     }
 }
