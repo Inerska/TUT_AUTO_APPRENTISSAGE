@@ -1,11 +1,7 @@
+import { AuthState, AuthStore } from "@/utils/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-type AuthState = {
-  profileId: string | null;
-  accessToken: string;
-  refreshToken: string;
-};
 
 export const useAuthStore = create(
   persist(
@@ -23,8 +19,8 @@ export const useAuthStore = create(
           profileId: null,
           accessToken: "",
           refreshToken: "",
-        }),
-    }),
+        } as AuthState),
+    } as AuthStore),
     {
       name: "auth",
     }
