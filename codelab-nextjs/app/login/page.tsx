@@ -96,7 +96,7 @@ export default function LoginPage() {
 					</form>
 					<p className="mt-2 text-center text-sm text-gray-600">
 						Vous n'avez pas de compte ? {' '}
-						<Link href="/signin" legacyBehavior>
+						<Link href="/signup" legacyBehavior>
 							<a className="font-medium text-blue-600 hover:text-blue-500">
 								Créer un compte
 							</a>
