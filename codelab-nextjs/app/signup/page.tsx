@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { HeaderComponent } from '@/components/HeaderComponent';
 import { FooterComponent } from '@/components/FooterComponent';
 import { register } from '@/utils/api';
-import { useAuthStore } from '../store/authState';
+import { useAuthStore } from '@/store/authState';
 import { useRouter } from 'next/navigation';
 
 

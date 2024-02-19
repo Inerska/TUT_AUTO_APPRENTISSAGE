@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Languages } from "@/utils/types";
 import { Edit } from "lucide-react";
-import {sendExerise} from "@/app/service/apiServiceExercise";
+import {sendExerise} from "@/service/apiServiceExercise";
 
 
 export default function Page() {
