@@ -15,7 +15,7 @@ export default function SignupPage() {
 	const { setAccessToken, setRefreshToken, setProfileId } = useAuthStore();
 	const router = useRouter();
 
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setIsLoading(true);
 		setError('');
@@ -26,24 +26,29 @@ export default function SignupPage() {
 			const username = form.username.value;
 			const password = form.password.value;
 			const confirmPassword = form.confirmPassword.value;
-			if (password !== confirmPassword) {
-				setError('Les mots de passe ne correspondent pas.');
-				setIsLoading(false);
-				return;
-			}
-			if (password.length < 8) {
-				setError('Le mot de passe doit contenir au moins 8 caractères.');
-				setIsLoading(false);
-				return;
-			}
+			setError('');
+			setTimeout(async () => {
+				if (password !== confirmPassword) {
+					setError('Les mots de passe ne correspondent pas.');
+					setIsLoading(false);
+					return;
+				}
+				if (password.length < 8) {
+					setError('Le mot de passe doit contenir au moins 8 caractères.');
+					setIsLoading(false);
+					return;
+				}
+	
+				const response = await register({ mail, username, password, confirmPassword});
+	
+				setAccessToken(response.data.accessToken);
+				setRefreshToken(response.data.refreshToken);
+				setProfileId(response.data.profileId);
+	
+				router.push('/menu');
+			}, 400);
 
-			const response = await register({ mail, username, password, confirmPassword});
-
-			setAccessToken(response.data.accessToken);
-			setRefreshToken(response.data.refreshToken);
-			setProfileId(response.data.profileId);
-
-			router.push('/menu');
+			
 		} catch (error: any) {
 			setError("Échec de l'inscrition. Veuillez réessayer.");
 			console.error(error);
