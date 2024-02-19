@@ -11,28 +11,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Edit } from "lucide-react";
+import { Languages } from "@/utils/types";
 
 export default function Page() {
   const editorRef = useRef(null);
   const [currentLanguage, setCurrentLanguage] = useState("javascript");
   const [currentTheme, setCurrentTheme] = useState("light");
 
-  const languages = [
-    "javascript",
-    "python",
-    "java",
-    "csharp",
-    "cpp",
-    "ruby",
-    "go",
-    "typescript",
-  ];
-
   const handleEditorDidMount = (editor: any, monaco: Monaco) => {
     editorRef.current = editor;
     editor.focus();
   };
+
+  const languages = Object.values(Languages);
 
   return (
     <div className="flex flex-col h-screen overflow-hidden">
