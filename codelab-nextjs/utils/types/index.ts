@@ -11,20 +11,20 @@ export enum Languages {
   TYPESCRIPT = "typescript",
 }
 
-export type AuthState = {
+export interface AuthState {
 	profileId: string | null;
 	accessToken: string;
 	refreshToken: string;
 };
-export type AuthStore = {
-	profileId: string | null;
-	accessToken: string;
-	refreshToken: string;
-	setProfileId: (profileId: string) => void;
+export interface AuthActions {
+	setProfileId: (profileId: string | null) => void;
 	setAccessToken: (accessToken: string) => void;
 	setRefreshToken: (refreshToken: string) => void;
 	logout: () => void;
-};
+  }
+
+export type AuthStore = AuthState & AuthActions;
+
 
 export type LoginBody = {
 	mail: string;
