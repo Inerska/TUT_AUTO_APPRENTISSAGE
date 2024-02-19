@@ -14,7 +14,7 @@ export default function LoginPage() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState('');
 	const router = useRouter();
-	const { setAccessToken, setRefreshToken, setProfileId } = useAuthStore();
+	const store = useAuthStore();
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -28,9 +28,9 @@ export default function LoginPage() {
 			setError('');
 			const response = await login({ mail, password });
 
-			setAccessToken(response.data.accessToken);
-			setRefreshToken(response.data.refreshToken);
-			setProfileId(response.data.profileId);
+			store.setAccessToken(response.data['access-token']);
+			store.setRefreshToken(response.data['refresh-token']);
+			store.setProfileId(response.data.profileId);
 
 			router.push('/menu');
 		} catch (error) {
