@@ -6,7 +6,7 @@ import { FooterComponent } from '@/components/FooterComponent';
 import { login } from '@/utils/api';
 import { useAuthStore } from '../store/authState';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 
 export default function LoginPage() {
@@ -25,6 +25,7 @@ export default function LoginPage() {
 			const form = e.currentTarget;
 			const mail = form.mail.value;
 			const password = form.password.value;
+			setError('');
 			const response = await login({ mail, password });
 
 			setAccessToken(response.data.accessToken);
@@ -32,7 +33,7 @@ export default function LoginPage() {
 			setProfileId(response.data.profileId);
 
 			router.push('/menu');
-		} catch (error: any) {
+		} catch (error) {
 			setError('Échec de la connexion. Veuillez réessayer.');
 			console.error(error);
 		} finally {
