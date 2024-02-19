@@ -17,6 +17,20 @@ module.exports = {
     },
     extend: {
       colors: {
+        // Couleurs pour le thème clair
+        'lite-primary': '#4778ec', // PRIMARY
+        'lite-secondary': '#002979', // PRIMARY Dark
+        'lite-tertiary': '#00d9d9', // PRIMARY Light
+        'lite-quaternary': '#a1e8cb',
+        'lite-quinary': '#cccccc',
+        'lite-senary': '#e8fff6',
+
+        // Couleurs pour le thème sombre
+        'dark-primary': '#323852',
+        'dark-secondary': '#1c233f',
+        'dark-tertiary': '#e8fff6', 
+        'dark-quaternary': '#ffffff',
+
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
