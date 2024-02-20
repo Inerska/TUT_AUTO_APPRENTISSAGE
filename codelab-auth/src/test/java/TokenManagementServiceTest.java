@@ -15,12 +15,17 @@ public class TokenManagementServiceTest {
      */
     @Test
     void testGetTokens_ReturnsNonNullTokensDTO() {
+        // Crée une instance du service de gestion de jetons
         TokenManagementService tokenManagementService = new TokenManagementService();
 
+        // Appelle la méthode getTokens avec une adresse e-mail factice
         TokensDTO tokensDTO = tokenManagementService.getTokens("test@example.com");
 
+        // Vérifie que l'objet retourné n'est pas nul
         assertNotNull(tokensDTO);
+        // Vérifie que l'access token n'est pas nul
         assertNotNull(tokensDTO.accessToken());
+        // Vérifie que le refresh token n'est pas nul
         assertNotNull(tokensDTO.refreshToken());
     }
 
@@ -30,17 +35,23 @@ public class TokenManagementServiceTest {
      */
     @Test
     void testGenerateJwt_ValidJwtGenerated() {
+        // Crée une instance du service de gestion de jetons
         TokenManagementService tokenManagementService = new TokenManagementService();
+        // Adresse e-mail factice
         String mail = "test@example.com";
 
         String jwt = null;
         try {
+            // Appelle la méthode generateJwt pour générer un jeton JWT
             jwt = tokenManagementService.generateJwt(mail);
         } catch (Exception e) {
+            // En cas d'exception, le test échoue
             fail("Exception levée lors de la génération du JWT : " + e.getMessage());
         }
 
+        // Vérifie que le jeton JWT généré n'est pas nul
         assertNotNull(jwt);
+        // Vérifie que le jeton JWT généré n'est pas vide
         assertFalse(jwt.isEmpty());
     }
 
@@ -50,16 +61,21 @@ public class TokenManagementServiceTest {
      */
     @Test
     void testGenerateRefreshToken_ValidRefreshTokenGenerated() {
+        // Crée une instance du service de gestion de jetons
         TokenManagementService tokenManagementService = new TokenManagementService();
 
         String refreshToken = null;
         try {
+            // Appelle la méthode generateRefreshToken pour générer un jeton de rafraîchissement
             refreshToken = tokenManagementService.generateRefreshToken();
         } catch (Exception e) {
+            // En cas d'exception, le test échoue
             fail("Exception levée lors de la génération du jeton de rafraîchissement : " + e.getMessage());
         }
 
+        // Vérifie que le jeton de rafraîchissement généré n'est pas nul
         assertNotNull(refreshToken);
+        // Vérifie que le jeton de rafraîchissement généré n'est pas vide
         assertFalse(refreshToken.isEmpty());
     }
 }

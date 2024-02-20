@@ -10,12 +10,12 @@ public class AccountTest {
     // Test du constructeur par défaut
     @Test
     void testDefaultConstructor() {
-        // Given - Préparation des données
+        // Préparation des données
         Account account = new Account();
 
-        // When - Exécution du test
+        // Exécution du test
 
-        // Then - Vérification des valeurs par défaut
+        // Vérification des valeurs par défaut
         assertEquals(null, account.getMail());
         assertEquals(null, account.getPassword());
         assertEquals(null, account.getAccessToken());
@@ -31,10 +31,10 @@ public class AccountTest {
         String accessToken = "accessToken";
         String refreshToken = "refreshToken";
 
-        // When - Exécution du test
+        // Exécution du test
         Account account = new Account(mail, password, accessToken, refreshToken);
 
-        // Then - Vérification des valeurs initialisées
+        // Vérification des valeurs initialisées
         assertEquals(mail, account.getMail());
         assertEquals(password, account.getPassword());
         assertEquals(accessToken, account.getAccessToken());
@@ -44,16 +44,16 @@ public class AccountTest {
     // Test des accesseurs
     @Test
     void testAccessors() {
-        // Given - Préparation des données
+        // Préparation des données
         Account account = new Account();
 
-        // When - Exécution du test
+        // Exécution du test
         account.setMail("th30pelli@gmail.com");
         account.setPassword("TheoIUTInfo");
         account.setAccessToken("accessToken");
         account.setRefreshToken("refreshToken");
 
-        // Then - Vérification des valeurs des accesseurs
+        // Vérification des valeurs des accesseurs
         assertEquals("th30pelli@gmail.com", account.getMail());
         assertEquals("TheoIUTInfo", account.getPassword());
         assertEquals("accessToken", account.getAccessToken());
@@ -63,52 +63,52 @@ public class AccountTest {
     // Test du setter de AccessToken
     @Test
     void testSetAccessToken() {
-        // Given - Préparation des données
+        // Préparation des données
         Account account = new Account();
 
-        // When - Exécution du test
+        // Exécution du test
         account.setAccessToken("accessToken");
 
-        // Then - Vérification du setter de AccessToken
+        // Vérification du setter de AccessToken
         assertEquals("accessToken", account.getAccessToken());
     }
 
     // Test du setter de RefreshToken
     @Test
     void testSetRefreshToken() {
-        // Given - Préparation des données
+        // Préparation des données
         Account account = new Account();
 
-        // When - Exécution du test
+        // Exécution du test
         account.setRefreshToken("refreshToken");
 
-        // Then - Vérification du setter de RefreshToken
+        // Vérification du setter de RefreshToken
         assertEquals("refreshToken", account.getRefreshToken());
     }
 
     // Test du getter de Mail
     @Test
     void testGetMail() {
-        // Given - Préparation des données
+        // Préparation des données
         Account account = new Account();
 
-        // When - Exécution du test
+        // Exécution du test
         account.setMail("theopelli54@gmail.com");
 
-        // Then - Vérification du getter de Mail
+        // Vérification du getter de Mail
         assertEquals("theopelli54@gmail.com", account.getMail());
     }
 
     // Test du getter de Password
     @Test
     void testGetPassword() {
-        // Given - Préparation des données
+        // Préparation des données
         Account account = new Account();
 
-        // When - Exécution du test
+        // Exécution du test
         account.setPassword("Pelli54");
 
-        // Then - Vérification du getter de Password
+        // Vérification du getter de Password
         assertEquals("Pelli54", account.getPassword());
     }
 }

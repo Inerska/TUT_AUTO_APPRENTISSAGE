@@ -11,29 +11,29 @@ public class HashedPasswordServiceTest {
     // Test du hashage d'un mot de passe
     @Test
     void testHashPassword() {
-        // Given - Préparation des données
-        String plainTextPassword = "password123";
+        // Préparation des données
+        String plainTextPassword = "arobase";
         HashedPasswordService hashedPasswordService = new HashedPasswordService();
 
-        // When - Exécution du test
+        // Exécution du test
         String hashedPassword = hashedPasswordService.hashPassword(plainTextPassword);
 
-        // Then - Vérification que le mot de passe hashé n'est pas nul
+        // Vérification que le mot de passe hashé n'est pas nul
         assertTrue(hashedPassword != null && !hashedPassword.isEmpty());
     }
 
     // Test de vérification d'un mot de passe
     @Test
     void testVerifyPassword() {
-        // Given - Préparation des données
-        String plainTextPassword = "password123";
+        // Préparation des données
+        String plainTextPassword = "arobase2";
         HashedPasswordService hashedPasswordService = new HashedPasswordService();
         String hashedPassword = hashedPasswordService.hashPassword(plainTextPassword);
 
-        // When/Then - Vérification que le mot de passe correspond au hash
+        // Vérification que le mot de passe correspond au hash
         assertTrue(hashedPasswordService.verifyPassword(plainTextPassword, hashedPassword));
 
-        // When/Then - Vérification qu'un mot de passe différent ne correspond pas au hash
+        // Vérification qu'un mot de passe différent ne correspond pas au hash
         assertFalse(hashedPasswordService.verifyPassword("differentPassword", hashedPassword));
     }
 }

@@ -31,33 +31,33 @@ public class BodyValidatorServiceTest {
     // Test pour vérifier si tous les champs du DTO sont présents
     @Test
     void testValidateBody_AllFieldsPresent() {
-        // Given - Préparation des données
+        // Préparation des données
         TestDTO testDTO = new TestDTO("value1", "value2");
         BodyValidatorService bodyValidatorService = new BodyValidatorService();
 
-        // When/Then - Aucune exception ne devrait être levée
+        // Aucune exception ne devrait être levée
         bodyValidatorService.validateBody(testDTO);
     }
 
     // Test pour vérifier si le champ 1 du DTO est manquant
     @Test
     void testValidateBody_Field1Missing() {
-        // Given - Préparation des données
+        // Préparation des données
         TestDTO testDTO = new TestDTO(null, "value2");
         BodyValidatorService bodyValidatorService = new BodyValidatorService();
 
-        // When/Then - Une RequiredFieldMissingException doit être levée
+        // Une RequiredFieldMissingException doit être levée
         assertThrows(RequiredFieldMissingException.class, () -> bodyValidatorService.validateBody(testDTO));
     }
 
     // Test pour vérifier si le champ 2 du DTO est manquant
     @Test
     void testValidateBody_Field2Missing() {
-        // Given - Préparation des données
+        // Préparation des données
         TestDTO testDTO = new TestDTO("value1", null);
         BodyValidatorService bodyValidatorService = new BodyValidatorService();
 
-        // When/Then - Une RequiredFieldMissingException doit être levée
+        // Une RequiredFieldMissingException doit être levée
         assertThrows(RequiredFieldMissingException.class, () -> bodyValidatorService.validateBody(testDTO));
     }
 }
