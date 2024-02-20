@@ -9,9 +9,11 @@ import java.util.List;
 @MongoEntity(collection = "profiles")
 public class Profile extends PanacheMongoEntity {
 
-    private final String username;
+    private String username;
 
     private final List<Exercice> exercices = new ArrayList<>();
+
+    public Profile() {}
 
     public Profile(String username) {
         this.username = username;

@@ -14,6 +14,8 @@ import org.arobase.infrastructure.dto.TokensDTO;
 import org.arobase.infrastructure.exception.AuthenticationException;
 import org.arobase.infrastructure.persistance.entity.Account;
 import org.arobase.infrastructure.persistance.repository.AccountRepository;
+import org.arobase.infrastructure.service.api.ProfileAPIService;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 /**
  * The auth service.
@@ -42,9 +44,8 @@ public class AuthService {
     @Inject
     TokenManagementService tokenManagementService;
 
-    @Inject
+    @RestClient
     ProfileAPIService profileAPIService;
-
 
     /**
      * The login method.
@@ -80,22 +81,22 @@ public class AuthService {
         return accountRepository.find("mail", registerCredentials.mail()).firstResult()
                 .onItem().ifNotNull().failWith(() -> new AuthenticationException(Response.Status.CONFLICT, "Account already exists"))
                 .onItem().ifNull().switchTo(Unchecked.supplier(() -> {
-
-                    if(!registerCredentials.password().equals(registerCredentials.confirmPassword())){
+                    if (!registerCredentials.password().equals(registerCredentials.confirmPassword())) {
                         throw new AuthenticationException(Response.Status.BAD_REQUEST, "Passwords do not match");
                     }
 
-                    int profileId = profileAPIService.createProfile();
-
-                    String hashedPassword = hashedPasswordService.hashPassword(registerCredentials.password());
-                    TokensDTO tokens = tokenManagementService.getTokens(registerCredentials.mail());
-
-                    Account newAccount = new Account(registerCredentials.mail(), hashedPassword, profileId, tokens.accessToken(), tokens.refreshToken());
-
-                    return accountRepository.persistAndFlush(newAccount);
+                    return profileAPIService.getProfile().onItem().transformToUni(profile -> {
+                        TokensDTO tokens = tokenManagementService.getTokens(registerCredentials.mail());
+                        String hashedPassword = hashedPasswordService.hashPassword(registerCredentials.password());
+                        Account newAccount = new Account(registerCredentials.mail(), hashedPassword, profile, tokens.accessToken(), tokens.refreshToken());
+                        return accountRepository.persistAndFlush(newAccount);
+                    });
                 }));
-
     }
+
+
+
+
 
 
 
