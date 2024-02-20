@@ -22,6 +22,11 @@ public final class Exercice extends PanacheMongoEntity {
     public String author;
 
     /**
+     * The language.
+     */
+    public String language;
+
+    /**
      * Created at.
      */
     public LocalTime createdAt;
