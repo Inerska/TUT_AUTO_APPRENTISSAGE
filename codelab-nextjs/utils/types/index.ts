@@ -45,19 +45,19 @@ export type LoginBody = {
 };
 export type LoginResponse = {
 	profileId: string;
-	accessToken: string;
-	refreshToken: string;
+	"access-token": string;
+	"refresh-token": string;
 };
 export type RegisterBody = {
 	mail: string;
 	username: string;
 	password: string;
-	confirmPassword: string;
+	"confirm-password": string;
 };
 export type RegisterResponse = {
 	profileId: string;
-	accessToken: string;
-	refreshToken: string;
+	"access-token": string;
+	"refresh-token": string;
 };
 
 export type SubmitExerciseBody = {

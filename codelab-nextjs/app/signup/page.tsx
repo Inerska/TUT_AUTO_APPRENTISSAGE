@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { HeaderComponent } from '@/components/HeaderComponent';
 import { FooterComponent } from '@/components/FooterComponent';
 import { register } from '@/utils/api';
-import { useAuthStore } from '../store/authState';
+import { useAuthStore } from '@/store/authState';
 import { useRouter } from 'next/navigation';
 
 
@@ -12,7 +12,7 @@ export default function SignupPage() {
 
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState('');
-	const { setAccessToken, setRefreshToken, setProfileId } = useAuthStore();
+	const store = useAuthStore();
 	const router = useRouter();
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -42,11 +42,11 @@ export default function SignupPage() {
 				return;
 			}
 
-			const response = await register({ mail, username, password, confirmPassword });
+			const response = await register({ mail, username, password, "confirm-password" : confirmPassword });
 
-			setAccessToken(response.data.accessToken);
-			setRefreshToken(response.data.refreshToken);
-			setProfileId(response.data.profileId);
+			store.setAccessToken(response.data['access-token']);
+			store.setRefreshToken(response.data['refresh-token']);
+			store.setProfileId(response.data.profileId);
 
 			router.push('/menu');
 
