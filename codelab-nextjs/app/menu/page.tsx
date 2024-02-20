@@ -6,7 +6,7 @@ import { SidebarItem, StatsItemProps, Languages } from '@/utils/types';
 import { useState } from 'react';
 import Link from 'next/link';
 import { HomeComponent } from '@/components/menu/HomeComponent';
-import { useRouter } from 'next/navigation';
+import { ExerciseComponent } from '@/components/menu/ExerciseComponent';
 export default function MenuPage() {
 	// pour la sidebar
 	const [selected, setSelected] = useState<string>("Accueil");
@@ -44,7 +44,7 @@ export default function MenuPage() {
 	]
 
 	return (
-		<div className="bg-lite-quinary text-dark-quaternary min-h-screen flex">
+		<div className="bg-lite-quinary text-dark-quaternary flex overflow-y-hidden overflow-x-hidden">
 			{/* Sidebar */}
 			<aside className="w-56 bg-lite-secondary min-h-screen flex flex-col items-center">
 				<Link href="/" legacyBehavior>
@@ -87,6 +87,7 @@ export default function MenuPage() {
 				{/* contenu */}
 				{/* @TODO :Il faudra passer en argument les données intéressantes afin d'éviter de à chaque fois refaire une requête */}
 				{selected === "Accueil" && <HomeComponent />}
+				{selected === "Exercices" && <ExerciseComponent />}
 			</div>
 		</div >
 	);
