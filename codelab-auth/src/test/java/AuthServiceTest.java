@@ -17,6 +17,8 @@ import org.mockito.MockitoAnnotations;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+// à terminer
+
 /**
  * Classe de test pour la classe AuthService.
  */

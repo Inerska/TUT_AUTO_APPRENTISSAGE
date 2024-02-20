@@ -20,6 +20,8 @@ import static org.mockito.Mockito.*;
 
 import jakarta.ws.rs.core.Response;
 
+// à terminer
+
 /**
  * Classe de test pour le contrôleur de connexion (LoginController).
  */
