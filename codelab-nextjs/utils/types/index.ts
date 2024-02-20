@@ -1,4 +1,15 @@
+import { LucideIcon } from "lucide-react";
 
+export type StatsItemProps = {
+	icon: LucideIcon;
+	label: string;
+	value: string;
+};
+
+export type SidebarItem = {
+	icon: LucideIcon;
+	label: string;
+};
 
 export enum Languages {
   JAVASCRIPT = "javascript",
