@@ -79,7 +79,7 @@ export default function MenuPage() {
 			{/* Main Content */}
 			<div className="flex-grow flex flex-col m-0">
 				{/* header */}
-				<header className='bg-dark-quaternary h-20 flex flex-row justify-between items-center'>
+				<header className='bg-dark-quaternary h-20 min-h-20 flex flex-row justify-between items-center'>
 					<p className='text-gray-400 font-light text-xl ml-6'>Bienvenue, <span className='text-lite-primary font-semibold'>Nom d'utilisateur</span></p>
 					<div className='mr-3 rounded-full w-16 h-16 flex justify-center align-middle border-2 border-black overflow-hidden'>
 						<img src="/next.svg" alt="Avatar" />
