@@ -137,7 +137,7 @@ public final class ExerciceService {
      * @return the list of exercices
      */
     public Uni<List<Exercice>> listExercicesByLanguage(final String language) {
-        return Uni.createFrom().item(() -> exerciceRepository.list("author.language", language));
+        return Uni.createFrom().item(() -> exerciceRepository.list("language", language));
     }
 
 }
