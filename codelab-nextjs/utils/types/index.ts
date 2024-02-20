@@ -9,6 +9,8 @@ export type StatsItemProps = {
 export type SidebarItem = {
 	icon: LucideIcon;
 	label: string;
+	link?: string;
+	separatorNext?: boolean;
 };
 
 export enum Languages {
