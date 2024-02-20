@@ -21,8 +21,7 @@ public final class Exercice extends PanacheMongoEntity {
      */
     public String author;
 
-    /**
-     * Created at.
-     */
-    public LocalTime createdAt;
+    public void setTestCode(String someTestCode) {
+        this.testCode = someTestCode;
+    }
 }

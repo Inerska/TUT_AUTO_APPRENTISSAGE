@@ -1,6 +1,7 @@
 import io.smallrye.mutiny.Uni;
 import org.arobase.domain.docker.service.DockerExecutionContext;
 import org.arobase.domain.model.request.ExerciceSubmitRequest;
+import org.arobase.infrastructure.docker.service.chain.PythonDockerTransactionCommandChain;
 import org.arobase.infrastructure.docker.util.DockerCommandExecutor;
 import org.arobase.infrastructure.persistence.service.ExerciceService;
 import org.junit.jupiter.api.Test;
@@ -11,16 +12,16 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import org.arobase.infrastructure.persistence.service.ExerciceService;
-import org.arobase.infrastructure.docker.util.DockerCommandExecutor;
-import org.arobase.domain.docker.service.DockerExecutionContext;
-import org.arobase.domain.model.request.ExerciceSubmitRequest;
-import org.arobase.infrastructure.docker.service.chain.PythonDockerTransactionCommandChain;
-
+/**
+ * Classe de test pour la classe PythonDockerTransactionCommandChain.
+ */
 public class PythonDockerTransactionCommandChainTest {
 
+    /**
+     * Teste la méthode execute de PythonDockerTransactionCommandChain.
+     */
     @Test
-    public void testExecute() throws Exception {
+    public void testExecute() {
         // Mock des dépendances
         ExerciceService exerciceService = mock(ExerciceService.class);
         DockerCommandExecutor commandExecutor = mock(DockerCommandExecutor.class);

@@ -4,8 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.arobase.domain.model.request.MessagingRequest;
 import org.arobase.domain.model.request.ExerciceCreateRequest;
 
+/**
+ * Classe de test pour la classe ExerciceCreateRequest.
+ */
 public class ExerciceCreateRequestTest {
 
+    /**
+     * Teste le constructeur de la classe ExerciceCreateRequest.
+     */
     @Test
     public void testConstructor() {
         // Vérification du constructeur
@@ -16,6 +22,9 @@ public class ExerciceCreateRequestTest {
         assertEquals("Java", request.getLanguage());
     }
 
+    /**
+     * Teste les getters et setters de la classe ExerciceCreateRequest.
+     */
     @Test
     public void testGettersAndSetters() {
         // Création d'une instance de ExerciceCreateRequest
@@ -36,10 +45,13 @@ public class ExerciceCreateRequestTest {
         assertEquals("Python", request.getLanguage());
     }
 
+    /**
+     * Teste l'implémentation de l'interface MessagingRequest par la classe ExerciceCreateRequest.
+     */
     @Test
     public void testMessagingRequestInterface() {
         // Vérification que la classe implémente l'interface MessagingRequest
-        assertTrue(ExerciceCreateRequest.class.getInterfaces()[0] == MessagingRequest.class);
+        assertSame(ExerciceCreateRequest.class.getInterfaces()[0], MessagingRequest.class);
     }
 
 }
