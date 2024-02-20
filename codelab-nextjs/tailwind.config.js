@@ -20,9 +20,9 @@ module.exports = {
         // Couleurs pour le thème clair
         'lite-primary': '#4778ec', // PRIMARY
         'lite-secondary': '#002979', // PRIMARY Dark
-        'lite-tertiary': '#00d9d9', // PRIMARY Light
+        'lite-tertiary': '#00d0d0', // PRIMARY Light
         'lite-quaternary': '#a1e8cb',
-        'lite-quinary': '#cccccc',
+        'lite-quinary': '#f1f1f1',
         'lite-senary': '#e8fff6',
 
         // Couleurs pour le thème sombre
