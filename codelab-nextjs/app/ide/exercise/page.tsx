@@ -12,11 +12,17 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Languages } from "@/utils/types";
+import { Edit } from "lucide-react";
+import {sendExerise} from "@/app/service/apiService";
+
 
 export default function Page() {
   const editorRef = useRef(null);
   const [currentLanguage, setCurrentLanguage] = useState("javascript");
   const [currentTheme, setCurrentTheme] = useState("light");
+
+  const [editorCode, setuserCode] = useState<undefined|string>("");
+  const [consoleOutput, setConsoleOutput] = useState<undefined|string>("No output yet");
 
   const handleEditorDidMount = (editor: any, monaco: Monaco) => {
     editorRef.current = editor;
@@ -31,7 +37,15 @@ export default function Page() {
         <h1 className="text-2xl font-semibold">Coding Game</h1>
         <div className="flex items-center space-x-2">
           <Button variant="outline">Save</Button>
-          <Button>Submit</Button>
+          <Button
+            onClick={() => {
+                sendExerise(editorCode).then((response) => {
+                    setConsoleOutput(response);
+                });
+            }}
+          >
+              Submit
+          </Button>
         </div>
       </header>
       <main className="flex flex-1 overflow-hidden">
@@ -81,6 +95,10 @@ export default function Page() {
                         </Select>
                     </div>
             <Editor
+                onChange={
+                    (value) =>
+                        setuserCode(value)
+                }
                 height="calc(100vh - 500px)"
                 language={currentLanguage}
                 defaultValue="//TODO: Write your code here"
@@ -92,7 +110,9 @@ export default function Page() {
             <h2 className="text-xl font-semibold mb-2">Console Output</h2>
             <div className="rounded-lg bg-white p-4 text-black border">
               <pre>
-                <code>Hello, world!</code>
+                <code>
+                    {consoleOutput}
+                </code>
               </pre>
             </div>
           </div>
