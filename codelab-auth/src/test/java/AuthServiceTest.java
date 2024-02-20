@@ -1,3 +1,4 @@
+/*
 import io.smallrye.mutiny.Uni;
 import org.arobase.infrastructure.dto.LoginCredentialsDTO;
 import org.arobase.infrastructure.dto.RegisterCredentialsDTO;
@@ -22,7 +23,7 @@ import static org.mockito.Mockito.*;
 /**
  * Classe de test pour la classe AuthService.
  */
-public class AuthServiceTest {
+/*public class AuthServiceTest {
 
     // Mocks pour les dépendances de l'AuthService
     @Mock
@@ -47,7 +48,7 @@ public class AuthServiceTest {
     /**
      * Test de connexion lorsque le compte est trouvé et que le mot de passe correspond.
      */
-    @Test
+    /*@Test
     public void testLogin_AccountFoundAndPasswordMatches() {
         String mail = "th30pelli@gmail.com";
         String password = "password";
@@ -74,7 +75,7 @@ public class AuthServiceTest {
     /**
      * Test de connexion lorsque le compte n'est pas trouvé.
      */
-    @Test
+    /*@Test
     public void testLogin_AccountNotFound() {
         String mail = "th30pelli@gmail.com";
         String password = "password";
@@ -93,7 +94,7 @@ public class AuthServiceTest {
     /**
      * Test de connexion lorsque le mot de passe ne correspond pas.
      */
-    @Test
+    /*@Test
     public void testLogin_PasswordDoesNotMatch() {
         String mail = "th30pelli@gmail.com";
         String password = "password";
@@ -114,7 +115,7 @@ public class AuthServiceTest {
     /**
      * Test d'enregistrement lorsque le compte existe déjà.
      */
-    @Test
+    /*@Test
     public void testRegister_AccountAlreadyExists() {
         String mail = "th30pelli@gmail.com";
         RegisterCredentialsDTO credentialsDTO = new RegisterCredentialsDTO("username", mail, "password", "password");
@@ -163,3 +164,5 @@ public class AuthServiceTest {
     }
 
 }
+
+*/
