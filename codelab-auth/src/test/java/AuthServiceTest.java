@@ -69,7 +69,6 @@ public class AuthServiceTest {
         assertEquals(account, resultAccount, "Returned account should match");
     }
 
-
     /**
      * Test de connexion lorsque le compte n'est pas trouvé.
      */
