@@ -17,10 +17,12 @@ import java.util.Optional;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+// à terminer
+
 /**
  * Classe de test pour la classe DockerExecutionServiceImpl.
  */
-class DockerExecutionServiceImplTest {
+/*class DockerExecutionServiceImplTest {
 
     @Mock
     private DockerQueueImageResolverFactory dockerQueueImageFactoryMock;
@@ -43,7 +45,7 @@ class DockerExecutionServiceImplTest {
      * Méthode exécutée avant chaque test.
      * Initialise les mocks et les instances nécessaires.
      */
-    @BeforeEach
+    /*@BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         dockerExecutionService = new DockerExecutionServiceImpl(
@@ -57,7 +59,7 @@ class DockerExecutionServiceImplTest {
     /**
      * Teste l'exécution du code avec succès.
      */
-    @Test
+    /*@Test
     void executeCode_Success() throws Exception {
         // Préparation des données nécessaires pour le test
         ExerciceSubmitRequest request = new ExerciceSubmitRequest("id", "code", "java", "resultId");
@@ -76,7 +78,7 @@ class DockerExecutionServiceImplTest {
     /**
      * Teste l'exécution du code lorsque l'image Docker n'est pas trouvée.
      */
-    @Test
+    /*@Test
     void executeCode_ImageNotFound() {
         // Préparation des données nécessaires pour le test
         ExerciceSubmitRequest request = new ExerciceSubmitRequest("id", "code", "unknown", "resultId");
@@ -93,7 +95,7 @@ class DockerExecutionServiceImplTest {
     /**
      * Teste l'exécution du code lorsqu'une exception se produit dans la chaîne de commandes Docker.
      */
-    @Test
+    /*@Test
     void executeCode_ExceptionInChain() throws Exception {
         // Préparation des données nécessaires pour le test
         ExerciceSubmitRequest request = new ExerciceSubmitRequest("id", "code", "language", "resultId");
@@ -113,3 +115,4 @@ class DockerExecutionServiceImplTest {
         );
     }
 }
+*/

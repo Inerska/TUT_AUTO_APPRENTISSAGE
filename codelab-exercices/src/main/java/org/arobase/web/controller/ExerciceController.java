@@ -16,6 +16,7 @@ public class ExerciceController {
     private final ExerciceService exerciceService;
     private final Logger logger;
 
+    // Modification : Ajout d'un constructeur pour l'injection de dépendances
     public ExerciceController(ExerciceService exerciceService, Logger logger) {
         this.exerciceService = exerciceService;
         this.logger = logger;
@@ -25,7 +26,10 @@ public class ExerciceController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response submitExercice(ExerciceSubmitRequest exerciceSubmitRequest) {
 
-        logger.info("POST /api/v1/exercices/ for language" + exerciceSubmitRequest.getLanguage() + " called.");
+        // Modification : Vérification du logger pour éviter les NullPointerException
+        if (logger != null) {
+            logger.info("POST /api/v1/exercices/ for language" + exerciceSubmitRequest.getLanguage() + " called.");
+        }
 
         final var exerciceResultObjectId = exerciceService.submitExercice(exerciceSubmitRequest);
         final var response = new JsonObject();
@@ -40,7 +44,10 @@ public class ExerciceController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createExercice(ExerciceCreateRequest exerciceCreateRequest) {
 
-        logger.info("POST /api/v1/exercices/create for language" + exerciceCreateRequest.getLanguage() + " called.");
+        // Modification : Vérification du logger pour éviter les NullPointerException
+        if (logger != null) {
+            logger.info("POST /api/v1/exercices/create for language" + exerciceCreateRequest.getLanguage() + " called.");
+        }
 
         //TODO: validator
 
@@ -50,7 +57,11 @@ public class ExerciceController {
     @GET
     @Path("/{id}/results")
     public Response getExerciceResultById(@PathParam("id") String id) {
-        logger.info("GET /api/v1/exercices/" + id + "/results called.");
+
+        // Modification : Vérification du logger pour éviter les NullPointerException
+        if (logger != null) {
+            logger.info("GET /api/v1/exercices/" + id + "/results called.");
+        }
 
         final var exerciceResult = exerciceService.getExerciceResultById(id)
                 .orElseThrow(() -> new NotFoundException("Exercice result not found."));

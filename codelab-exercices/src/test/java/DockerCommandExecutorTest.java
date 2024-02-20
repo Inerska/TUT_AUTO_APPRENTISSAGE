@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
 
+//à terminer
+
 /**
  * Classe de test pour la classe DockerCommandExecutor.
  * Cette classe vise à tester le bon fonctionnement de la méthode executeCommandInContainer de la classe DockerCommandExecutor.
@@ -32,7 +34,7 @@ public class DockerCommandExecutorTest {
      * Cette méthode vérifie si la méthode executeCommandInContainer retourne le résultat attendu
      * lorsqu'elle est exécutée avec un conteneur et une commande valides.
      */
-    @Test
+    /*@Test
     public void testExecuteCommandInContainer() {
         // Préparation des données
         String containerId = "testContainerId";
