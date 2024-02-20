@@ -7,6 +7,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { HomeComponent } from '@/components/menu/HomeComponent';
 import { ExerciseComponent } from '@/components/menu/ExerciseComponent';
+import { RessourceComponent } from '@/components/menu/RessourceComponent';
 export default function MenuPage() {
 	// pour la sidebar
 	const [selected, setSelected] = useState<string>("Accueil");
@@ -46,7 +47,7 @@ export default function MenuPage() {
 	return (
 		<div className="bg-lite-quinary text-dark-quaternary flex overflow-y-hidden overflow-x-hidden">
 			{/* Sidebar */}
-			<aside className="w-56 bg-lite-secondary min-h-screen flex flex-col items-center">
+			<aside className="w-56 min-w-56 bg-lite-secondary min-h-screen flex flex-col items-center">
 				<Link href="/" legacyBehavior>
 					<a><img src="/codelab.png" alt="Logo" className="w-44 h-auto object-contain mt-4" /></a>
 				</Link>
@@ -88,6 +89,7 @@ export default function MenuPage() {
 				{/* @TODO :Il faudra passer en argument les données intéressantes afin d'éviter de à chaque fois refaire une requête */}
 				{selected === "Accueil" && <HomeComponent />}
 				{selected === "Exercices" && <ExerciseComponent />}
+				{selected === "Ressources" && <RessourceComponent />}
 			</div>
 		</div >
 	);
