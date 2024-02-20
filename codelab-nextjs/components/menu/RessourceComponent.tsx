@@ -4,13 +4,6 @@ export const RessourceComponent = () => {
 
 	const ressources = [
 		{
-			nom: "CppReference",
-			url: "https://en.cppreference.com/",
-			description: "Un site de référence pour les programmeurs C++ offrant une documentation complète sur le langage.",
-			type: "C++",
-			category: "cpp"
-		},
-		{
 			nom: "Microsoft Docs - C#",
 			url: "https://docs.microsoft.com/en-us/dotnet/csharp/",
 			description: "La documentation officielle de Microsoft pour le C#, avec des tutoriels, des guides de démarrage rapide et une référence de langage.",
@@ -93,13 +86,6 @@ export const RessourceComponent = () => {
 			description: "Un site moderne de tutoriels JavaScript pour apprendre et maîtriser JavaScript, du débutant à l'avancé.",
 			type: "JavaScript",
 			category: "js"
-		},
-		{
-			nom: "Real Python",
-			url: "https://realpython.com/",
-			description: "Tutoriels, articles, et ressources pour tous les niveaux de compétence en Python.",
-			type: "Python",
-			category: "python"
 		},
 		{
 			nom: "Ruby on Rails Guides",
