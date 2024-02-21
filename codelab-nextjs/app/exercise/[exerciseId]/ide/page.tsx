@@ -19,7 +19,10 @@ interface ConsoleEntry {
 	message: string;
 	isServer: boolean; // true pour les sorties serveur, false pour les commandes utilisateur
 }
-export default function Page() {
+export default function IdePage({ params }: { params: { exerciseId: string } }) {
+
+	const exerciseId = params.exerciseId;
+
 	const editorRef = useRef(null);
 	const consoleRef = useRef(null);
 
