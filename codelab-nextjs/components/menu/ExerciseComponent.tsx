@@ -130,7 +130,7 @@ export const ExerciseComponent = () => {
 								<p>{exercice.description}</p>
 								<p><i>Dernière date de modification : {convertISOToDate(exercice.lastModified)}</i></p>
 								<div className='flex my-auto'>
-									<Link legacyBehavior href={`/exercise/${exercice.id}`}><a className='bg-lite-senary rounded-lg p-2 mr-6 border'>Continuer</a></Link>
+									<Link legacyBehavior href={`/exercise/${exercice.id}/ide`}><a className='bg-lite-senary rounded-lg p-2 mr-6 border'>Continuer</a></Link>
 									<Link legacyBehavior href={`/exercise/${exercice.id}/consigne`}><a className='bg-lite-senary rounded-lg p-2 mr-6 border'>Voir consignes</a></Link>
 								</div>
 							</div>
