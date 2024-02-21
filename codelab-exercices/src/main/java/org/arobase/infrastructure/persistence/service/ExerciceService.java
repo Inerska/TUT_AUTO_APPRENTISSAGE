@@ -107,6 +107,7 @@ public final class ExerciceService {
         final var exercice = new Exercice();
         exercice.author = exerciceCreateRequest.getAuthor();
         exercice.testCode = exerciceCreateRequest.getTestCode();
+        exercice.language = exerciceCreateRequest.getLanguage();
 
         try {
             exercice.persist();
