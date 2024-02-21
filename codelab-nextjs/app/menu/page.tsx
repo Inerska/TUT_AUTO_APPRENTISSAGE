@@ -1,15 +1,17 @@
 "use client";
-
-
 import { Blocks, LogOut, BookAIcon, LucideMonitorPlay, UserIcon, BarChart2, CheckCircle2, TestTube2Icon, LucideLanguages, BookImage } from 'lucide-react';
 import { SidebarItem, StatsItemProps, Languages } from '@/utils/types';
 import { useState } from 'react';
 import Link from 'next/link';
 import { HomeComponent } from '@/components/menu/HomeComponent';
 import { ExerciseComponent } from '@/components/menu/ExerciseComponent';
+import { RessourceComponent } from '@/components/menu/RessourceComponent';
+import { useAuthStore } from '../store/authState';
 export default function MenuPage() {
 	// pour la sidebar
 	const [selected, setSelected] = useState<string>("Accueil");
+	
+	const store = useAuthStore();
 
 	const sidebarItems: SidebarItem[] = [
 		{
@@ -29,7 +31,7 @@ export default function MenuPage() {
 		{
 			icon: UserIcon,
 			label: "Profil",
-			link: "/profil"
+			link: `/profile/${store.profileId}`
 		},
 		{
 			icon: BookImage,
@@ -46,7 +48,7 @@ export default function MenuPage() {
 	return (
 		<div className="bg-lite-quinary text-dark-quaternary flex overflow-y-hidden overflow-x-hidden">
 			{/* Sidebar */}
-			<aside className="w-56 bg-lite-secondary min-h-screen flex flex-col items-center">
+			<aside className="w-56 min-w-56 bg-lite-secondary min-h-screen flex flex-col items-center">
 				<Link href="/" legacyBehavior>
 					<a><img src="/codelab.png" alt="Logo" className="w-44 h-auto object-contain mt-4" /></a>
 				</Link>
@@ -78,16 +80,16 @@ export default function MenuPage() {
 			{/* Main Content */}
 			<div className="flex-grow flex flex-col m-0">
 				{/* header */}
-				<header className='bg-dark-quaternary h-20 flex flex-row justify-between items-center'>
+				<header className='bg-dark-quaternary h-20 min-h-20 flex flex-row justify-between items-center'>
 					<p className='text-gray-400 font-light text-xl ml-6'>Bienvenue, <span className='text-lite-primary font-semibold'>Nom d'utilisateur</span></p>
 					<div className='mr-3 rounded-full w-16 h-16 flex justify-center align-middle border-2 border-black overflow-hidden'>
 						<img src="/next.svg" alt="Avatar" />
 					</div>
 				</header>
 				{/* contenu */}
-				{/* @TODO :Il faudra passer en argument les données intéressantes afin d'éviter de à chaque fois refaire une requête */}
 				{selected === "Accueil" && <HomeComponent />}
 				{selected === "Exercices" && <ExerciseComponent />}
+				{selected === "Ressources" && <RessourceComponent />}
 			</div>
 		</div >
 	);

@@ -1,11 +1,11 @@
-import { Blocks, LogOut, BookAIcon, LucideMonitorPlay, UserIcon, BarChart2, CheckCircle2, TestTube2Icon, LucideLanguages, BookImage } from 'lucide-react';
-import { Doughnut } from 'react-chartjs-2';
-import { Chart } from 'chart.js';
-import 'chart.js/auto';
-import 'chartjs-plugin-datalabels';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { BarChart2, CheckCircle2, TestTube2Icon, LucideLanguages } from 'lucide-react';
+
+
 import { StatsItemProps } from '@/utils/types';
-Chart.register(ChartDataLabels);
+import { StatsComponent } from '../StatsComponent';
+import { LanguagesComponent } from '../LanguagesComponent';
+import { ChartComponent } from '../ChartComponent';
+
 export const HomeComponent = () => {
 	const stats = [
 		{
@@ -110,93 +110,16 @@ export const HomeComponent = () => {
 		},
 	]
 
-	const data = {
-		labels: Object.values(langages).map(lang => lang.placeholder),
-		datasets: [
-			{
-				label: "Exercice(s) lancé avec ce langage",
-				data: Object.values(langages).map(lang => lang.nbExercices),
-				backgroundColor: [
-					'rgba(255, 99, 132, 0.2)',
-					'rgba(54, 162, 235, 0.2)',
-					'rgba(255, 206, 86, 0.2)',
-					'rgba(75, 192, 192, 0.2)',
-					'rgba(153, 102, 255, 0.2)',
-					'rgba(255, 159, 64, 0.2)',
-				],
-				borderColor: [
-					'rgba(255, 99, 132, 1)',
-					'rgba(54, 162, 235, 1)',
-					'rgba(255, 206, 86, 1)',
-					'rgba(75, 192, 192, 1)',
-					'rgba(153, 102, 255, 1)',
-					'rgba(255, 159, 64, 1)',
-				],
-				borderWidth: 1,
-				anchor: 'end',
 
-			},
-		],
-	};
-
-
-
-	var options = {
-		tooltips: {
-			enabled: false
-		},
-		plugins: {
-			datalabels: {
-				formatter: (value: number, ctx: any) => {
-
-					let sum = 0;
-					let dataArr = ctx.chart.data.datasets[0].data;
-					dataArr.map((data: any) => {
-						sum += data;
-					});
-					let percentage = (value * 100 / sum).toFixed(0) + "%";
-					return percentage;
-				},
-				color: '#000000',
-			}
-		}
-	};
 	return (
 		<main className='grid grid-cols-3 w-full h-full'>
 		{/* conteneur de gauche */}
 		<div className='col-span-2 h-full w-full ml-6'>
 			{/* statistiques */}
-			<div className='flex justify-between bg-white rounded-xl h-5/12 mt-8 m-auto'>
-				<div className='flex flex-col m-4 bg-lite-tertiary w-5/12 pl-2 pt-5 justify-between rounded-lg' >
-					<div>
-						<h3 className='ml-6 font-normal text-3xl drop-shadow-2xl'>Statistiques</h3>
-						<p className='ml-6 mt-5 font-light text-xl drop-shadow-2xl'>Ton compte en quelques chiffres</p>
-					</div>
-					<div className='flex justify-end'>
-						<img src="/stats.png" alt="Image illustration" className='w-52 object-contain' />
-					</div>
-
-				</div>
-				<div className='grid grid-cols-2 h-5/12 m-3'>
-					{stats.map((stat, index) => (
-						<div className='w-56 h-36 bg-lite-quinary m-3 rounded-xl'>
-							<div className="bg-white rounded-md w-10 h-10 mt-3 ml-4 flex justify-center items-center">
-								<stat.icon size={20} color="#485fd1" />
-							</div>
-							<p className="mt-3 ml-4 text-4xl font-bold text-black">{stat.value}</p>
-							<span className="ml-4 text-lg font-medium text-gray-500">{stat.label}</span>
-						</div>
-					))}
-				</div>
-			</div>
+			<StatsComponent stats={stats} profile={false} />
 			<div className='grid grid-cols-2 my-9'>
 				{/* graphique */}
-				<div className='flex flex-col items-center bg-white rounded-xl h-4/12 w-auto mr-5 h-full pb-4'>
-					<div>
-						<h3 className='text-black text-center text-xl m-4 font-semibold'>Graphique pourcentage langage </h3>
-						<Doughnut width={"60px"} height={"60px"} options={options} data={data} />
-					</div>
-				</div>
+				<ChartComponent langages={langages} />
 				{/* partie rapide */}
 				<div className='flex flex-col items-center bg-white rounded-xl h-5/12 ml-5 w-auto h-full no-user-select'>
 					<img src="/illustration.avif" alt="Image d'illustration" className='w-96 object-contain' />
@@ -233,24 +156,7 @@ export const HomeComponent = () => {
 					))}
 				</div>
 			</div>
-			<div className='flex flex-col items-center bg-dark-quaternary h-4/12 text-black w-10/12 m-auto mt-6 rounded-xl'>
-				<div className='flex flex-col justify-between w-full my-4'>
-					{/* header */}
-					<header className='ml-6'>
-						<h3 className='text-xl font-semibold'>Vos langages exercés</h3>
-						<p className='text-sm'>Tous les langages exercés à travers les exercices</p>
-					</header>
-					{/* les langages */}
-					<div className='grid grid-cols-4 mx-10 mt-5'>
-						{langages.map((langage, index) => (
-							<div key={index} className='flex flex-col items-center my-2'>
-								<img src={langage.icon} alt="" className='w-16 h-16  object-contain' />
-								<p>{langage.placeholder}</p>
-							</div>
-						))}
-					</div>
-				</div>
-			</div>
+			<LanguagesComponent langages={langages} />
 		</div>
 	</main>
 	);
