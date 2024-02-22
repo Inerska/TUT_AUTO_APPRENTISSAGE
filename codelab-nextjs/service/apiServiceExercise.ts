@@ -1,6 +1,8 @@
 import axios from 'axios';
+import {languages} from "monaco-editor";
 
-const API_URL = 'http://exercices.codelab.local:81/api/v1/exercices';
+const baseUrl = 'http://exercices.codelab.local:81/api/v1';
+const API_URL = `${baseUrl}/exercices`;
 
 const TestsTemporaires = {
     "language": "python",
@@ -52,4 +54,46 @@ export const sendExerise = async (data : string|undefined) => {
     console.log(results);
 
     return results.result;
+};
+
+export const getAllLanguages = async () => {
+    try {
+        const response = await axios.get(`${baseUrl}/languages`);
+        return response.data.map(
+            (language: any) => {
+                return {
+                    name : language.item1,
+                    abbreviation: language.item2
+                }
+            }
+        );
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+export const getAllExercicesForSupportedLanguages = async (languages: any) => {
+    const exercices = [];
+    try {
+        for (let i = 0; i < languages.length; i++) {
+            const response = await axios.get(`${baseUrl}/languages/exercices?language=${languages[i].name}`);
+            exercices.push(...response.data);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+    return exercices.map(
+        (exercise) => {
+            return {
+                title: "Titre python",
+                description: "Description js",
+                banner: "https://via.placeholder.com/150x120",
+                author: exercise.author,
+                language: exercise.language,
+                id: exercise.id,
+                testCode: exercise.testCode,
+                nbTestTotal: 5
+            };
+        }
+    );
 }

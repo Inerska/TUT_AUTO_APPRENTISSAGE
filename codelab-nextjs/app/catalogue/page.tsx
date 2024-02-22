@@ -1,9 +1,10 @@
 "use client";
-import { FooterComponent } from "@/components/FooterComponent";
-import { HeaderComponent } from "@/components/HeaderComponent";
-import { Search } from "lucide-react";
+import {FooterComponent} from "@/components/FooterComponent";
+import {HeaderComponent} from "@/components/HeaderComponent";
+import {Search} from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import {useState} from "react";
+import {getAllExercicesForSupportedLanguages, getAllLanguages} from "@/service/apiServiceExercise";
 
 export default function CataloguePage() {
 	const exercices = [
@@ -63,21 +64,38 @@ export default function CataloguePage() {
 		},
 	]
 
-	const [searchTerm, setSearchTerm] = useState('');
-	const [languageFilter, setLanguageFilter] = useState('');
-	const [sortDirection, setSortDirection] = useState('desc'); // Nouveau
-	const [filteredExercises, setFilteredExercises] = useState(exercices);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [sortDirection, setSortDirection] = useState('desc'); // Nouveau
+    const [languageFilter, setLanguageFilter] = useState('');
 
-	const handleSearch = (e: any) => {
-		e.preventDefault();
-		const filtered = exercices.filter(exercise => {
-			return exercise.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-				exercise.language.includes(languageFilter);
-		}).sort((a: any, b: any) => {
-					return sortDirection === 'asc' ? a.language.localeCompare(b.language) : b.language.localeCompare(a.language);
-		});
-		setFilteredExercises(filtered);
-	};
+    const [filteredExercises, setFilteredExercises] = useState(exercices); //List exos
+
+    const [languagesList, setLanguagesList] = useState([]);
+
+    const handleSearch = (e: any) => {
+        e.preventDefault();
+        const filtered = exercices.filter(exercise => {
+            return exercise.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+                exercise.language.includes(languageFilter);
+        }).sort((a: any, b: any) => {
+            return sortDirection === 'asc' ? a.language.localeCompare(b.language) : b.language.localeCompare(a.language);
+        });
+        setFilteredExercises(filtered);
+    };
+
+    if(languagesList.length === 0) { //One time set to prevent api call spam | can be changed to update once every x seconds
+        getAllLanguages().then(languages => {
+            console.log(languages);
+            setLanguagesList(languages);
+            getAllExercicesForSupportedLanguages(languages).then(exercices => {
+                console.log(exercices);
+            }).catch(err => {
+                console.error(err);
+            });
+        }).catch(err => {
+            console.error(err);
+        });
+    }
 
 	return (
 		<div className="flex flex-col min-h-screen">
@@ -89,11 +107,13 @@ export default function CataloguePage() {
 						<input type="text" placeholder="Rechercher un exercice" className="border-2 border-gray-200 p-2 w-6/12" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
 						<select name="language" id="language" className="border-2 border-gray-200 p-2 w-3/12" value={languageFilter} onChange={(e) => setLanguageFilter(e.target.value)}>
 							<option value="">Tous les langages</option>
-							<option value="js">Javascript</option>
-							<option value="java">Java</option>
-							<option value="cs">C#</option>
-							<option value="cpp">C++</option>
-							<option value="ruby">Ruby</option>
+                            {languagesList.map((language: any) => (
+								<option key={language.abbreviation}
+                                        value={language.abbreviation}
+                                >
+                                    {language.name}
+                                </option>
+							))}
 						</select>
 						{/* Sélecteurs pour critère de tri et direction */}
 						<select value={sortDirection} onChange={(e) => setSortDirection(e.target.value)} className="border-2 border-gray-200 p-2">
@@ -125,8 +145,8 @@ export default function CataloguePage() {
 					</div>
 				</div>
 
-			</main>
-			<FooterComponent />
-		</div>
-	)
+            </main>
+            <FooterComponent/>
+        </div>
+    )
 }

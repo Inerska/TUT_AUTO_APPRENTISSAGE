@@ -9,11 +9,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { Languages } from "@/utils/types";
-import { sendExerise } from "@/app/service/apiService";
 import { HeaderComponent } from "@/components/HeaderComponent";
-import { FooterComponent } from "@/components/FooterComponent";
+import {sendExerise} from "@/service/apiServiceExercise";
 
 interface ConsoleEntry {
 	message: string;
