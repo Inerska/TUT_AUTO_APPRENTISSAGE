@@ -1,5 +1,6 @@
 package org.arobase.infrastructure.persistence.service;
 
+import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
@@ -14,6 +15,7 @@ import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.jboss.logging.Logger;
 
+import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -109,7 +111,7 @@ public final class ExerciceService {
         try {
             exercice.persist();
 
-            return Response.ok().build();
+            return Response.ok(exercice.id).build();
         } catch (final Exception e) {
             logger.error("Error while creating exercice.", e);
 
@@ -128,5 +130,14 @@ public final class ExerciceService {
 
         return exercice.testCode;
     }
-}
 
+    /**
+     * Get exercices by language.
+     * @param language the language
+     * @return the list of exercices
+     */
+    public Uni<List<Exercice>> listExercicesByLanguage(final String language) {
+        return Uni.createFrom().item(() -> exerciceRepository.list("language", language));
+    }
+
+}
