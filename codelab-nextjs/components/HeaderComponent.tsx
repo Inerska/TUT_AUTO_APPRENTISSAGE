@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
-export const HeaderComponent = ({ admin }: { admin: boolean }) => {
+export const HeaderComponent = ({ admin }: { admin?: boolean }) => {
 	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
 	return (
