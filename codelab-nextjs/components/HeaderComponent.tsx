@@ -38,10 +38,10 @@ export const HeaderComponent = ({ admin }: { admin: boolean }) => {
 				</div>
 				<div className="hidden lg:flex lg:flex-1 lg:justify-end">
 					{admin && (
-						<Link href={"#"} className="text-sm font-semibold leading-6 text-gray-900">Menu</Link>
+						<Link href={"#"} className="text-sm font-semibold leading-6 text-gray-900">Menu  <span aria-hidden="true">&rarr;</span></Link>
 					)}
 					{!admin && (
-						<Link href={"#"} className="text-sm font-semibold leading-6 text-gray-900">Connexion</Link>
+						<Link href={"#"} className="text-sm font-semibold leading-6 text-gray-900">Connexion  <span aria-hidden="true">&rarr;</span></Link>
 					)}
 				</div>
 			</nav>
@@ -73,8 +73,11 @@ export const HeaderComponent = ({ admin }: { admin: boolean }) => {
 								<Link href={"#"} className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Profil</Link>
 							)}
 							<Link href={"#"} className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Exercice aléatoire &#128256;</Link>
+							{admin && (
+								<Link href={"#"} className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Menu <span aria-hidden="true">&rarr;</span></Link>
+							)}
 							{!admin && (
-								<Link href={"#"} className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Connexion</Link>
+								<Link href={"#"} className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Connexion <span aria-hidden="true">&rarr;</span></Link>
 							)}
 
 						</div>
