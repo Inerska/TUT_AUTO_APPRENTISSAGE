@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { HomeComponent } from '@/components/menu/HomeComponent';
 import { ExerciseComponent } from '@/components/menu/ExerciseComponent';
 import { RessourceComponent } from '@/components/menu/RessourceComponent';
-import { useAuthStore } from '../store/authState';
+import { useAuthStore } from '@/store/authState';
 export default function MenuPage() {
 	// pour la sidebar
 	const [selected, setSelected] = useState<string>("Accueil");
