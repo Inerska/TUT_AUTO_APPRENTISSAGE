@@ -1,16 +1,12 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import Editor, { Monaco } from "@monaco-editor/react";
-import {
-	Select,
-	SelectContent,
-	SelectGroup,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-import { HeaderComponent } from "@/components/HeaderComponent";
-import {sendExerise} from "@/service/apiServiceExercise";
+import React, {useEffect, useRef, useState} from "react";
+import Editor, {Monaco} from "@monaco-editor/react";
+import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select";
+import {HeaderComponent} from "@/components/HeaderComponent";
+import {useGetExerciseDetails} from "@/utils/hooks/useGetExerciseDetails";
+import {GetExerciseDetailsResponse, Languages} from "@/utils/types";
+import {useSubmitExercise} from "@/utils/hooks/useSubmitExercise";
+import {useGetExerciseResults} from "@/utils/hooks/useGetExerciseResults";
 
 interface ConsoleEntry {
 	message: string;
@@ -23,7 +19,6 @@ export default function IdePage({ params }: { params: { exerciseId: string } }) 
 	const editorRef = useRef(null);
 	const consoleRef = useRef(null);
 
-	const currentLanguage = "javascript" //TODO: utiliser l'api pour set le language
 	const [currentTheme, setCurrentTheme] = useState("Light");
 
 	//TODO modifier editorCode pour qu'il soit récupéré depuis l'api
@@ -34,11 +29,29 @@ export default function IdePage({ params }: { params: { exerciseId: string } }) 
 	const [isDirty, setIsDirty] = useState(false);
 
 	const [loading, setLoading] = useState(false);
-	const [exercice, setExercice] = useState({
-		title: "Exercice 1",
-		description: "Dans cet exercice, vous allez apprendre à créer une méthode Hello World, vérifier une condition et afficher un message de bienvenue.",
-		tasks: ["Créer une méthode Hello World", "Vérifier une condition", "Afficher un message de bienvenue"],
-	});
+
+	const [exercice, setExercice] = useState<GetExerciseDetailsResponse>(
+		{
+			title: "Chargement...",
+			description: "Chargement...",
+			banner: "https://via.placeholder.com/150x120",
+			author: "Chargement...",
+			language: Languages.JAVASCRIPT,
+			id: exerciseId,
+			nbTest: 0,
+			tasks: [],
+			difficulty: "Chargement...",
+			testCode: "",
+			createdAt: new Date()
+		}
+	);
+	const { exercise : dataExo } = useGetExerciseDetails(exerciseId);
+
+	useEffect(() => {
+		if (dataExo) {
+			setExercice(dataExo);
+		}
+	}, [dataExo]);
 
 	const handleEditorDidMount = (editor: any, monaco: Monaco) => {
 		editorRef.current = editor;
@@ -63,7 +76,7 @@ export default function IdePage({ params }: { params: { exerciseId: string } }) 
 		return () => {
 			window.removeEventListener("beforeunload", beforeUnloadListener);
 		};
-	}, [isDirty]);
+	}, [ isDirty]);
 
 	useEffect(() => {
 		scrollToBottom(); 
@@ -85,20 +98,63 @@ export default function IdePage({ params }: { params: { exerciseId: string } }) 
 		setIsDirty(false);
 		console.log("Code saved!");
 	};
+
+	const [sendCode, setSendCode] = useState("");
+
+	const {
+		response: responseSubmit,
+		loading: loadSubmit,
+		error: erorSubmit,
+		setIsExerciseSubmitted
+	} = useSubmitExercise({
+		language: exercice.language,
+		code: sendCode,
+		exerciceId: exercice.id,
+	});
+
+	const {
+		results,
+		pending,
+		error: errorResults,
+		refreshData
+	} = useGetExerciseResults(sendCode, loadSubmit, responseSubmit?.id);
+
+	//print errors if set
+	useEffect(() => {
+		if (erorSubmit) {
+			appendToConsole(erorSubmit, true);
+		}
+	} , [erorSubmit]);
+
+	useEffect(() => {
+		if (errorResults) {
+			appendToConsole(errorResults, true);
+		}
+	} , [errorResults]);
+
+
+	// If results gets updated, append to console and stop loading
+	useEffect(() => {
+		if (results) {
+			const interval = setInterval(() => {
+				if (!pending && sendCode !="" && !loadSubmit) {
+					appendToConsole(results.result, true);
+					setSendCode("");
+					clearInterval(interval);
+				}
+				refreshData;
+
+			} , 5000);
+
+		}
+	}, [results]);
+
 	const handleSubmit = () => {
+		setSendCode(editorCode);
+		setIsExerciseSubmitted(false);
 		setLoading(true);
 		appendToConsole("Envoi du code...", false);
-		sendExerise(editorCode).then((response) => {
-			appendToConsole(response, true);
-			setLoading(false);
-		}).catch((error) => {
-			if (error.response) {
-				appendToConsole(error.response.data, true);
-			} else {
-				appendToConsole(error.message, true);
-			}
-			setLoading(false);
-		});
+
 	}
 
 	return (
@@ -129,7 +185,7 @@ export default function IdePage({ params }: { params: { exerciseId: string } }) 
 									else if (value === savedCode) setIsDirty(false)
 								}
 							}
-							language={currentLanguage}
+							language={exercice.language}
 							className="border border-black border-opacity-20 py-1 h-4/5 w-auto overflow-hidden"
 							defaultValue={editorCode}
 							theme={currentTheme}

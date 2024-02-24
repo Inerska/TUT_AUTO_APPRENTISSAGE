@@ -24,11 +24,28 @@ export enum Languages {
   TYPESCRIPT = "typescript",
 }
 
+export type LanguageItemApi = {
+	name: string,
+	abbreviation: string
+}
+
+export const LanguageAbbreviations: Record<Languages, string> = {
+	[Languages.JAVASCRIPT]: "js",
+	[Languages.PYTHON]: "py",
+	[Languages.JAVA]: "java",
+	[Languages.CSHARP]: "cs",
+	[Languages.CPP]: "cpp",
+	[Languages.RUBY]: "rb",
+	[Languages.GO]: "go",
+	[Languages.TYPESCRIPT]: "ts",
+};
+
 export interface AuthState {
 	profileId: string | null;
 	accessToken: string;
 	refreshToken: string;
-};
+}
+
 export interface AuthActions {
 	setProfileId: (profileId: string | null) => void;
 	setAccessToken: (accessToken: string) => void;
@@ -60,19 +77,35 @@ export type RegisterResponse = {
 	"refresh-token": string;
 };
 
-export type SubmitExerciseBody = {
-	language: "javascript" | "python" | "java" | "csharp"; 
-	testCode: string;
+export type GetExerciseDetailsResponse = {
+	title: string;
+	description: string;
+	banner: string;
 	author: string;
+	language: Languages;
+	difficulty: string,
+	id: string;
+	testCode: string;
+	tasks: string[]
+	nbTest: number;
+	createdAt: Date;
+}
+
+export type SubmitExerciseBody = {
+	language: Languages;
+	code: string;
+	exerciceId: string
 };
+
 export type SubmitExerciseResponse = {
 	id: string;
 	feedback: string;
 };
 
 export type CreateExerciseBody = {
-	language: "javascript" | "python" | "java" | "csharp";
+	language: Languages;
 	testCode: string;
+	author: string;
 };
 export type CreateExerciseResponse = {
 	language: string;

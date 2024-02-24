@@ -1,25 +1,30 @@
 import axios from 'axios';
-import {languages} from "monaco-editor";
+import {LanguageItemApi, Languages, SubmitExerciseBody} from "@/utils/types";
 
 const baseUrl = 'http://exercices.codelab.local:81/api/v1';
 const API_URL = `${baseUrl}/exercices`;
 
-const TestsTemporaires = {
-    "language": "python",
-    "testCode": "import unittest\n\nfrom main import hello\n\nclass TestHelloFunction(unittest.TestCase):\n\n    def test_hello_returns_correct_message(self):\n        self.assertEqual(hello(), \"Hello world\", \"Should be 'Hello world'\")\n\n    def test_hello_returns_correct_message_case(self):\n        self.assertEqual(hello(), \"Hello world\", \"Should be 'Hello world'\")\n\n    def test_hello_returns_correct_message_type(self):\n        self.assertEqual(type(hello()), str, \"Should be a string\")\n\n    def test_hello_returns_correct_message_length(self):\n        self.assertEqual(len(hello()), 11, \"Should be 11 characters\")\n\n\nif __name__ == \"__main__\":\n    unittest.main()",
-    "author": "Alexis Gridel"
-}
-
-export const getExercise = async (exercise: any) => {
-    try {
-        const response = await axios.post(`${API_URL}/create`, exercise); // Pour les besoins du mvp on doit le créer
-        return response.data;
-    } catch (error) {
-        console.error(error);
-    }
+export const getExerciseDetails = async (exerciseId: string) => {
+    //65d9232feb032c39fafe6217
+    const reponse = { //type a modifier quand api dispo
+        data : {
+            title: "Titre python",
+            description: "Description js",
+            banner: "https://via.placeholder.com/150x120",
+            author: "Alexis Gridel",
+            language: Languages.PYTHON,
+            id: exerciseId,
+            tasks: ["Créer une méthode Hello World", "Vérifier une condition", "Afficher un message de bienvenue", "Tartenpion"],
+            testCode: "import unittest\n\nfrom main import hello\n\nclass TestHelloFunction(unittest.TestCase):\n\n    def test_hello_returns_correct_message(self):\n        self.assertEqual(hello(), \"Hello world\", \"Should be 'Hello world'\")\n\n    def test_hello_returns_correct_message_case(self):\n        self.assertEqual(hello(), \"Hello world\", \"Should be 'Hello world'\")\n\n    def test_hello_returns_correct_message_type(self):\n        self.assertEqual(type(hello()), str, \"Should be a string\")\n\n    def test_hello_returns_correct_message_length(self):\n        self.assertEqual(len(hello()), 11, \"Should be 11 characters\")\n\n\nif __name__ == \"__main__\":\n    unittest.main()",
+            nbTest: 5,
+            difficulty: "Facile",
+            createdAt: new Date()
+        }
+    };
+    return reponse;
 };
 
-export const submitExercise = async (submission: any) => {
+export const submitExercise = async (submission: SubmitExerciseBody) => {
     try {
         const response = await axios.post(API_URL, submission);
         return response.data;
@@ -28,32 +33,13 @@ export const submitExercise = async (submission: any) => {
     }
 };
 
-export const getExerciseResults = async (id: any) => {
+export const getExerciseResults = async (id: string) => {
     try {
         const response = await axios.get(`${API_URL}/${id}/results`);
         return response.data;
     } catch (error) {
         console.error(error);
     }
-};
-
-export const sendExerise = async (data : string|undefined) => {
-    //crée un exercice
-    const exercise = await getExercise(TestsTemporaires);
-    console.log('exercise ' + exercise);
-    const submission = await submitExercise(
-        {
-            "language": "python", // a modif post mvp pour récupérer la langue depuis editeur
-            "code": data,
-            "exerciceId": exercise
-        }
-    );
-    console.log(submission);
-    //récupère les résultats de l'exercice
-    const results = await getExerciseResults(submission.id);
-    console.log(results);
-
-    return results.result;
 };
 
 export const getAllLanguages = async () => {
@@ -72,7 +58,7 @@ export const getAllLanguages = async () => {
     }
 };
 
-export const getAllExercicesForSupportedLanguages = async (languages: any) => {
+export const getAllExercicesForSupportedLanguages = async (languages: LanguageItemApi[]) => {
     const exercices = [];
     try {
         for (let i = 0; i < languages.length; i++) {
@@ -90,9 +76,12 @@ export const getAllExercicesForSupportedLanguages = async (languages: any) => {
                 banner: "https://via.placeholder.com/150x120",
                 author: exercise.author,
                 language: exercise.language,
+                difficulty: "Facile",
+                createdAt: new Date(),
                 id: exercise.id,
+                tasks: ["Créer une méthode Hello World", "Vérifier une condition", "Afficher un message de bienvenue"],
                 testCode: exercise.testCode,
-                nbTestTotal: 5
+                nbTest: 5
             };
         }
     );

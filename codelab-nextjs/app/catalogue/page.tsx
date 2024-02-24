@@ -3,74 +3,40 @@ import {FooterComponent} from "@/components/FooterComponent";
 import {HeaderComponent} from "@/components/HeaderComponent";
 import {Search} from "lucide-react";
 import Link from "next/link";
-import {useState} from "react";
-import {getAllExercicesForSupportedLanguages, getAllLanguages} from "@/service/apiServiceExercise";
+import {useEffect, useState} from "react";
+import {useGetAllLanguages} from "@/utils/hooks/useGetAllLanguages";
+import {GetExerciseDetailsResponse, LanguageAbbreviations, LanguageItemApi, Languages} from "@/utils/types";
+import {useGetAllExercicesForSupportedLanguages} from "@/utils/hooks/useGetAllExercicesForSupportedLanguages";
 
 export default function CataloguePage() {
-	const exercices = [
-		{
-			title: "Titre ts",
-			description: "Description js",
-			language: 'ts',
-			id: "65a855d5e8f3b59165d67b7f3",
-			banner: "https://via.placeholder.com/150x120",
-			nbTestTotal: 5,
-			author: "Codelab"
-		},
-		{
-			title: "Titre python",
-			description: "Description js",
-			language: 'python',
-			id: "65a855d58f3b59165d67erb7f3",
-			banner: "https://via.placeholder.com/150x120",
-			nbTestTotal: 5,
-			author: "Codelab"
-		},
-		{
-			title: "Titre java",
-			description: "Description js",
-			language: 'java',
-			id: "65a855d58f3b59165d67zrb7f3",
-			banner: "https://via.placeholder.com/150x120",
-			nbTestTotal: 5,
-			author: "Codelab"
-		},
-		{
-			title: "Titre go",
-			description: "Description js",
-			language: 'go',
-			id: "65a855d58f3b59165d6a7b7f3",
-			banner: "https://via.placeholder.com/150x120",
-			nbTestTotal: 5,
-			author: "Codelab"
-		},
-		{
-			title: "Titre C++",
-			description: "Description js",
-			language: 'cpp',
-			id: "65a855d58f3b59165d6ee7b7f3",
-			banner: "https://via.placeholder.com/150x120",
-			nbTestTotal: 5,
-			author: "Codelab"
-		},
-		{
-			title: "Titre C#",
-			description: "Description js",
-			language: 'cs',
-			id: "65a855da58f3b59165d6ee7b7f3",
-			banner: "https://via.placeholder.com/150x120",
-			nbTestTotal: 5,
-			author: "Codelab"
-		},
-	]
+
+		//const exercices = [
+	// 		{
+	// 			title: "Titre ts",
+	// 			description: "Description js",
+	// 			language: 'ts',
+	// 			id: "65a855d5e8f3b59165d67b7f3",
+	// 			banner: "https://via.placeholder.com/150x120",
+	// 			nbTestTotal: 5,
+	// 			author: "Codelab"
+	// 		},
+	// 		{
+	// 			title: "Titre python",
+	// 			description: "Description js",
+	// 			language: 'py',
+	// 			id: "65a855d58f3b59165d67erb7f3",
+	// 			banner: "https://via.placeholder.com/150x120",
+	// 			nbTestTotal: 5,
+	// 			author: "Codelab"
+	// 		},
 
     const [searchTerm, setSearchTerm] = useState('');
     const [sortDirection, setSortDirection] = useState('desc'); // Nouveau
     const [languageFilter, setLanguageFilter] = useState('');
 
-    const [filteredExercises, setFilteredExercises] = useState(exercices); //List exos
+    const [exercices, setExercises] = useState<GetExerciseDetailsResponse[]>([]); //List exos
 
-    const [languagesList, setLanguagesList] = useState([]);
+    const [languagesList, setLanguagesList] = useState<LanguageItemApi[]>([]);
 
     const handleSearch = (e: any) => {
         e.preventDefault();
@@ -80,22 +46,26 @@ export default function CataloguePage() {
         }).sort((a: any, b: any) => {
             return sortDirection === 'asc' ? a.language.localeCompare(b.language) : b.language.localeCompare(a.language);
         });
-        setFilteredExercises(filtered);
+		setExercises(filtered);
     };
 
-    if(languagesList.length === 0) { //One time set to prevent api call spam | can be changed to update once every x seconds
-        getAllLanguages().then(languages => {
-            console.log(languages);
-            setLanguagesList(languages);
-            getAllExercicesForSupportedLanguages(languages).then(exercices => {
-                console.log(exercices);
-            }).catch(err => {
-                console.error(err);
-            });
-        }).catch(err => {
-            console.error(err);
-        });
-    }
+    const { languages } = useGetAllLanguages();
+
+	useEffect(() => {
+		if (languages) {
+			console.log(languages);
+			setLanguagesList(languages);
+		}
+	}, [languages]);
+
+	const {exercises} = useGetAllExercicesForSupportedLanguages(languagesList)
+
+	useEffect(() => {
+		if (exercises) {
+			console.log(exercises);
+			setExercises(exercises);
+		}
+	}, [exercises]);
 
 	return (
 		<div className="flex flex-col min-h-screen">
@@ -126,10 +96,10 @@ export default function CataloguePage() {
 				{/* conteneur */}
 				<div className="mt-10 h-[55%] justify-items-center">
 					<div className="flex flex-wrap justify-center gap-4 mt-10">
-						{filteredExercises.map((exercise) => (
+						{exercices.map((exercise) => (
 							<div key={exercise.id} className="flex flex-row justify-between border-2 border-gray-200 p-4 bg-white rounded-xl text-black m-1 w-6/12 md:w-4/12">
 								<div className="flex">
-									<img src={`/lg/${exercise.language}.png`} alt={`${exercise.language} logo`} className="w-24 h-24" />
+									<img src={`/lg/${LanguageAbbreviations[exercise.language]}.png`} alt={`${exercise.language.valueOf()} logo`} className="w-24 h-24" />
 									<div className="ml-6 flex flex-col justify-between">
 										<h4 className="font-semibold text-xl">{exercise.title}</h4>
 										<p>{exercise.description} - <i>Proposé par {exercise.author}</i></p>
