@@ -44,6 +44,8 @@ Remplacez `(user)`, `(pass)`, `(host)` et `(db)` par vos informations de connexi
 - **Corps de la Requête** :
   ```json
   {
+    "title": "Exercice de test",
+    "wording": "Un enoncé de fou furieux",
     "language": "python",
     "testCode": "import unittest\n\nfrom main import hello\n\nclass TestHelloFunction(unittest.TestCase):\n\n    def test_hello_returns_correct_message(self):\n        self.assertEqual(hello(), \"Hello world\", \"Should be 'Hello world'\")\n\n    def test_hello_returns_correct_message_case(self):\n        self.assertEqual(hello(), \"Hello world\", \"Should be 'Hello world'\")\n\n    def test_hello_returns_correct_message_type(self):\n        self.assertEqual(type(hello()), str, \"Should be a string\")\n\n    def test_hello_returns_correct_message_length(self):\n        self.assertEqual(len(hello()), 11, \"Should be 11 characters\")\n\n\nif __name__ == \"__main__\":\n    unittest.main()",
     "author": "Alexis Gridel"
