@@ -11,6 +11,22 @@ import java.time.LocalTime;
 @MongoEntity(collection = "exercices")
 public final class Exercice extends PanacheMongoEntity {
 
+
+    /**
+     * The title.
+     */
+    public String title;
+
+    /**
+     * The wording.
+     */
+    public String wording;
+
+    /**
+     * The bannerURL.
+     */
+    public String bannerURL;
+
     /**
      * The test code.
      */

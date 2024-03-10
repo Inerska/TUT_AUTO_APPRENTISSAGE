@@ -1,11 +1,13 @@
 package org.arobase.web.controller;
 
 import io.vertx.core.json.JsonObject;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.arobase.domain.model.request.ExerciceCreateRequest;
 import org.arobase.domain.model.request.ExerciceSubmitRequest;
+import org.arobase.infrastructure.persistence.service.BodyValidatorService;
 import org.arobase.infrastructure.persistence.service.ExerciceService;
 import org.jboss.logging.Logger;
 
@@ -13,6 +15,8 @@ import org.jboss.logging.Logger;
 @Produces(MediaType.APPLICATION_JSON)
 public class ExerciceController {
 
+    @Inject
+    BodyValidatorService bodyValidatorService;
     private final ExerciceService exerciceService;
     private final Logger logger;
 
@@ -42,7 +46,7 @@ public class ExerciceController {
 
         logger.info("POST /api/v1/exercices/create for language" + exerciceCreateRequest.getLanguage() + " called.");
 
-        //TODO: validator
+        bodyValidatorService.validateBody(exerciceCreateRequest);
 
         return exerciceService.createExercice(exerciceCreateRequest);
     }
