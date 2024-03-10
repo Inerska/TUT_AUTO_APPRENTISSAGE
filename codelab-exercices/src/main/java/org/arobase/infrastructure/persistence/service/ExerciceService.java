@@ -141,5 +141,14 @@ public final class ExerciceService {
         return Uni.createFrom().item(() -> exerciceRepository.list("language", language));
     }
 
+    /**
+     * Get exercices by id.
+     * @param id Exercise Id
+     * @return the exercice
+     */
+    public Optional<Exercice> getExerciseById(final String id) {
+        return exerciceRepository.findByIdOptional(new ObjectId(id));
+    }
+
 }
 

@@ -5,23 +5,24 @@ const baseUrl = 'http://exercices.codelab.local:81/api/v1';
 const API_URL = `${baseUrl}/exercices`;
 
 export const getExerciseDetails = async (exerciseId: string) => {
-    //65d9232feb032c39fafe6217
-    const reponse = { //type a modifier quand api dispo
-        data : {
-            title: "Titre python",
-            description: "Description js",
-            banner: "https://via.placeholder.com/150x120",
-            author: "Alexis Gridel",
-            language: Languages.PYTHON,
-            id: exerciseId,
-            tasks: ["Créer une méthode Hello World", "Vérifier une condition", "Afficher un message de bienvenue", "Tartenpion"],
-            testCode: "import unittest\n\nfrom main import hello\n\nclass TestHelloFunction(unittest.TestCase):\n\n    def test_hello_returns_correct_message(self):\n        self.assertEqual(hello(), \"Hello world\", \"Should be 'Hello world'\")\n\n    def test_hello_returns_correct_message_case(self):\n        self.assertEqual(hello(), \"Hello world\", \"Should be 'Hello world'\")\n\n    def test_hello_returns_correct_message_type(self):\n        self.assertEqual(type(hello()), str, \"Should be a string\")\n\n    def test_hello_returns_correct_message_length(self):\n        self.assertEqual(len(hello()), 11, \"Should be 11 characters\")\n\n\nif __name__ == \"__main__\":\n    unittest.main()",
-            nbTest: 5,
-            difficulty: "Facile",
-            createdAt: new Date()
-        }
-    };
-    return reponse;
+    try {
+        const response = await axios.get(`${API_URL}/${exerciseId}`);
+        return {
+                title: response.data.title ?? "Titre python",
+                description: "Description js",
+                banner: response.data.bannerURL ?? "https://via.placeholder.com/150x120",
+                author: response.data.author,
+                language: response.data.language,
+                id: response.data.id,
+                tasks: ["Créer une méthode Hello World", "Vérifier une condition", "Afficher un message de bienvenue", "Tartenpion"],
+                testCode: response.data.testCode,
+                nbTest: 5,
+                difficulty: "Facile",
+                createdAt:  response.data.createdAt ?? new Date()
+        };
+    } catch (error) {
+        console.error(error);
+    }
 };
 
 export const submitExercise = async (submission: SubmitExerciseBody) => {
@@ -71,13 +72,13 @@ export const getAllExercicesForSupportedLanguages = async (languages: LanguageIt
     return exercices.map(
         (exercise) => {
             return {
-                title: "Titre python",
+                title: exercise.title ?? "Titre python",
                 description: "Description js",
-                banner: "https://via.placeholder.com/150x120",
+                banner: exercise.bannerURL ?? "https://via.placeholder.com/150x120",
                 author: exercise.author,
                 language: exercise.language,
                 difficulty: "Facile",
-                createdAt: new Date(),
+                createdAt: exercise.createdAt ?? new Date(),
                 id: exercise.id,
                 tasks: ["Créer une méthode Hello World", "Vérifier une condition", "Afficher un message de bienvenue"],
                 testCode: exercise.testCode,

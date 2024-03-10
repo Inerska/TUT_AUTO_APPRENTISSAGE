@@ -11,14 +11,14 @@ export function useGetExerciseDetails(exerciseId : string) {
     useEffect(() => {
         setLoading(true);
         getExerciseDetails(exerciseId)
-            .then(({ data }) => {
+            .then(data => {
                 setExercise(data)
             })
             .catch((err)=> {
                 setError(err);
             })
             .finally(() => {
-                setTimeout(()=> {},1000) //fake api time
+                //setTimeout(()=> {},1000) //fake api time
                 setLoading(false);
             })
     }, [exerciseId], )
