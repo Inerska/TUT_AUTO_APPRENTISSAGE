@@ -3,8 +3,6 @@ package org.arobase.infrastructure.persistence.entity;
 import io.quarkus.mongodb.panache.PanacheMongoEntity;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 
-import java.time.LocalTime;
-
 /**
  * The exercice entity.
  */
