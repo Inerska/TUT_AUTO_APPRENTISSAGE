@@ -75,7 +75,7 @@ export const HomeComponent = () => {
 		},
 		{
 			placeholder: "Python",
-			icon: "/lg/python.png",
+			icon: "/lg/py.png",
 			nbExercices: 3
 		},
 		{
@@ -95,7 +95,7 @@ export const HomeComponent = () => {
 		},
 		{
 			placeholder: "Ruby",
-			icon: "/lg/ruby.png",
+			icon: "/lg/rb.png",
 			nbExercices: 3
 		},
 		{

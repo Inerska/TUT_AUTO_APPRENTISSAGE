@@ -42,7 +42,7 @@ export default function ProfilePage({ params }: { params: { profileId: string } 
 		},
 		{
 			placeholder: "Python",
-			icon: "/lg/python.png",
+			icon: "/lg/py.png",
 			nbExercices: 3
 		},
 		{
@@ -62,7 +62,7 @@ export default function ProfilePage({ params }: { params: { profileId: string } 
 		},
 		{
 			placeholder: "Ruby",
-			icon: "/lg/ruby.png",
+			icon: "/lg/rb.png",
 			nbExercices: 3
 		},
 		{

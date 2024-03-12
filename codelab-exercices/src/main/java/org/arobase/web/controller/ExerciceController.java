@@ -61,4 +61,16 @@ public class ExerciceController {
 
         return Response.ok(exerciceResult).build();
     }
+
+    @GET
+    @Path("/{id}")
+    public Response getExerciceById(@PathParam("id") String id) {
+        logger.info("GET /api/v1/exercices/" + id + " called.");
+
+        final var exerciceResult = exerciceService.getExerciseById(id)
+                .orElseThrow(() -> new NotFoundException("Exercice not found."));
+
+        return Response.ok(exerciceResult).build();
+    }
+
 }
