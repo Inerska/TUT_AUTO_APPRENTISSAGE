@@ -105,12 +105,25 @@ public final class ExerciceService {
      */
     public Response createExercice(final ExerciceCreateRequest exerciceCreateRequest) {
         final var exercice = new Exercice();
+        exercice.title = exerciceCreateRequest.getTitle();
+        exercice.description = exerciceCreateRequest.getDescription();
+        exercice.instructions = exerciceCreateRequest.getInstructions();
+        exercice.tasks = exerciceCreateRequest.getTasks();
+        exercice.banner = exerciceCreateRequest.getBanner();
         exercice.author = exerciceCreateRequest.getAuthor();
         exercice.testCode = exerciceCreateRequest.getTestCode();
         exercice.language = exerciceCreateRequest.getLanguage();
+        exercice.difficulty = exerciceCreateRequest.getDifficulty();
+        exercice.nbTests = exerciceCreateRequest.getNbTests();
+        exercice.createdAt = exerciceCreateRequest.getCreatedAt();
 
         try {
+            exercice.tasks.forEach(task -> task.persist());
+            exercice.language.persist();
+            exercice.difficulty.persist();
+
             exercice.persist();
+
 
             return Response.ok(exercice.id).build();
         } catch (final Exception e) {
@@ -138,7 +151,7 @@ public final class ExerciceService {
      * @return the list of exercices
      */
     public Uni<List<Exercice>> listExercicesByLanguage(final String language) {
-        return Uni.createFrom().item(() -> exerciceRepository.list("language", language));
+        return Uni.createFrom().item(() -> exerciceRepository.list("language.name", language));
     }
 
     /**

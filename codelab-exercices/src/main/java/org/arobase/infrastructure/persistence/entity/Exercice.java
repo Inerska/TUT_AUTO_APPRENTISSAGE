@@ -3,7 +3,9 @@ package org.arobase.infrastructure.persistence.entity;
 import io.quarkus.mongodb.panache.PanacheMongoEntity;
 import io.quarkus.mongodb.panache.common.MongoEntity;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.List;
 
 /**
  * The exercice entity.
@@ -11,26 +13,30 @@ import java.time.LocalTime;
 @MongoEntity(collection = "exercices")
 public final class Exercice extends PanacheMongoEntity {
 
-
     /**
      * The title.
      */
     public String title;
 
     /**
-     * The wording.
+     * The description.
      */
-    public String wording;
+    public String description;
 
     /**
-     * The bannerURL.
+     * The Instructions.
      */
-    public String bannerURL;
+    public String instructions;
 
     /**
-     * The test code.
+     * The tasks.
      */
-    public String testCode;
+    public List<Task> tasks;
+
+    /**
+     * The banner, url.
+     */
+    public String banner;
 
     /**
      * The author.
@@ -38,12 +44,27 @@ public final class Exercice extends PanacheMongoEntity {
     public String author;
 
     /**
+     * The test code.
+     */
+    public String testCode;
+
+    /**
      * The language.
      */
-    public String language;
+    public Language language;
+
+    /**
+     * The difficulty.
+     */
+    public Difficulty difficulty;
+
+    /**
+     * The number of tests.
+     */
+    public int nbTests;
 
     /**
      * Created at.
      */
-    public LocalTime createdAt;
+    public LocalDateTime createdAt;
 }

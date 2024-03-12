@@ -44,7 +44,7 @@ public class ExerciceController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createExercice(ExerciceCreateRequest exerciceCreateRequest) {
 
-        logger.info("POST /api/v1/exercices/create for language" + exerciceCreateRequest.getLanguage() + " called.");
+        logger.info("POST /api/v1/exercices/create for language" + exerciceCreateRequest.getLanguage().name + " called.");
 
         bodyValidatorService.validateBody(exerciceCreateRequest);
 

@@ -10,27 +10,7 @@ import {useGetAllExercicesForSupportedLanguages} from "@/utils/hooks/useGetAllEx
 
 export default function CataloguePage() {
 
-		//const exercices = [
-	// 		{
-	// 			title: "Titre ts",
-	// 			description: "Description js",
-	// 			language: 'ts',
-	// 			id: "65a855d5e8f3b59165d67b7f3",
-	// 			banner: "https://via.placeholder.com/150x120",
-	// 			nbTestTotal: 5,
-	// 			author: "Codelab"
-	// 		},
-	// 		{
-	// 			title: "Titre python",
-	// 			description: "Description js",
-	// 			language: 'py',
-	// 			id: "65a855d58f3b59165d67erb7f3",
-	// 			banner: "https://via.placeholder.com/150x120",
-	// 			nbTestTotal: 5,
-	// 			author: "Codelab"
-	// 		},
-
-    const [searchTerm, setSearchTerm] = useState('');
+	const [searchTerm, setSearchTerm] = useState('');
     const [sortDirection, setSortDirection] = useState('desc'); // Nouveau
     const [languageFilter, setLanguageFilter] = useState('');
 
