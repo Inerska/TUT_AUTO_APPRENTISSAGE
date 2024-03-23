@@ -7,19 +7,7 @@ const API_URL = `${baseUrl}/exercices`;
 export const getExerciseDetails = async (exerciseId: string) => {
     try {
         const response = await axios.get(`${API_URL}/${exerciseId}`);
-        return {
-                title: response.data.title ?? "Titre python",
-                description: "Description js",
-                banner: response.data.bannerURL ?? "https://via.placeholder.com/150x120",
-                author: response.data.author,
-                language: response.data.language,
-                id: response.data.id,
-                tasks: ["Créer une méthode Hello World", "Vérifier une condition", "Afficher un message de bienvenue", "Tartenpion"],
-                testCode: response.data.testCode,
-                nbTest: 5,
-                difficulty: "Facile",
-                createdAt:  response.data.createdAt ?? new Date()
-        };
+        return response.data;
     } catch (error) {
         console.error(error);
     }
@@ -46,14 +34,7 @@ export const getExerciseResults = async (id: string) => {
 export const getAllLanguages = async () => {
     try {
         const response = await axios.get(`${baseUrl}/languages`);
-        return response.data.map(
-            (language: any) => {
-                return {
-                    name : language.item1,
-                    abbreviation: language.item2
-                }
-            }
-        );
+        return response.data;
     } catch (error) {
         console.error(error);
     }

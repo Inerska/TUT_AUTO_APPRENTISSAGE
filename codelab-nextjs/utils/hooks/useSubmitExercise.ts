@@ -23,8 +23,6 @@ export function useSubmitExercise(exercise : SubmitExerciseBody) {
                         setError(err);
                     })
                     .finally(() => {
-                        setTimeout(() => {
-                        }, 1000) //fake api time
                         setLoading(false);
                     })
             }

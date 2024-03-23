@@ -44,7 +44,7 @@ public class ExerciceController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createExercice(ExerciceCreateRequest exerciceCreateRequest) {
 
-        logger.info("POST /api/v1/exercices/create for language" + exerciceCreateRequest.getLanguage() + " called.");
+        logger.info("POST /api/v1/exercices/create for language" + exerciceCreateRequest.getLanguage().name + " called.");
 
         bodyValidatorService.validateBody(exerciceCreateRequest);
 
@@ -71,6 +71,16 @@ public class ExerciceController {
                 .orElseThrow(() -> new NotFoundException("Exercice not found."));
 
         return Response.ok(exerciceResult).build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response deleteExercice(@PathParam("id") String id) {
+        logger.info("DELETE /api/v1/exercices/" + id + " called.");
+
+        exerciceService.deleteExerciceById(id);
+
+        return Response.ok("Exercice deleted successfully.").build();
     }
 
 }

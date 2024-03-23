@@ -29,17 +29,6 @@ export type LanguageItemApi = {
 	abbreviation: string
 }
 
-export const LanguageAbbreviations: Record<Languages, string> = {
-	[Languages.JAVASCRIPT]: "js",
-	[Languages.PYTHON]: "py",
-	[Languages.JAVA]: "java",
-	[Languages.CSHARP]: "cs",
-	[Languages.CPP]: "cpp",
-	[Languages.RUBY]: "rb",
-	[Languages.GO]: "go",
-	[Languages.TYPESCRIPT]: "ts",
-};
-
 export interface AuthState {
 	profileId: string | null;
 	accessToken: string;
@@ -78,17 +67,29 @@ export type RegisterResponse = {
 };
 
 export type GetExerciseDetailsResponse = {
+	id: string;
 	title: string;
 	description: string;
+	instructions: string;
+	tasks: {
+		id: string;
+		content: string;
+		order: number;
+	}[];
 	banner: string;
 	author: string;
-	language: Languages;
-	difficulty: string,
-	id: string;
 	testCode: string;
-	tasks: string[]
-	nbTest: number;
-	createdAt: Date;
+	language: {
+		id: string;
+		name: Languages;
+		abbreviation: string;
+	};
+	difficulty: {
+		id: string;
+		name: string;
+	};
+	nbTests: number;
+	createdAt: string;
 }
 
 export type SubmitExerciseBody = {
