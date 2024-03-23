@@ -73,4 +73,14 @@ public class ExerciceController {
         return Response.ok(exerciceResult).build();
     }
 
+    @DELETE
+    @Path("/{id}")
+    public Response deleteExercice(@PathParam("id") String id) {
+        logger.info("DELETE /api/v1/exercices/" + id + " called.");
+
+        exerciceService.deleteExerciceById(id);
+
+        return Response.ok("Exercice deleted successfully.").build();
+    }
+
 }

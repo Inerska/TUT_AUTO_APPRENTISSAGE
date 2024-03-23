@@ -11,4 +11,6 @@ public class Language extends PanacheMongoEntity {
 
     public String name;
 
+    public String abbreviation;
+
 }

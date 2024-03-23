@@ -32,17 +32,25 @@ export default function IdePage({ params }: { params: { exerciseId: string } }) 
 
 	const [exercice, setExercice] = useState<GetExerciseDetailsResponse>(
 		{
+			id: "",
 			title: "Chargement...",
 			description: "Chargement...",
-			banner: "https://via.placeholder.com/150x120",
-			author: "Chargement...",
-			language: Languages.JAVASCRIPT,
-			id: exerciseId,
-			nbTest: 0,
+			instructions: "Chargement...",
 			tasks: [],
-			difficulty: "Chargement...",
+			banner: "https://via.placeholder.com/150x120",
+			author: "Codelab",
 			testCode: "",
-			createdAt: new Date()
+			language: {
+				id: "",
+				name: Languages.PYTHON,
+				abbreviation: ""
+			},
+			difficulty: {
+				id: "",
+				name: ""
+			},
+			nbTests: 0,
+			createdAt: ""
 		}
 	);
 	const { exercise : dataExo } = useGetExerciseDetails(exerciseId);
@@ -107,7 +115,7 @@ export default function IdePage({ params }: { params: { exerciseId: string } }) 
 		error: erorSubmit,
 		setIsExerciseSubmitted
 	} = useSubmitExercise({
-		language: exercice.language,
+		language: exercice.language.name,
 		code: sendCode,
 		exerciceId: exercice.id,
 	});
@@ -185,7 +193,7 @@ export default function IdePage({ params }: { params: { exerciseId: string } }) 
 									else if (value === savedCode) setIsDirty(false)
 								}
 							}
-							language={exercice.language}
+							language={exercice.language.name}
 							className="border border-black border-opacity-20 py-1 h-4/5 w-auto overflow-hidden"
 							defaultValue={editorCode}
 							theme={currentTheme}
@@ -212,11 +220,11 @@ export default function IdePage({ params }: { params: { exerciseId: string } }) 
 				<aside className="flex flex-col justify-between w-96 h-5/6 p-6 overflow-y-auto m-8 bg-white rounded-xl">
 					<div>
 						<h2 className="text-xl font-semibold mb-4">{exercice.title}</h2>
-						<p className="text-gray-600 dark:text-gray-400">{exercice.description}</p>
+						<p className="text-gray-600 dark:text-gray-400">{exercice.instructions}</p>
 						<h3 className="text-lg font-semibold mt-6 mb-2">Objectifs</h3>
 						<ul className="list-inside text-gray-600 dark:text-gray-400 list-none">
-							{exercice.tasks.map((task: any, index: number) => (
-								<li key={index} className="flex items-center"><span className="flex items-center justify-center border w-7 h-7 rounded-full mr-2 my-1">{index + 1}</span> {task}</li>
+							{exercice.tasks.map((task, index) => (
+								<li key={index} className="flex items-center"><span className="flex items-center justify-center border w-7 h-7 rounded-full mr-2 my-1">{index + 1}</span> {task.content}</li>
 							))}
 						</ul>
 						<h3 className="text-lg font-semibold mt-6 mb-2">L'exercice sera terminé une fois tous les objectifs terminés</h3>
