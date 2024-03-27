@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import { Search } from 'lucide-react';
-import { Sidebar } from '@/components/menu/Sidebar';
+import { Sidebar } from '@/components/Sidebar';
 
 export default function MenuExercisesPage() {
 
@@ -73,7 +73,7 @@ export default function MenuExercisesPage() {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [languageFilter, setLanguageFilter] = useState('');
 	const [sortCriteria, setSortCriteria] = useState('date');
-	const [sortDirection, setSortDirection] = useState('desc'); 
+	const [sortDirection, setSortDirection] = useState('desc');
 	const [filteredExercises, setFilteredExercises] = useState(exercices);
 
 	const handleSearch = (e: any) => {
@@ -149,7 +149,7 @@ export default function MenuExercisesPage() {
 				</div>
 			</main>
 		</div>
-		
+
 	);
 }
 

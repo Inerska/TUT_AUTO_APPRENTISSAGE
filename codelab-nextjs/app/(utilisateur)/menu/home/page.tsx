@@ -5,7 +5,7 @@ import { StatsItemProps } from '@/utils/types';
 import { ChartComponent } from '@/components/ChartComponent';
 import { LanguagesComponent } from '@/components/LanguagesComponent';
 import { StatsComponent } from '@/components/StatsComponent';
-import { Sidebar } from '@/components/menu/Sidebar';
+import { Sidebar } from '@/components/Sidebar';
 export default function MenuPage() {
 
 	const stats = [

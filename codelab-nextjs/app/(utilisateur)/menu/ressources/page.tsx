@@ -1,5 +1,5 @@
 "use client";
-import { Sidebar } from "@/components/menu/Sidebar";
+import { Sidebar } from "@/components/Sidebar";
 import { useState } from "react";
 
 export default function MenuPage() {

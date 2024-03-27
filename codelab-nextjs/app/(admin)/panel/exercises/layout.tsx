@@ -5,8 +5,8 @@ import './../../../globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Codelab - Admin Utilisateurs',
-  description: 'Page utilisateur admin de Codelab',
+  title: 'Codelab - Admin Exercices',
+  description: 'Page exercice admin de Codelab',
 }
 
 export default function RootLayout({
