@@ -37,10 +37,16 @@ export default function SiteMap() {
 							<h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">UTILISATEUR</h2>
 							<nav className="list-none mb-10">
 								<li>
-									<Link href="/menu" className="text-gray-600 hover:text-gray-800">Menu</Link>
+									<Link href="/menu/home" className="text-gray-600 hover:text-gray-800">Menu</Link>
 								</li>
 								<li>
-									<Link href="/catalogue" className="text-gray-600 hover:text-gray-800">Gérez exercice</Link>
+									<Link href="/menu/exercises" className="text-gray-600 hover:text-gray-800">Exercices</Link>
+								</li>
+								<li>
+									<Link href="/menu/ressources" className="text-gray-600 hover:text-gray-800">Ressources</Link>
+								</li>
+								<li>
+									<Link href="/menu/profile" className="text-gray-600 hover:text-gray-800">Modifier profil</Link>
 								</li>
 							</nav>
 						</div>
