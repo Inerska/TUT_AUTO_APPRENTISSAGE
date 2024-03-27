@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import './../globals.css'
+import './../../globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Codelab - Inscription',
-  description: 'Page d\'inscription de Codelab',
+  title: 'Codelab - Connexion',
+  description: 'Page de connexion Codelab',
 }
 
 export default function RootLayout({
