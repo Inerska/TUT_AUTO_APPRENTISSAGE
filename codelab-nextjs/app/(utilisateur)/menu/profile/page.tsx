@@ -1,7 +1,8 @@
+"use client";
+import { Sidebar } from "@/components/Sidebar";
 import { useState } from "react";
 
-export const RessourceComponent = () => {
-
+export default function MenuPage() {
 	const ressources = [
 		{
 			nom: "Microsoft Docs - C#",
@@ -255,39 +256,41 @@ export const RessourceComponent = () => {
 		});
 		setFilteredRessources(filtered);
 	};
-
-
 	return (
-		<main className="w-full mw-full">
-			<header className="bg-white rounded-xl h-24 flex flex-col items-center justify-center mt-8 w-9/12 mx-auto text-black">
-				<form onSubmit={handleSearch} className="flex flex-row justify-between items-center w-11/12 mx-auto">
-					<input
-						type="text"
-						placeholder="Rechercher une ressource"
-						className="border-2 border-gray-200 p-2 w-full"
-						value={searchTerm}
-						onChange={(e) => setSearchTerm(e.target.value)}
-					/>
-					<button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4">
-						Rechercher
-					</button>
-				</form>
-			</header>
-			<div className="flex flex-wrap justify-center mt-10 m-auto w-11/12 text-black overflow-y-scroll max-h-[700px]">
-				{filteredRessources.map((ressource, index) => (
-					<div key={index} className="flex flex-col border-2 justify-between border-gray-200 p-4 bg-white rounded-xl m-2 w-full md:w-5/12 lg:w-3/12 xl:w-1/4 h-[450px] overflow-auto">
-						<div>
-							<img src={`/lg/${ressource.category}.png`} alt={`${ressource.type}`} className="w-full h-32 object-contain" />
-							<h4 className="font-semibold text-xl mt-2">{ressource.nom}</h4>
-							<p className="my-2">{ressource.description}</p>
+		<div className="bg-lite-quinary text-dark-quaternary flex overflow-y-hidden overflow-x-hidden">
+			<Sidebar selected="Ressources" />
+			<main className="w-full mw-full">
+				<header className="bg-white rounded-xl h-24 flex flex-col items-center justify-center mt-8 w-9/12 mx-auto text-black">
+					<form onSubmit={handleSearch} className="flex flex-row justify-between items-center w-11/12 mx-auto">
+						<input
+							type="text"
+							placeholder="Rechercher une ressource"
+							className="border-2 border-gray-200 p-2 w-full"
+							value={searchTerm}
+							onChange={(e) => setSearchTerm(e.target.value)}
+						/>
+						<button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4">
+							Rechercher
+						</button>
+					</form>
+				</header>
+				<div className="flex flex-wrap justify-center mt-10 m-auto w-11/12 text-black overflow-y-scroll max-h-[700px]">
+					{filteredRessources.map((ressource, index) => (
+						<div key={index} className="flex flex-col border-2 justify-between border-gray-200 p-4 bg-white rounded-xl m-2 w-full md:w-5/12 lg:w-3/12 xl:w-1/4 h-[450px] overflow-auto">
+							<div>
+								<img src={`/lg/${ressource.category}.png`} alt={`${ressource.type}`} className="w-full h-32 object-contain" />
+								<h4 className="font-semibold text-xl mt-2">{ressource.nom}</h4>
+								<p className="my-2">{ressource.description}</p>
+							</div>
+							<div className="flex flex-col">
+								<span className="bg-gray-200 text-gray-700 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{ressource.type}</span>
+								<a href={ressource.url} target="_blank" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2 text-center">Visiter</a>
+							</div>
 						</div>
-						<div className="flex flex-col">
-							<span className="bg-gray-200 text-gray-700 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{ressource.type}</span>
-							<a href={ressource.url} target="_blank" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2 text-center">Visiter</a>
-						</div>
-					</div>
-				))}
-			</div>
-		</main>
+					))}
+				</div>
+			</main>
+		</div>
 	)
+
 }
