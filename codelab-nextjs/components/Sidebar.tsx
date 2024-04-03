@@ -4,7 +4,7 @@ import { Blocks, BookAIcon, BookImage, LogOut, LucideMonitorPlay, User2, UserCog
 import { redirect } from "next/navigation"
 import { useAuthStore } from "@/store/authState"
 
-export const Sidebar = ({ selected }: { selected: string }) => {
+export const Sidebar = ({ selected, admin }: { selected: string, admin?: boolean }) => {
 	const store = useAuthStore()
 	const sidebarItems: SidebarItem[] = [
 		{
@@ -42,7 +42,8 @@ export const Sidebar = ({ selected }: { selected: string }) => {
 		},
 		{
 			icon: LogOut,
-			label: "Déconnexion"
+			label: "Déconnexion",
+			separatorNext: `${admin}` ? true : false,
 		},
 	]
 
@@ -71,6 +72,14 @@ export const Sidebar = ({ selected }: { selected: string }) => {
 							{item.separatorNext && <hr className="my-2 border-opacity-20 border-gray-50 w-full" />}
 						</>
 					))}
+					{admin && (
+						<Link href={"/panel/home"} key={sidebarItems.length} legacyBehavior>
+							<a className={`m-0 p-0 w-full duration-75 h-12 flex items-center cursor-pointer`}>
+								<User2 size={24} className="ml-6" />
+								<span className="ml-4 text-lg font-extralight">Panel admin</span>
+							</a>
+						</Link>
+					)}
 				</ul>
 
 			</nav>
