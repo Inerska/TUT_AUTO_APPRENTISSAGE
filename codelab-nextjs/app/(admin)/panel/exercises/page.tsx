@@ -167,9 +167,6 @@ export default function PanelExercises() {
 		console.log("Delete user with id", id)
 	}
 
-	const handleSwitchAdmin = (id: string) => {
-		console.log("Switch admin with id", id)
-	}
 	return (
 		<div className="bg-lite-quinary text-dark-quaternary flex justify-centeroverflow-y-hidden overflow-x-hidden">
 			<AdminSideBar selected="Exercices" />
