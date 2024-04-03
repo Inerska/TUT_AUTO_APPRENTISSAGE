@@ -66,7 +66,15 @@ export type RegisterResponse = {
 	"refresh-token": string;
 };
 
-export type GetExerciseDetailsResponse = {
+export type Profile = {
+	id: string;
+	username: string;
+	email: string;
+	createdAt: string;
+	admin: boolean;
+};
+
+export type Exercise = {
 	id: string;
 	title: string;
 	description: string;
