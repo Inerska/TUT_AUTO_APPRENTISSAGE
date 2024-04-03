@@ -35,11 +35,11 @@ export const Sidebar = ({ selected, admin }: { selected: string, admin?: boolean
 			link: "/catalogue",
 			separatorNext: true
 		},
-		{
-			icon: UserCog,
-			label: "Modifier profil",
-			link: "/menu/profile",
-		},
+		// {
+		// 	icon: UserCog,
+		// 	label: "Modifier profil",
+		// 	link: "/menu/profile",
+		// },
 		{
 			icon: LogOut,
 			label: "Déconnexion",
