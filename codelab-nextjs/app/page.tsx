@@ -7,7 +7,7 @@ export default function Home() {
 		<>
 			<HeaderComponent />
 			<div className="text-dark  bg-white flex overflow-y-hidden h-auto overflow-x-hidden justify-center ">
-				<div className="grid grid-cols-2 w-5/6 mt-8 p-4">
+				<div className="grid grid-cols-2 w-4/6 mt-8 p-4">
 					<div className="flex flex-col mt-8 justify-center">
 						<h2 className="font-extrabold text-6xl">CODELAB</h2>
 						<h4 className="font-bold text-2xl mt-8" >L'apprentissage sans limite</h4>
@@ -23,7 +23,7 @@ export default function Home() {
 					<div className="flex flex-wrap -m-4">
 						<div className="lg:w-1/3 lg:mb-0 mb-6 p-4">
 							<div className="h-full text-center">
-								<img alt="testimonial" className="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100" src="https://dummyimage.com/302x302" />
+								<img alt="testimonial" className="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100" src="/avis.png" />
 								<p className="leading-relaxed">Grâce à CodeLab, j'ai pu apprendre les bases de la programmation en JavaScript et je me sens maintenant prêt à relever de nouveaux défis.</p>
 								<span className="inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4"></span>
 								<h2 className="text-gray-900 font-medium title-font tracking-wider text-sm">HOLDEN CAULFIELD</h2>
@@ -32,7 +32,7 @@ export default function Home() {
 						</div>
 						<div className="lg:w-1/3 lg:mb-0 mb-6 p-4">
 							<div className="h-full text-center">
-								<img alt="testimonial" className="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100" src="https://dummyimage.com/300x300" />
+								<img alt="testimonial" className="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100" src="/avis.png" />
 								<p className="leading-relaxed">Je recommande vivement CodeLab à tous ceux qui souhaitent se former aux langages de programmation. De plus, la plateforme est très intuitive et facile à utiliser.</p>
 								<span className="inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4"></span>
 								<h2 className="text-gray-900 font-medium title-font tracking-wider text-sm">ALPER KAMU</h2>
@@ -41,7 +41,7 @@ export default function Home() {
 						</div>
 						<div className="lg:w-1/3 lg:mb-0 p-4">
 							<div className="h-full text-center">
-								<img alt="testimonial" className="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100" src="https://dummyimage.com/305x305" />
+								<img alt="testimonial" className="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100" src="/avis.png" />
 								<p className="leading-relaxed">CodeLab m'a permis d'approfondir mes connaissances en Python et de découvrir de nouveaux frameworks. Je suis ravi d'avoir choisi cette plateforme pour me former.</p>
 								<span className="inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4"></span>
 								<h2 className="text-gray-900 font-medium title-font tracking-wider text-sm">HENRY LETHAM</h2>
@@ -115,7 +115,7 @@ export default function Home() {
 					</div>
 				</div>
 			</section>
-			
+
 			<FooterComponent />
 		</>
 
