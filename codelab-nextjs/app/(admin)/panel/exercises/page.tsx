@@ -233,7 +233,7 @@ export default function PanelExercises() {
 										{exercise.createdAt}
 									</td>
 									<td className="px-6 py-4 text-right">
-										<a href={`/exercise/${exercise.id}/consigne`} target="_blank" onClick={() => handleDelete(exercise.id)} className="font-medium text-blue-600  hover:underline">Voir</a>
+										<a href={`/exercise/${exercise.id}/consigne`} target="_blank" className="font-medium text-blue-600  hover:underline">Voir</a>
 										<button onClick={() => handleDelete(exercise.id)} className="ml-4 font-medium text-red-600  hover:underline">Supprimer</button>
 									</td>
 								</tr>
