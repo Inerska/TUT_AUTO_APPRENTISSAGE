@@ -23,7 +23,6 @@ public class ProfileController {
     BodyValidatorService bodyValidatorService;
 
     @POST
-    @PermitAll
     public Response createProfile(final ProfileDTO profile) {
         bodyValidatorService.validateBody(profile);
         PanacheMongoEntity entity = profileService.createProfile(profile.username());
