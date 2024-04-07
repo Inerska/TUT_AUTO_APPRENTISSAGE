@@ -98,7 +98,7 @@ export default function MenuExercisesPage() {
 	return (
 		<div className="bg-lite-quinary text-dark-quaternary flex overflow-y-hidden overflow-x-hidden">
 			<Sidebar selected="Exercices" />
-			<main className="w-full mw-full">
+			<main className="w-full">
 				<header className='bg-white rounded-xl h-24 flex flex-row items-center justify-center mt-8 w-9/12 mx-auto text-black'>
 					<form onSubmit={handleSearch} className="flex flex-row justify-between items-center w-11/12 mx-auto">
 						<input type="text" placeholder="Rechercher un exercice" className="border-2 border-gray-200 p-2 w-6/12" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
@@ -122,7 +122,12 @@ export default function MenuExercisesPage() {
 						</select>
 						<button type="submit" className="bg-lite-senary rounded-lg p-2 w-2/12 border flex align-middle justify-center"><Search className='mr-2' />Rechercher</button>
 					</form>
+
 				</header>
+				<section className='h-12 flex flex-row items-center justify-center mt-4 w-9/12 mx-auto text-white gap-4'>
+					<Link href={"/menu/exercises/create"} className='bg-lite-secondary rounded-lg p-2 w-2/12 border text-center'>Créer un exercice</Link>
+					<Link href={"/menu/exercises/owns"} className='bg-lite-secondary rounded-lg p-2 w-2/12 border text-center'>Gérez mes exercices</Link>
+				</section>
 				<div className='flex flex-col items-center mt-10 h-[55%] m-auto overflow-y-scroll overflow-x-hidden w-9/12'>
 					{filteredExercises.map((exercice, index) => (
 						<div key={index} className="flex flex-row justify-between border-2 border-gray-200 p-4 bg-white rounded-xl w-full text-black m-1">
@@ -133,8 +138,8 @@ export default function MenuExercisesPage() {
 									<p>{exercice.description}</p>
 									<p><i>Dernière date de modification : {convertISOToDate(exercice.lastModified)}</i></p>
 									<div className='flex my-auto'>
-										<Link legacyBehavior href={`/exercise/${exercice.id}/ide`}><a className='bg-lite-senary rounded-lg p-2 mr-6 border'>Continuer</a></Link>
-										<Link legacyBehavior href={`/exercise/${exercice.id}/consigne`}><a className='bg-lite-senary rounded-lg p-2 mr-6 border'>Voir consignes</a></Link>
+										<Link legacyBehavior href={`/exercise/${exercice.id}/ide`} className='bg-lite-senary rounded-lg p-2 mr-6 border text-center'>Continuer</Link>
+										<Link legacyBehavior href={`/exercise/${exercice.id}/consigne`} className='bg-lite-senary rounded-lg p-2 mr-6 border'>Voir consignes</Link>
 									</div>
 								</div>
 							</div>
@@ -149,7 +154,6 @@ export default function MenuExercisesPage() {
 				</div>
 			</main>
 		</div>
-
 	);
 }
 

@@ -114,7 +114,7 @@ export default function MenuPage() {
 	return (
 		<div className="bg-lite-quinary text-dark-quaternary flex overflow-y-hidden overflow-x-hidden">
 			{/* Sidebar */}
-			<Sidebar selected="Accueil" />
+			<Sidebar selected="Accueil" admin/>
 
 			{/* Main Content */}
 			<div className="flex-grow flex flex-col m-0">
