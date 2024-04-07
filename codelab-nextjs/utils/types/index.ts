@@ -1,4 +1,17 @@
+import { LucideIcon } from "lucide-react";
 
+export type StatsItemProps = {
+	icon: LucideIcon;
+	label: string;
+	value: string;
+};
+
+export type SidebarItem = {
+	icon: LucideIcon;
+	label: string;
+	link?: string;
+	separatorNext?: boolean;
+};
 
 export enum Languages {
   JAVASCRIPT = "javascript",
@@ -11,11 +24,17 @@ export enum Languages {
   TYPESCRIPT = "typescript",
 }
 
+export type LanguageItemApi = {
+	name: string,
+	abbreviation: string
+}
+
 export interface AuthState {
 	profileId: string | null;
 	accessToken: string;
 	refreshToken: string;
-};
+}
+
 export interface AuthActions {
 	setProfileId: (profileId: string | null) => void;
 	setAccessToken: (accessToken: string) => void;
@@ -32,34 +51,62 @@ export type LoginBody = {
 };
 export type LoginResponse = {
 	profileId: string;
-	accessToken: string;
-	refreshToken: string;
+	"access-token": string;
+	"refresh-token": string;
 };
 export type RegisterBody = {
 	mail: string;
 	username: string;
 	password: string;
-	confirmPassword: string;
+	"confirm-password": string;
 };
 export type RegisterResponse = {
 	profileId: string;
-	accessToken: string;
-	refreshToken: string;
+	"access-token": string;
+	"refresh-token": string;
 };
 
-export type SubmitExerciseBody = {
-	language: "javascript" | "python" | "java" | "csharp"; 
-	testCode: string;
+export type GetExerciseDetailsResponse = {
+	id: string;
+	title: string;
+	description: string;
+	instructions: string;
+	tasks: {
+		id: string;
+		content: string;
+		order: number;
+	}[];
+	banner: string;
 	author: string;
+	testCode: string;
+	language: {
+		id: string;
+		name: Languages;
+		abbreviation: string;
+	};
+	difficulty: {
+		id: string;
+		name: string;
+	};
+	nbTests: number;
+	createdAt: string;
+}
+
+export type SubmitExerciseBody = {
+	language: Languages;
+	code: string;
+	exerciceId: string
 };
+
 export type SubmitExerciseResponse = {
 	id: string;
 	feedback: string;
 };
 
 export type CreateExerciseBody = {
-	language: "javascript" | "python" | "java" | "csharp";
+	language: Languages;
 	testCode: string;
+	author: string;
 };
 export type CreateExerciseResponse = {
 	language: string;
