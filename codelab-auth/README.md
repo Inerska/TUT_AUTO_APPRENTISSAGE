@@ -20,21 +20,52 @@ openssl rsa -pubout -in privateKey.pem -out publicKey.pem
 openssl pkcs8 -topk8 -nocrypt -inform pem -in privateKey.pem -outform
 ```
 
+## Authentification API
 
-## Routes 
+Cette API gère l'authentification des utilisateurs. Vous pouvez vous enregistrer et vous connecter pour obtenir des jetons d'accès et de rafraîchissement pour accéder à d'autres fonctionnalités de l'application.
 
-- POST /api/auth/register
+### Enregistrement (/register)
+
+- **Méthode :** POST
+- **Endpoint :** `/api/auth/register`
+- **Description :** Permet à un utilisateur de créer un nouveau compte en fournissant un nom d'utilisateur, une adresse e-mail et un mot de passe.
+- **Requête :**
 ```json
-{
-  "username": "username",
-  "password": "password"
-}
+  {
+    "username": "samuel",
+    "mail": "samuel.pomin@gmail.com",
+    "password": "azerty123",
+    "confirm-password": "azerty123"
+  }
 ```
+- **Réponse :**
+ ```json
+ {
+  "access-token": "eyJ...",
+  "refresh-token": "eyJ..."
+}
+ ```
 
-- POST /api/auth/login
+### Connexion (/login)
+
+- **Méthode :** POST
+- **Endpoint :** `/api/auth/login`
+- **Description :** Permet à un utilisateur existant de se connecter en fournissant son adresse e-mail et son mot de passe.
+- **Requête :**
 ```json
-{
-  "username": "username",
-  "password": "password"
-}
+  {
+    "mail": "samuel.pomin@gmail.com",
+    "password": "azerty123"
+  }
 ```
+- **Réponse :**
+ ```json
+ {
+  "access-token": "eyJ...",
+  "refresh-token": "eyJ..."
+}
+ ```
+
+## Gestion des Tokens
+
+Après l'enregistrement ou la connexion, chaque utilisateur reçoit un jeton d'accès et un jeton de rafraîchissement. Le jeton d'accès est utilisé pour authentifier les requêtes API, tandis que le jeton de rafraîchissement est utilisé pour obtenir un nouveau jeton d'accès une fois que le jeton d'accès précédent expire. Assurez-vous de stocker ces jetons en toute sécurité et de les inclure dans les en-têtes de vos requêtes API pour accéder aux ressources protégées.
