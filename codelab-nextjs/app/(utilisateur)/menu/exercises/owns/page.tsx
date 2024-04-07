@@ -1,10 +1,8 @@
 "use client";
-import { AdminSideBar } from "@/components/AdminSidebar";
-import { FooterComponent } from "@/components/FooterComponent";
-import { HeaderComponent } from "@/components/HeaderComponent";
+import { Sidebar } from "@/components/Sidebar";
 import { Exercise } from "@/utils/types";
 
-export default function PanelExercises() {
+export default function MenuOwnsExercisesPage() {
 	const exercises = [
 		{
 			id: "1",
@@ -168,8 +166,8 @@ export default function PanelExercises() {
 	}
 
 	return (
-		<div className="bg-lite-quinary text-dark-quaternary flex justify-centeroverflow-y-hidden overflow-x-hidden">
-			<AdminSideBar selected="Exercices" />
+		<div className="bg-lite-quinary text-dark-quaternary flex overflow-y-hidden overflow-x-hidden">
+			<Sidebar selected="Exercices" />
 			<section className="text-gray-600 body-font w-full flex justify-center">
 				<div className="relative overflow-x-auto  sm:rounded-lg">
 					<table className="w-full text-sm text-left rtl:text-right text-gray-500 mt-4">
@@ -234,6 +232,7 @@ export default function PanelExercises() {
 									</td>
 									<td className="px-6 py-4 text-right">
 										<a href={`/exercise/${exercise.id}/consigne`} target="_blank" className="font-medium text-blue-600  hover:underline">Voir</a>
+										<a href={`/menu/exercises/${exercise.id}/edit`} target="_blank" className="ml-4 font-medium text-orange-600  hover:underline">Modifier</a>
 										<button onClick={() => handleDelete(exercise.id)} className="ml-4 font-medium text-red-600  hover:underline">Supprimer</button>
 									</td>
 								</tr>

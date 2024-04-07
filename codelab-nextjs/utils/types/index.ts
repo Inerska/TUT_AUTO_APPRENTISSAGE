@@ -14,14 +14,14 @@ export type SidebarItem = {
 };
 
 export enum Languages {
-  JAVASCRIPT = "javascript",
-  PYTHON = "python",
-  JAVA = "java",
-  CSHARP = "csharp",
-  CPP = "cpp",
-  RUBY = "ruby",
-  GO = "go",
-  TYPESCRIPT = "typescript",
+	PYTHON = "python",
+  // JAVASCRIPT = "javascript",
+  // JAVA = "java",
+  // CSHARP = "csharp",
+  // CPP = "cpp",
+  // RUBY = "ruby",
+  // GO = "go",
+  // TYPESCRIPT = "typescript",
 }
 
 export type LanguageItemApi = {
@@ -66,7 +66,15 @@ export type RegisterResponse = {
 	"refresh-token": string;
 };
 
-export type GetExerciseDetailsResponse = {
+export type Profile = {
+	id: string;
+	username: string;
+	email: string;
+	createdAt: string;
+	admin: boolean;
+};
+
+export type Exercise = {
 	id: string;
 	title: string;
 	description: string;

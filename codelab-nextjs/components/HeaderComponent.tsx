@@ -11,7 +11,7 @@ export const HeaderComponent = ({ admin }: { admin?: boolean }) => {
 				<div className="flex lg:flex-1">
 					<Link href={"/"} className="-m-1.5 p-1.5">
 						<span className="sr-only">Codelab</span>
-						<img className="h-8 w-auto" src="/small_logo.png" alt="" />
+						<img className="h-12 w-auto" src="/small_logo.png" alt="" />
 					</Link>
 				</div>
 				<div className="flex lg:hidden">
@@ -22,26 +22,26 @@ export const HeaderComponent = ({ admin }: { admin?: boolean }) => {
 					>
 						<span className="sr-only">Ouvrir main</span>
 						{/* Menu icon */}
-						<svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
+						<svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
 							<path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
 						</svg>
 					</button>
 				</div>
 				<div className="hidden lg:flex lg:gap-x-12">
-					<Link href={"/"} className="text-sm font-semibold leading-6 text-gray-900">Accueil</Link>
-					<Link href={"/catalogue"} className="text-sm font-semibold leading-6 text-gray-900">Catalogue</Link>
+					<Link href={"/"} className="text-lg font-semibold leading-6 text-gray-900">Accueil</Link>
+					<Link href={"/catalogue"} className="text-lg font-semibold leading-6 text-gray-900">Catalogue</Link>
 					{admin && (
 						//todo changer id
-						<Link href={"/profile/ID"} className="text-sm font-semibold leading-6 text-gray-900">Profil</Link>
+						<Link href={"/profile/ID"} className="text-lg font-semibold leading-6 text-gray-900">Profil</Link>
 					)}
-					<Link href={"/exercise/aleatoire"} className="text-sm font-semibold leading-6 text-gray-900">Exercice aléatoire &#128256;</Link>
+					<Link href={"/exercise/aleatoire"} className="text-lg font-semibold leading-6 text-gray-900">Exercice aléatoire &#128256;</Link>
 				</div>
 				<div className="hidden lg:flex lg:flex-1 lg:justify-end">
 					{admin && (
-						<Link href={"/menu"} className="text-sm font-semibold leading-6 text-gray-900">Menu  <span aria-hidden="true">&rarr;</span></Link>
+						<Link href={"/menu"} className="text-lg font-semibold leading-6 text-gray-900">Menu  <span aria-hidden="true">&rarr;</span></Link>
 					)}
 					{!admin && (
-						<Link href={"/login"} className="text-sm font-semibold leading-6 text-gray-900">Connexion  <span aria-hidden="true">&rarr;</span></Link>
+						<Link href={"/login"} className="text-lg font-semibold leading-6 text-gray-900">Connexion  <span aria-hidden="true">&rarr;</span></Link>
 					)}
 				</div>
 			</nav>
