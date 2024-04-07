@@ -97,6 +97,22 @@ public class Account {
     }
 
     /**
+     * The mail setter.
+     * @param mail The mail.
+     */
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    /**
+     * The password setter.
+     * @param password The password.
+     */
+    public void setPassword(String password) {
+        this.password = password;
+
+    }
+    /**
      * The access token setter.
      * @param accessToken The access token.
      */

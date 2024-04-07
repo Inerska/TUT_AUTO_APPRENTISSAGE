@@ -1,11 +1,13 @@
 package org.arobase.web.controller;
 
 import io.vertx.core.json.JsonObject;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.arobase.domain.model.request.ExerciceCreateRequest;
 import org.arobase.domain.model.request.ExerciceSubmitRequest;
+import org.arobase.infrastructure.persistence.service.BodyValidatorService;
 import org.arobase.infrastructure.persistence.service.ExerciceService;
 import org.jboss.logging.Logger;
 
@@ -13,6 +15,8 @@ import org.jboss.logging.Logger;
 @Produces(MediaType.APPLICATION_JSON)
 public class ExerciceController {
 
+    @Inject
+    BodyValidatorService bodyValidatorService;
     private final ExerciceService exerciceService;
     private final Logger logger;
 
@@ -40,9 +44,9 @@ public class ExerciceController {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createExercice(ExerciceCreateRequest exerciceCreateRequest) {
 
-        logger.info("POST /api/v1/exercices/create for language" + exerciceCreateRequest.getLanguage() + " called.");
+        logger.info("POST /api/v1/exercices/create for language" + exerciceCreateRequest.getLanguage().name + " called.");
 
-        //TODO: validator
+        bodyValidatorService.validateBody(exerciceCreateRequest);
 
         return exerciceService.createExercice(exerciceCreateRequest);
     }
@@ -57,4 +61,26 @@ public class ExerciceController {
 
         return Response.ok(exerciceResult).build();
     }
+
+    @GET
+    @Path("/{id}")
+    public Response getExerciceById(@PathParam("id") String id) {
+        logger.info("GET /api/v1/exercices/" + id + " called.");
+
+        final var exerciceResult = exerciceService.getExerciseById(id)
+                .orElseThrow(() -> new NotFoundException("Exercice not found."));
+
+        return Response.ok(exerciceResult).build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response deleteExercice(@PathParam("id") String id) {
+        logger.info("DELETE /api/v1/exercices/" + id + " called.");
+
+        exerciceService.deleteExerciceById(id);
+
+        return Response.ok("Exercice deleted successfully.").build();
+    }
+
 }
