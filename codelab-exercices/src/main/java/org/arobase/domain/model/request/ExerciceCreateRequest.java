@@ -20,11 +20,11 @@ public final class ExerciceCreateRequest implements MessagingRequest {
 
     private final String banner;
 
-    private final String author;
+    private String author;
 
-    private final String testCode;
+    private String testCode;
 
-    public final Language language;
+    public Language language;
 
     public final Difficulty difficulty;
 
@@ -90,4 +90,15 @@ public final class ExerciceCreateRequest implements MessagingRequest {
         return createdAt;
     }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setTestCode(String code) {
+        this.testCode = code;
+    }
+
+    public void setLanguage(Language lang) {
+        this.language = lang;
+    }
 }

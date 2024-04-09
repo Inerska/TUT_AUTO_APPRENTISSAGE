@@ -67,4 +67,8 @@ public final class Exercice extends PanacheMongoEntity {
      * Created at.
      */
     public LocalDateTime createdAt;
+
+    public void setTestCode(String someTestCode) {
+        this.testCode = someTestCode;
+    }
 }
