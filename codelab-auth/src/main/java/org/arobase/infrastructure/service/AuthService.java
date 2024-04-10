@@ -15,7 +15,6 @@ import org.arobase.infrastructure.exception.AuthenticationException;
 import org.arobase.infrastructure.persistance.entity.Account;
 import org.arobase.infrastructure.persistance.repository.AccountRepository;
 import org.arobase.infrastructure.service.api.ProfileAPIService;
-import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 /**
  * The auth service.

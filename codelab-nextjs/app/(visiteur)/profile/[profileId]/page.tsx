@@ -1,15 +1,32 @@
-"use client";
-import { ChartComponent } from "@/components/ChartComponent";
-import { FooterComponent } from "@/components/FooterComponent";
+"use client"
+import { useGetProfile } from "@/utils/hooks/useGetProfile";
 import { HeaderComponent } from "@/components/HeaderComponent";
-import { LanguagesComponent } from "@/components/LanguagesComponent";
+import { FooterComponent } from "@/components/FooterComponent";
 import { StatsComponent } from "@/components/StatsComponent";
-import { StatsItemProps } from "@/utils/types";
+import { LanguagesComponent } from "@/components/LanguagesComponent";
+import { ChartComponent } from "@/components/ChartComponent";
 import { BarChart2, CheckCircle2, TestTube2Icon, LucideLanguages } from "lucide-react";
+import { useEffect } from "react";
 
 export default function ProfilePage({ params }: { params: { profileId: string } }) {
 	const profileId = params.profileId;
-	// @TODO: utiliser le profileId pour afficher les info de l'utilisateur
+	const { profile, loading, error } = useGetProfile(profileId);
+
+	useEffect(() => {
+		console.log("Profile changed:", profile);
+	}, [profile]);
+
+	if (loading) {
+		return <div>Loading...</div>;
+	}
+
+	if (error) {
+		return <div>Error: {error.message}</div>;
+	}
+
+	if (!profile) {
+		return <div>No profile found</div>;
+	}
 
 	const stats = [
 		{
@@ -32,7 +49,7 @@ export default function ProfilePage({ params }: { params: { profileId: string } 
 			label: "Langage(s) exercé",
 			value: "2"
 		},
-	] as StatsItemProps[];
+	];
 
 	const langages = [
 		{
@@ -75,7 +92,7 @@ export default function ProfilePage({ params }: { params: { profileId: string } 
 			icon: "/lg/ts.png",
 			nbExercices: 1
 		},
-	]
+	];
 
 	return (
 		<div className="flex flex-col min-h-screen">
@@ -89,17 +106,15 @@ export default function ProfilePage({ params }: { params: { profileId: string } 
 				</div>
 				{/* user info */}
 				<div className="mt-12 flex flex-col items-center w-full">
-					<h1 className="text-2xl font-bold">Username</h1>
+					<h1 className="text-2xl font-bold">{profile.username}</h1>
 				</div>
 				{/* Statistiques */}
 				<StatsComponent stats={stats} profile />
 				<div className="flex justify-between rounded-xl h-5/12 mt-8 w-full max-w-6xl ">
 					{/* Langages */}
-					<ChartComponent langages={langages} profile/>
+					<ChartComponent langages={langages} profile />
 					<LanguagesComponent langages={langages} profile />
-
 				</div>
-
 			</div>
 			<FooterComponent />
 		</div>

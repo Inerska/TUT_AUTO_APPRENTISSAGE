@@ -34,6 +34,8 @@ public class ProfileAPIService {
                 ))
                 .build();
 
+        logger.info("Username: " + Json.createObjectBuilder().add("username", username).build().toString());
+
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             logger.info("Response from create profile: " + response.body());
