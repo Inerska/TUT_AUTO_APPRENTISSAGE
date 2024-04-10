@@ -51,22 +51,14 @@ export const getAllExercicesForSupportedLanguages = async (languages: LanguageIt
 		console.error(error);
 	}
 
-	// exercices.map(
-	// 	(exercise) => {
-	// 		return {
-	// 			title: exercise.title ?? "Titre python",
-	// 			description: "Description js",
-	// 			banner: exercise.banner ?? "https://via.placeholder.com/150x120",
-	// 			author: exercise.author,
-	// 			language: exercise.language,
-	// 			difficulty: "Facile",
-	// 			createdAt: exercise.createdAt ?? new Date(),
-	// 			id: exercise.id,
-	// 			tasks: ["Créer une méthode Hello World", "Vérifier une condition", "Afficher un message de bienvenue"],
-	// 			testCode: exercise.testCode,
-	// 			nbTest: 5
-	// 		};
-	// 	}
-	// );
 	return exercices;
+}
+
+export const getProfil = async (profilId: string) => {
+	try {
+		const response = await axios.get(`${baseUrl}/profil/${profilId}`);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+	}
 }

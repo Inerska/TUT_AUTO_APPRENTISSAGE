@@ -132,3 +132,9 @@ export type GetResultsExerciceResponse = {
 	errorDetails: string|null;
 	additionalInfo: string|null;
 };
+
+export type GetUserProfileResponse = {
+	id: string;
+	username: string;
+	exercices: GetResultsExerciceResponse[];
+}
