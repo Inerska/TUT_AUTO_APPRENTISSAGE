@@ -52,7 +52,10 @@ public final class ExerciceService {
 
         final var exerciceResult = new ExerciceResults();
         exerciceResult.status = "SUBMITTED";
-        exerciceResult.exerciceId = exercice.getExerciceId();
+        exerciceResult.exercice = exerciceRepository
+                .findByIdOptional(new ObjectId(exercice.getExerciceId()))
+                .orElseThrow(() -> new NotFoundException("Exercice not found."));
+
         try {
             exerciceResult.persist();
         } catch (final Exception e) {
@@ -68,7 +71,7 @@ public final class ExerciceService {
         );
 
         //delete previous exercice result if exists in profile
-        profile.exercices.removeIf(exerciceResults -> exerciceResults.exerciceId.equals(exercice.getExerciceId()));
+        profile.exercices.removeIf(exerciceResults -> exerciceResults.exercice.id.toString().equals(exercice.getExerciceId()));
 
         profile.exercices.add(exerciceResult);
 

@@ -127,7 +127,7 @@ export type GetResultsExerciceResponse = {
 	id: string;
 	status: "PENDING"|"ERROR"|"COMPLETED";
 	result: string;
-	exerciceId: string;
+	exercice: Exercise;
 	timestamp: string;
 	errorDetails: string|null;
 	additionalInfo: string|null;
