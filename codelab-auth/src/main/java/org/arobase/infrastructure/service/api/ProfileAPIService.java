@@ -18,7 +18,7 @@ import java.net.http.HttpResponse;
 @ApplicationScoped
 public class ProfileAPIService {
 
-    private final String apiUrl = "http://exercices.codelab.local:8080/api/v1/profile";
+    private final String apiUrl = "http://exercices.codelab.local:8080/api/v1/profil";
 
     @Inject
     Logger logger;

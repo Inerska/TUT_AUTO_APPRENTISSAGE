@@ -20,7 +20,8 @@ public class ProfileService {
         if(profileRepository.find("username", username).count() > 0){
             throw new ProfileException(Response.Status.CONFLICT, "Username already exists");
         }
-        Profile profile = new Profile(username);
+        Profile profile = new Profile();
+        profile.username = username;
         profileRepository.persist(profile);
         return profile;
     }

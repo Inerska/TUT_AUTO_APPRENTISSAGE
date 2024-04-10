@@ -104,6 +104,7 @@ export type SubmitExerciseBody = {
 	language: Languages;
 	code: string;
 	exerciceId: string
+	profileId: string;
 };
 
 export type SubmitExerciseResponse = {
@@ -126,6 +127,7 @@ export type GetResultsExerciceResponse = {
 	id: string;
 	status: "PENDING"|"ERROR"|"COMPLETED";
 	result: string;
+	exerciceId: string;
 	timestamp: string;
 	errorDetails: string|null;
 	additionalInfo: string|null;

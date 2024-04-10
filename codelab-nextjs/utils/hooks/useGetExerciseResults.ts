@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { getExerciseResults } from "@/service/apiServiceExercise";
-import { Exercise } from "@/utils/types";
+import {GetResultsExerciceResponse} from "@/utils/types";
 
 export function useGetExerciseResults(code: string, submitLoad: boolean, exerciseId?: string) {
 
-	const [results, setResults] = useState<Exercise>();
+	const [results, setResults] = useState<GetResultsExerciceResponse>();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState();
 	const [pending, setPending] = useState<boolean>(true)

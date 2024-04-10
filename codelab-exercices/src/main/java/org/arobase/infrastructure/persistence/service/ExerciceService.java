@@ -8,10 +8,7 @@ import org.arobase.domain.model.request.ExerciceCreateRequest;
 import org.arobase.domain.model.request.ExerciceSubmitRequest;
 import org.arobase.infrastructure.persistence.entity.Exercice;
 import org.arobase.infrastructure.persistence.entity.ExerciceResults;
-import org.arobase.infrastructure.persistence.repository.DifficultyRepository;
-import org.arobase.infrastructure.persistence.repository.ExerciceRepository;
-import org.arobase.infrastructure.persistence.repository.ExerciceResultsRepository;
-import org.arobase.infrastructure.persistence.repository.LanguageRepository;
+import org.arobase.infrastructure.persistence.repository.*;
 import org.bson.types.ObjectId;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
@@ -27,6 +24,8 @@ public final class ExerciceService {
 
     private final LanguageRepository languageRepository;
 
+    private final ProfileRepository profileRepository;
+
     private final DifficultyRepository difficultyRepository;
 
     private final Logger logger;
@@ -34,10 +33,11 @@ public final class ExerciceService {
     @Channel("exercice-submitted")
     Emitter<ExerciceSubmitRequest> exerciceEmitter;
 
-    public ExerciceService(ExerciceResultsRepository exerciceResultsRepository, ExerciceRepository exerciceRepository, LanguageRepository languageRepository, DifficultyRepository difficultyRepository, Logger logger) {
+    public ExerciceService(ExerciceResultsRepository exerciceResultsRepository, ExerciceRepository exerciceRepository, LanguageRepository languageRepository, ProfileRepository profileRepository, DifficultyRepository difficultyRepository, Logger logger) {
         this.exerciceResultsRepository = exerciceResultsRepository;
         this.exerciceRepository = exerciceRepository;
         this.languageRepository = languageRepository;
+        this.profileRepository = profileRepository;
         this.difficultyRepository = difficultyRepository;
         this.logger = logger;
     }
@@ -52,6 +52,7 @@ public final class ExerciceService {
 
         final var exerciceResult = new ExerciceResults();
         exerciceResult.status = "SUBMITTED";
+        exerciceResult.exerciceId = exercice.getExerciceId();
         try {
             exerciceResult.persist();
         } catch (final Exception e) {
@@ -61,7 +62,21 @@ public final class ExerciceService {
 
         exercice.setExerciceResultObjectId(exerciceResult.id.toString());
 
+        //add exerciseResult to profile
+        final var profile = profileRepository.findByIdOptional(
+                new ObjectId(exercice.getProfileId())).orElseThrow(() -> new NotFoundException("Profile not found.")
+        );
+
+        //delete previous exercice result if exists in profile
+        profile.exercices.removeIf(exerciceResults -> exerciceResults.exerciceId.equals(exercice.getExerciceId()));
+
+        profile.exercices.add(exerciceResult);
+
+        profile.update();
+
         exerciceEmitter.send(exercice);
+
+        logger.info("Profile username: " + profile.username + " has submitted exercice " + exercice.getExerciceId());
 
         return exerciceResult.id;
     }
@@ -104,6 +119,21 @@ public final class ExerciceService {
         exerciceResult.status = status;
         exerciceResult.result = result;
         exerciceResult.persistOrUpdate();
+
+        //get profile
+        final var profile = profileRepository.list("exercices._id", new ObjectId(id)).getFirst();
+
+        //update exercice result in profile
+        profile.exercices.stream()
+                .filter(exerciceResults -> exerciceResults.id.equals(new ObjectId(id)))
+                .findFirst()
+                .ifPresent(exerciceResults -> {
+                    exerciceResults.status = status;
+                    exerciceResults.result = result;
+                });
+
+        profile.update();
+
     }
 
     /**

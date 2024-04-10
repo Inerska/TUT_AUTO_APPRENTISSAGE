@@ -9,21 +9,8 @@ import java.util.List;
 @MongoEntity(collection = "profiles")
 public class Profile extends PanacheMongoEntity {
 
-    private String username;
+    public String username;
 
-    private final List<Exercice> exercices = new ArrayList<>();
+    public List<ExerciceResults> exercices = new ArrayList<>();
 
-    public Profile() {}
-
-    public Profile(String username) {
-        this.username = username;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public List<Exercice> getExercices() {
-        return exercices;
-    }
 }

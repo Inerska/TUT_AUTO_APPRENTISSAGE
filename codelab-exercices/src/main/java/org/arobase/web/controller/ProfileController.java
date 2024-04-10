@@ -12,7 +12,7 @@ import org.arobase.domain.dto.ProfileDTO;
 import org.arobase.infrastructure.persistence.service.ProfileService;
 import org.arobase.infrastructure.service.BodyValidatorService;
 
-@Path("/api/v1/profile")
+@Path("/api/v1/profil")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ProfileController {
@@ -30,7 +30,7 @@ public class ProfileController {
     }
 
     @GET
-    @Path("/profile/{id}")
+    @Path("/{id}")
     public Response getProfileById(@PathParam("id") String id) {
         return Response.ok(profileService.getProfile(id)).build();
     }
