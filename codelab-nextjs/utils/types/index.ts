@@ -30,13 +30,13 @@ export type LanguageItemApi = {
 }
 
 export interface AuthState {
-	profileId: string | null;
+	profileId: string;
 	accessToken: string;
 	refreshToken: string;
 }
 
 export interface AuthActions {
-	setProfileId: (profileId: string | null) => void;
+	setProfileId: (profileId: string ) => void;
 	setAccessToken: (accessToken: string) => void;
 	setRefreshToken: (refreshToken: string) => void;
 	logout: () => void;
@@ -50,7 +50,7 @@ export type LoginBody = {
 	password: string;
 };
 export type LoginResponse = {
-	profileId: string;
+	"profile-id": string;
 	"access-token": string;
 	"refresh-token": string;
 };
@@ -61,7 +61,7 @@ export type RegisterBody = {
 	"confirm-password": string;
 };
 export type RegisterResponse = {
-	profileId: string;
+	"profile-id": string;
 	"access-token": string;
 	"refresh-token": string;
 };

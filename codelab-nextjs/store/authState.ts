@@ -6,7 +6,7 @@ export const useAuthStore = create(
 	persist<AuthStore>(
 		(set) => ({
 			// État initial
-			profileId: null,
+			profileId: "",
 			accessToken: "",
 			refreshToken: "",
 
@@ -14,7 +14,7 @@ export const useAuthStore = create(
 			setProfileId: (profileId) => set({ profileId }),
 			setAccessToken: (accessToken) => set({ accessToken }),
 			setRefreshToken: (refreshToken) => set({ refreshToken }),
-			logout: () => set({ profileId: null, accessToken: "", refreshToken: "" }),
+			logout: () => set({ profileId: "", accessToken: "", refreshToken: "" }),
 		}),
 		{
 			name: "auth", // Nom de la clé sous laquelle l'état persistant est stocké dans le localStorage
