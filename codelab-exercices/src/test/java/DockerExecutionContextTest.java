@@ -10,12 +10,8 @@ import org.arobase.domain.docker.service.DockerExecutionContext;
  * Classe de test pour la classe DockerExecutionContext.
  */
 public class DockerExecutionContextTest {
-
-    // Mock de DockerClient
     private DockerClient dockerClientMock;
-    // Identifiant du conteneur
     private final String containerId = "testContainerId";
-    // Instance de DockerExecutionContext à tester
     private DockerExecutionContext dockerExecutionContext;
 
     /**

@@ -14,7 +14,7 @@ import org.jboss.logging.Logger;
 public class DifficultyController {
 
     @Inject
-    BodyValidatorService bodyValidatorService;
+    public BodyValidatorService bodyValidatorService;
 
     private final DifficultyService difficultyService;
 

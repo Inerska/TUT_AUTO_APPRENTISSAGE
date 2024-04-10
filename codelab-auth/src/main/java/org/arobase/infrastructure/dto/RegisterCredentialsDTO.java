@@ -10,5 +10,4 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @param confirmPassword
  */
 public record RegisterCredentialsDTO(@JsonProperty("username") String username, @JsonProperty("mail") String mail, @JsonProperty("password") String password, @JsonProperty("confirm-password") String confirmPassword) {
-
 }

@@ -43,14 +43,11 @@ class ExerciceMessagingRequestProcessorTest {
      */
     @Test
     void process_ShouldProcessExerciceAndHandleSuccess() {
-        // Préparation des données nécessaires pour le test
         ExerciceSubmitRequest request = new ExerciceSubmitRequest("code", "java", "exerciceId", "resultObjectId");
         when(dockerExecutionService.executeCode(request)).thenReturn(Uni.createFrom().item("exerciceResponse"));
 
-        // Exécution de la méthode à tester
         processor.process(request);
 
-        // Vérification des résultats ou du comportement attendu
         verify(exerciceService).processExerciceResultById("resultObjectId");
         verify(exerciceService).updateExerciceResult("resultObjectId", "COMPLETED", "exerciceResponse");
         verify(logger).info("Exercice " + request + " processed.");

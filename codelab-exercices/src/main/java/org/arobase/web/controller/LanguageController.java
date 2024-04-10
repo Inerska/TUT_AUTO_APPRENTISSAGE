@@ -15,7 +15,7 @@ import org.jboss.logging.Logger;
 public class LanguageController {
 
     @Inject
-    BodyValidatorService bodyValidatorService;
+    public BodyValidatorService bodyValidatorService;
 
     private final LanguageService languageService;
 

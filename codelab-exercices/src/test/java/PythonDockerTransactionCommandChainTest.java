@@ -22,27 +22,21 @@ public class PythonDockerTransactionCommandChainTest {
      */
     @Test
     public void testExecute() {
-        // Mock des dépendances
         ExerciceService exerciceService = mock(ExerciceService.class);
         DockerCommandExecutor commandExecutor = mock(DockerCommandExecutor.class);
         DockerExecutionContext context = mock(DockerExecutionContext.class);
         ExerciceSubmitRequest request = new ExerciceSubmitRequest("code", "Python", "exerciceId", "resultObjectId");
 
-        // Définir le comportement des mocks
         when(exerciceService.getTestCodeByExerciceId(anyString())).thenReturn("testCode");
         when(context.getContainerId()).thenReturn("containerId");
         when(commandExecutor.executeCommandInContainer(any(), any(), anyString())).thenReturn(Uni.createFrom().item("executionResult"));
 
-        // Créer l'instance de la classe à tester
         PythonDockerTransactionCommandChain commandChain = new PythonDockerTransactionCommandChain(exerciceService, commandExecutor);
 
-        // Appeler la méthode à tester
         Uni<String> result = commandChain.execute(context, request);
 
-        // Vérifier le résultat
         assertEquals("executionResult", result.await().indefinitely());
 
-        // Vérifier les appels de méthode
         Mockito.verify(exerciceService).getTestCodeByExerciceId("exerciceId");
         Mockito.verify(context).getContainerId();
         Mockito.verify(commandExecutor).executeCommandInContainer(any(), any(), eq("echo 'code' > /home/main.py"));
