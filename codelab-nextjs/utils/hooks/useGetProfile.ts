@@ -1,28 +1,24 @@
 import { useEffect, useState } from "react";
 import { getProfil } from "@/service/apiServiceExercise";
-import { Profile } from "@/utils/types";
+import {GetUserProfileResponse, Profile} from "@/utils/types";
 
 export function useGetProfile(profilId: string) {
-    const [profile, setProfile] = useState<Profile | null>(null);
+    const [profile, setProfile] = useState<GetUserProfileResponse>();
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<any>(null);
 
     useEffect(() => {
-        const fetchProfile = async () => {
-            setLoading(true);
-            try {
-                const data = await getProfil(profilId);
+        setLoading(true);
+        getProfil(profilId)
+            .then(data => {
                 setProfile(data);
-            } catch (err) {
+            })
+            .catch((err) => {
                 setError(err);
-            } finally {
+            })
+            .finally(() => {
                 setLoading(false);
-            }
-        };
-
-        if (profilId !== "") {
-            fetchProfile();
-        }
+            });
     }, [profilId]);
 
     return { profile, loading, error };
