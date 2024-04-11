@@ -5,6 +5,7 @@ import { Sidebar } from '@/components/Sidebar';
 import {useCreateExercise} from "@/utils/hooks/useCreateExercise";
 import {useGetAllDifficulties} from "@/utils/hooks/useGetAllDifficulties";
 import {useGetAllLanguages} from "@/utils/hooks/useGetAllLanguages";
+import {redirect} from "next/navigation";
 
 export default function MenuCreateExercise() {
 	const [exercise, setExercise] = useState<CreateExerciseBody>
@@ -110,6 +111,7 @@ export default function MenuCreateExercise() {
 		console.log(exercise);
 		setIsExerciseSubmitted(false);
 
+		redirect('/catalogue');
 	};
 
 	return (
