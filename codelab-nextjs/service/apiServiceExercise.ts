@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { Exercise, LanguageItemApi, Languages, SubmitExerciseBody } from "@/utils/types";
+import {
+	CreateExerciseBody, CreateExerciseResponse,
+	Exercise,
+	LanguageItemApi,
+	Languages,
+	SubmitExerciseBody
+} from "@/utils/types";
 
 const baseUrl = 'http://exercices.codelab.local:81/api/v1';
 const API_URL = `${baseUrl}/exercices`;
@@ -62,3 +68,24 @@ export const getProfil = async (profilId: string) => {
 		console.error(error);
 	}
 }
+
+export const createExercise = async (exerciseData: CreateExerciseBody): Promise<CreateExerciseResponse | null> => {
+	try {
+		const response = await axios.post<CreateExerciseResponse>(API_URL, exerciseData);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		return null;
+	}
+};
+
+export const getAllDifficulties = async () => {
+	try {
+		const response = await axios.get(`${baseUrl}/difficulties`);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+

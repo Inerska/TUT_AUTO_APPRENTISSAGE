@@ -225,7 +225,7 @@ export default function MenuCreateExercise() {
 						type="submit"
 						className="bg-dark-primary text-white px-3 py-2 rounded mt-4"
 					>
-						Créer l'exercice
+						Créer exercice
 					</button>
 				</form>
 			</main>
