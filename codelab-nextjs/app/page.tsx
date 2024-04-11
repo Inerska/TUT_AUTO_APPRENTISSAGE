@@ -1,113 +1,123 @@
-import Image from 'next/image'
+import { FooterComponent } from "@/components/FooterComponent";
+import { HeaderComponent } from "@/components/HeaderComponent";
+import { List, Code, Lightbulb, CheckCircle, MessageSquare, Clock } from 'lucide-react';
 
 export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+	return (
+		<>
+			<HeaderComponent />
+			<div className="text-dark  bg-white flex overflow-y-hidden h-auto overflow-x-hidden justify-center ">
+				<div className="grid grid-cols-2 w-4/6 mt-8 p-4">
+					<div className="flex flex-col mt-8 justify-center">
+						<h2 className="font-extrabold text-6xl">CODELAB</h2>
+						<h4 className="font-bold text-2xl mt-8" >L'apprentissage sans limite</h4>
+						<a className="bg-lite-primary w-48 h-12 text-center mt-8 flex justify-center items-center text-white rounded-xl cursor-pointer" href="/catalogue">Voir notre catalogue</a>
+					</div>
+					<div>
+						<img src="/general.png" alt="Illustration" />
+					</div>
+				</div>
+			</div>
+			<section className="text-gray-600 body-font">
+				<div className="container px-5 py-24 mx-auto">
+					<div className="flex flex-wrap -m-4">
+						<div className="lg:w-1/3 lg:mb-0 mb-6 p-4">
+							<div className="h-full text-center">
+								<img alt="testimonial" className="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100" src="/avis.png" />
+								<p className="leading-relaxed">Grâce à CodeLab, j'ai pu apprendre les bases de la programmation en JavaScript et je me sens maintenant prêt à relever de nouveaux défis.</p>
+								<span className="inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4"></span>
+								<h2 className="text-gray-900 font-medium title-font tracking-wider text-sm">HOLDEN CAULFIELD</h2>
+								<p className="text-gray-500">Développeur junior</p>
+							</div>
+						</div>
+						<div className="lg:w-1/3 lg:mb-0 mb-6 p-4">
+							<div className="h-full text-center">
+								<img alt="testimonial" className="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100" src="/avis.png" />
+								<p className="leading-relaxed">Je recommande vivement CodeLab à tous ceux qui souhaitent se former aux langages de programmation. De plus, la plateforme est très intuitive et facile à utiliser.</p>
+								<span className="inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4"></span>
+								<h2 className="text-gray-900 font-medium title-font tracking-wider text-sm">ALPER KAMU</h2>
+								<p className="text-gray-500">Développeur full-stack</p>
+							</div>
+						</div>
+						<div className="lg:w-1/3 lg:mb-0 p-4">
+							<div className="h-full text-center">
+								<img alt="testimonial" className="w-20 h-20 mb-8 object-cover object-center rounded-full inline-block border-2 border-gray-200 bg-gray-100" src="/avis.png" />
+								<p className="leading-relaxed">CodeLab m'a permis d'approfondir mes connaissances en Python et de découvrir de nouveaux frameworks. Je suis ravi d'avoir choisi cette plateforme pour me former.</p>
+								<span className="inline-block h-1 w-10 rounded bg-indigo-500 mt-6 mb-4"></span>
+								<h2 className="text-gray-900 font-medium title-font tracking-wider text-sm">HENRY LETHAM</h2>
+								<p className="text-gray-500">Développeur senior</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section className="text-gray-600 body-font">
+				<div className="container px-5 py-24 mx-auto">
+					<div className="flex flex-wrap w-full mb-20 flex-col items-center text-center">
+						<h1 className="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">L'outil d'apprentissage parfait</h1>
+						<p className="lg:w-1/2 w-full leading-relaxed text-gray-500">Apprendre un nouveau langage n'a jamais été aussi simple.</p>
+					</div>
+					<div className="flex flex-wrap -m-4">
+						<div className="xl:w-1/3 md:w-1/2 p-4">
+							<div className="border border-gray-200 p-6 rounded-lg">
+								<div className="w-10 h-10 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4">
+									<List />
+								</div>
+								<h2 className="text-lg text-gray-900 font-medium title-font mb-2">Un catalogue complet</h2>
+								<p className="leading-relaxed text-base">Avec un catalogue d'exercice complet, vous trouverez l'exercice parfait.</p>
+							</div>
+						</div>
+						<div className="xl:w-1/3 md:w-1/2 p-4">
+							<div className="border border-gray-200 p-6 rounded-lg">
+								<div className="w-10 h-10 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4">
+									<Code />
+								</div>
+								<h2 className="text-lg text-gray-900 font-medium title-font mb-2">Apprentissage en temps réel</h2>
+								<p className="leading-relaxed text-base">Pratiquez et obtenez des commentaires instantanés sur votre code.</p>
+							</div>
+						</div>
+						<div className="xl:w-1/3 md:w-1/2 p-4">
+							<div className="border border-gray-200 p-6 rounded-lg">
+								<div className="w-10 h-10 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4">
+									<Lightbulb />
+								</div>
+								<h2 className="text-lg text-gray-900 font-medium title-font mb-2">Idées et astuces</h2>
+								<p className="leading-relaxed text-base">Découvrez de nouvelles façons de coder avec nos conseils et astuces.</p>
+							</div>
+						</div>
+						<div className="xl:w-1/3 md:w-1/2 p-4">
+							<div className="border border-gray-200 p-6 rounded-lg">
+								<div className="w-10 h-10 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4">
+									<CheckCircle />
+								</div>
+								<h2 className="text-lg text-gray-900 font-medium title-font mb-2">Validation des compétences</h2>
+								<p className="leading-relaxed text-base">Validez vos compétences avec nos défis et projets.</p>
+							</div>
+						</div>
+						<div className="xl:w-1/3 md:w-1/2 p-4">
+							<div className="border border-gray-200 p-6 rounded-lg">
+								<div className="w-10 h-10 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4">
+									<MessageSquare />
+								</div>
+								<h2 className="text-lg text-gray-900 font-medium title-font mb-2">Feedback constructif</h2>
+								<p className="leading-relaxed text-base">Recevez des commentaires constructifs.</p>
+							</div>
+						</div>
+						<div className="xl:w-1/3 md:w-1/2 p-4">
+							<div className="border border-gray-200 p-6 rounded-lg">
+								<div className="w-10 h-10 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 mb-4">
+									<Clock />
+								</div>
+								<h2 className="text-lg text-gray-900 font-medium title-font mb-2">Suivi du progrès</h2>
+								<p className="leading-relaxed text-base">Suivez votre progression et restez motivé.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+			<FooterComponent />
+		</>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+	)
 }

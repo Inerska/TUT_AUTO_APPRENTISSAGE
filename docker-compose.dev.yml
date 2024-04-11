@@ -1,65 +1,123 @@
 version: "3.7"
-name: codelab-development
-
 services:
-
-  api_quarkus-dev:
-    container_name: codelab_api_quarkus
+  api_auth-dev:
+    container_name: codelab_auth_api
     build:
-      context: codelab-quarkus
+      context: codelab-auth
       dockerfile: src/main/docker/Dockerfile.development
     restart: unless-stopped
-    ports:
-      - "8080:8080"
+    volumes:
+      - ./codelab-auth:/app
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api-auth-dev.rule=Host(`auth.codelab.local`)"
+      - "traefik.http.services.api-auth-dev.loadbalancer.server.port=8080"
+      - "traefik.http.routers.api-auth-dev.middlewares=cors"
+      - "traefik.http.middlewares.cors.headers.accessControlAllowMethods=GET,PUT,POST,DELETE"
+      - "traefik.http.middlewares.cors.headers.accessControlAllowOriginList=*"
+      - "traefik.http.middlewares.cors.headers.accessControlAllowHeaders=Content-Type"
+      - "traefik.http.middlewares.cors.headers.accessControlAllowCredentials=true"
+      - "traefik.docker.network=codelab-dev"
+    networks:
+      - codelab-dev
+
+  api_exercices-dev:
+    container_name: codelab_api_exercices
+    build:
+      context: codelab-exercices
+      dockerfile: src/main/docker/Dockerfile.development
+    restart: unless-stopped
+    volumes:
+      - ./codelab-exercices:/app
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api-exercices-dev.rule=Host(`exercices.codelab.local`)"
+      - "traefik.http.routers.api-exercices-dev.middlewares=cors"
+      - "traefik.http.services.api-exercices-dev.loadbalancer.server.port=8080"
+      - "traefik.http.middlewares.cors.headers.accessControlAllowMethods=GET,PUT,POST,DELETE"
+      - "traefik.http.middlewares.cors.headers.accessControlAllowOriginList=*"
+      - "traefik.http.middlewares.cors.headers.accessControlAllowHeaders=Content-Type"
+      - "traefik.http.middlewares.cors.headers.accessControlAllowCredentials=true"
+      - "traefik.docker.network=codelab-dev"
+    networks:
+      codelab-dev:
+        aliases:
+          - "exercices.codelab.local"
     environment:
       - quarkus.http.host=0.0.0.0
-    volumes:
-      - ./codelab-quarkus:/app
-    networks:
-      - codelab-dev
+      - TESTCONTAINERS_RYUK_DISABLED=true
     depends_on:
-      - db-dev
+      - db_auth-dev
 
-  db-dev:
+  db_auth-dev:
     image: postgres:16
-    container_name: codelab_postgres
+    container_name: codelab_auth_postgres
     restart: unless-stopped
     environment:
-      POSTGRES_USER: codelab
-      POSTGRES_PASSWORD: codelab
-      POSTGRES_DB: codelab
-    ports:
-      - "5432:5432"
+      POSTGRES_USER: codelab-auth
+      POSTGRES_PASSWORD: codelab-auth
+      POSTGRES_DB: codelab-auth
     volumes:
-      - ./data:/var/lib/postgresql/data
+      - ./auth_data:/var/lib/postgresql/data
     networks:
       - codelab-dev
 
-  db_ui-dev:
-    image: dpage/pgadmin4
-    container_name: codelab_pgadmin
+  api_exercices-mongodb:
+    image: mongo:7
+    container_name: codelab_api_exercices_mongodb
     restart: unless-stopped
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-    ports:
-      - "5050:80"
     networks:
       - codelab-dev
-    depends_on:
-      - db-dev
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: codelab
+      MONGO_INITDB_ROOT_PASSWORD: codelab
+
+  adminer-auth:
+    image: adminer
+    container_name: codelab_adminer
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.adminer-auth.rule=Host(`adminer.codelab.local`)"
+      - "traefik.http.services.adminer-auth.loadbalancer.server.port=8080"
+    networks:
+      - codelab-dev
+    ports:
+      - "8089:8080"
 
   webclient-dev:
     container_name: codelab_webclient
     build:
       context: ./codelab-nextjs
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.development
     restart: unless-stopped
-    ports:
-      - "3005:3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.webclient-dev.rule=Host(`webclient.codelab.local`)"
+      - "traefik.http.services.webclient-dev.loadbalancer.server.port=3000"
+    networks:
+      - codelab-dev
     volumes:
       - ./codelab-nextjs:/app
-      - /codelab-nextjs/node_modules
+      - /app/node_modules
+
+  traefik:
+    image: "traefik:v2.5"
+    container_name: codelab_traefik
+    restart: unless-stopped
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "81:80" 
+      - "8082:8080" 
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - codelab-dev
 
 networks:
   codelab-dev:
