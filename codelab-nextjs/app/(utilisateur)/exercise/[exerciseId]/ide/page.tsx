@@ -165,6 +165,7 @@ export default function IdePage({ params }: { params: { exerciseId: string } }) 
 		setLoading(true);
 		appendToConsole("Envoi du code...", false);
 
+		scrollToBottom();
 	}
 
 	return (
