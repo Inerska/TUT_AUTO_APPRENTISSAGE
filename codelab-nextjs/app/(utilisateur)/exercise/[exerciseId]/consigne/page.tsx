@@ -42,7 +42,7 @@ export default function ConsignePage({ params }: { params: { exerciseId: string 
 	}, [dataExo]);
 
 	const authStore = useAuthStore();
-	const canStartExercise = authStore.profileId !== null;
+	const canStartExercise = authStore.profileId !== "";
 
 	return (
 		<div className="w-full h-screen bg-lite-quinary">
@@ -60,12 +60,16 @@ export default function ConsignePage({ params }: { params: { exerciseId: string 
 						</ul>
 						{/* //? tasks = tests unitaire ? */}
 					</div>
-					{!canStartExercise && (
+					{canStartExercise ? (
 						<Link legacyBehavior href={`/exercise/${exercice.id}/ide`}>
 							<a className="mx-auto w-full h-14 m-6 bg-primary rounded-xl hover:bg-slate-700 font-semibold text-xl text-white">
 								Commencer l'exercice
 							</a>
 						</Link>
+					) : (
+						<div className="mx-auto w-full h-14 m-6 bg-red-500 rounded-xl flex items-center justify-center text-white font-semibold text-xl">
+							Impossible de démarrer l'exercice pour le moment.
+						</div>
 					)}
 
 				</div>
