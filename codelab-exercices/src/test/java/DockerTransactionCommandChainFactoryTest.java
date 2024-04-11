@@ -34,13 +34,10 @@ class DockerTransactionCommandChainFactoryTest {
      */
     @Test
     void getChain_withPythonLanguage_shouldReturnPythonDockerTransactionCommandChain() {
-        // Préparation des données nécessaires pour le test
         String language = "python";
 
-        // Appel de la méthode à tester
         DockerTransactionCommandChain chain = factory.getChain(language);
 
-        // Vérification de la classe retournée
         assertInstanceOf(PythonDockerTransactionCommandChain.class, chain);
     }
 
@@ -50,10 +47,8 @@ class DockerTransactionCommandChainFactoryTest {
      */
     @Test
     void getChain_withUnsupportedLanguage_shouldThrowIllegalArgumentException() {
-        // Préparation des données nécessaires pour le test
         String language = "java";
 
-        // Vérification du lancement de l'exception
         assertThrows(IllegalArgumentException.class, () -> factory.getChain(language));
     }
 
@@ -63,7 +58,6 @@ class DockerTransactionCommandChainFactoryTest {
      */
     @Test
     void getChain_withEmptyLanguage_shouldThrowIllegalArgumentException() {
-        // Vérification du lancement de l'exception
         assertThrows(IllegalArgumentException.class, () -> factory.getChain(""));
     }
 }

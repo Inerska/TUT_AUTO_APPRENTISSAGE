@@ -18,8 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-// à terminer
-
 /**
  * Classe de test pour la classe ExerciceService.
  */
@@ -70,60 +68,6 @@ class ExerciceServiceTest {
         assertTrue(result.isPresent());
     }
 
-    /**
-     * Teste le traitement du résultat d'un exercice par ID.
-     * Vérifie qu'aucune exception n'est levée pour un ID valide.
-     */
-    /*@Test
-    void testProcessExerciceResultById_ValidId_ExerciceResultProcessed() {
-        // Given: Préparation des données nécessaires pour le test
-        String validId = "5feb56b8f1f4e56528b6cd28";
-        when(exerciceResultsRepository.findByIdOptional(any(ObjectId.class)))
-                .thenReturn(Optional.of(new ExerciceResults()));
-
-        // When: Exécution de la méthode à tester
-        assertDoesNotThrow(() -> exerciceService.processExerciceResultById(validId));
-    }
-
-    /**
-     * Teste le traitement du résultat d'un exercice par ID.
-     * Vérifie qu'une NotFoundException est levée pour un ID invalide.
-     */
-    /*@Test
-    void testProcessExerciceResultById_InvalidId_ExerciceResultNotFound() {
-        // Given: Préparation des données nécessaires pour le test
-        String invalidId = "invalidId";
-        when(exerciceResultsRepository.findByIdOptional(any(ObjectId.class))).thenReturn(Optional.empty());
-
-        // Then: Vérification des résultats ou du comportement attendu
-        assertThrows(NotFoundException.class, () -> {
-            // When: Exécution de la méthode à tester
-            exerciceService.processExerciceResultById(invalidId);
-        });
-    }
-
-    /**
-     * Teste la mise à jour du résultat d'un exercice.
-     * Vérifie qu'aucune exception n'est levée lors de la mise à jour du résultat.
-     */
-    /*@Test
-    void testUpdateExerciceResult() {
-        // Given: Préparation des données nécessaires pour le test
-        String id = "5feb56b8f1f4e56528b6cd28";
-        String status = "UPDATED";
-        String result = "New result";
-
-        // Mock repository response
-        when(exerciceResultsRepository.findByIdOptional(any(ObjectId.class))).thenReturn(Optional.of(new ExerciceResults()));
-
-        // When: Exécution de la méthode à tester
-        assertDoesNotThrow(() -> exerciceService.updateExerciceResult(id, status, result));
-    }
-
-    /**
-     * Teste la récupération du code de test par ID d'exercice.
-     * Vérifie que le code de test est récupéré avec succès pour un ID d'exercice valide.
-     */
     @Test
     void testGetTestCodeByExerciceId() {
         // Given: Préparation des données nécessaires pour le test
