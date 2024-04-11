@@ -135,7 +135,7 @@ public final class ExerciceService {
                 .filter(exerciceResults -> exerciceResults.id.equals(new ObjectId(id)))
                 .findFirst()
                 .ifPresent(exerciceResults -> {
-                    exerciceResults.status = status;
+                    exerciceResults.status = (result.contains("FAILED")) ? "FAILED" : status; //TODO: fix exercise to return proper status, returns completed even if failed
                     exerciceResults.result = result;
                 });
 
@@ -181,7 +181,6 @@ public final class ExerciceService {
             );
 
             exercice.persist();
-
 
             return Response.ok(exercice.id).build();
         } catch (final Exception e) {

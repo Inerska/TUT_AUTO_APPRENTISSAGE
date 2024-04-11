@@ -3,7 +3,7 @@ import { LucideIcon } from "lucide-react";
 export type StatsItemProps = {
 	icon: LucideIcon;
 	label: string;
-	value: string;
+	value: number;
 };
 
 export type SidebarItem = {

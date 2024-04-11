@@ -6,110 +6,99 @@ import { ChartComponent } from '@/components/ChartComponent';
 import { LanguagesComponent } from '@/components/LanguagesComponent';
 import { StatsComponent } from '@/components/StatsComponent';
 import { Sidebar } from '@/components/Sidebar';
+import {useEffect, useState} from "react";
+import {useGetProfile} from "@/utils/hooks/useGetProfile";
+import {useAuthStore} from "@/store/authState";
 export default function MenuPage() {
 
-	const stats = [
+	const { profile, loading, error } = useGetProfile(useAuthStore().profileId);
+
+	const [stats, setStats] = useState([
 		{
 			icon: BarChart2,
 			label: "Exercice(s) démarré",
-			value: "16"
+			value: 0
 		},
 		{
 			icon: CheckCircle2,
 			label: "Exercice(s) terminé",
-			value: "10"
+			value: 0
 		},
 		{
 			icon: TestTube2Icon,
 			label: "Test(s) réussi",
-			value: "30"
+			value: 0
 		},
 		{
 			icon: LucideLanguages,
 			label: "Langage(s) exercé",
-			value: "2"
+			value: 0
 		},
-	] as StatsItemProps[];
-	const exercices = [
-		{
-			title: "Titre exercice 1",
-			description: "Description de l'exercice 1",
-			finished: false,
-			lang: 'js'
-		},
-		{
-			title: "Titre exercice 2",
-			description: "Description de l'exercice 2",
-			finished: true,
-			lang: 'java'
-		},
-		{
-			title: "Titre exercice 3",
-			description: "Description de l'exercice 3",
-			finished: false,
-			lang: 'cs'
-		},
-		{
-			title: "Titre exercice 4",
-			description: "Description de l'exercice 4",
-			finished: false,
-			lang: 'cpp'
-		},
-		{
-			title: "Titre exercice 5",
-			description: "Description de l'exercice 5",
-			finished: false,
-			lang: 'ruby'
-		},
-		{
-			title: "Titre exercice 6",
-			description: "Description de l'exercice 6",
-			finished: false,
-			lang: 'python'
-		},
-	]
-	const langages = [
-		{
-			placeholder: "Javascript",
-			icon: "/lg/js.png",
-			nbExercices: 6
-		},
-		{
-			placeholder: "Python",
-			icon: "/lg/py.png",
-			nbExercices: 3
-		},
-		{
-			placeholder: "Java",
-			icon: "/lg/java.png",
-			nbExercices: 2
-		},
-		{
-			placeholder: "C#",
-			icon: "/lg/cs.png",
-			nbExercices: 5
-		},
-		{
-			placeholder: "C++",
-			icon: "/lg/cpp.png",
-			nbExercices: 2
-		},
-		{
-			placeholder: "Ruby",
-			icon: "/lg/rb.png",
-			nbExercices: 3
-		},
-		{
-			placeholder: "Go",
-			icon: "/lg/go.png",
-			nbExercices: 8
-		},
-		{
-			placeholder: "Typescript",
-			icon: "/lg/ts.png",
-			nbExercices: 1
-		},
-	]
+	]);
+
+	const [exercices, setExercices] = useState<any[]>([]);
+
+	const [langages, setLangages] = useState<any[]>([]);
+
+	useEffect(() => {
+		console.log("Profile changed:", profile);
+		console.log("Calculating stats...");
+
+		if (profile) {
+			let newStats = [...stats];
+			newStats[0].value = 0;
+			newStats[1].value = 0;
+			newStats[2].value = 0;
+			newStats[3].value = 0;
+
+			let tempExercices: {
+				title: string;
+				description: string;
+				finished: boolean;
+				lang: string;
+			}[] = [];
+
+			let tempLangages = [...langages];
+
+			profile.exercices.forEach(exercice => {
+				if (exercice.status !== "COMPLETED") {
+					newStats[0].value++;
+				} else {
+					newStats[1].value++;
+					newStats[2].value += exercice.exercice.nbTests;
+				}
+
+				// if langage is not in langages, add it
+				const langage = exercice.exercice.language;
+				const langageIndex = tempLangages.findIndex(l => l.placeholder === langage.name);
+				if (langageIndex === -1) {
+					tempLangages.push({
+						placeholder: langage.name,
+						icon: "/lg/"+langage.abbreviation+".png",
+						nbExercices: 1
+					});
+				} else {
+					tempLangages[langageIndex].nbExercices++;
+				}
+
+				tempExercices.push({
+					title: exercice.exercice.title,
+					description: exercice.exercice.description,
+					finished: exercice.status === "COMPLETED",
+					lang: exercice.exercice.language.name
+				});
+
+			});
+
+			newStats[3].value = new Set(
+				profile.exercices.map(exercice => exercice.exercice.language.name)
+			).size;
+
+			setStats(newStats);
+			setExercices(tempExercices);
+			setLangages(tempLangages);
+		}
+	}, [profile]);
 
 	return (
 		<div className="bg-lite-quinary text-dark-quaternary flex overflow-y-hidden overflow-x-hidden">
@@ -120,7 +109,7 @@ export default function MenuPage() {
 			<div className="flex-grow flex flex-col m-0">
 				{/* header */}
 				<header className='bg-dark-quaternary h-20 min-h-20 flex flex-row justify-between items-center'>
-					<p className='text-gray-400 font-light text-xl ml-6'>Bienvenue, <span className='text-lite-primary font-semibold'>Nom d'utilisateur</span></p>
+					<p className='text-gray-400 font-light text-xl ml-6'>Bienvenue, <span className='text-lite-primary font-semibold'>{profile?.username}</span></p>
 					<div className='mr-3 rounded-full w-16 h-16 flex justify-center align-middle border-2 border-black overflow-hidden'>
 						<img src="/next.svg" alt="Avatar" />
 					</div>
