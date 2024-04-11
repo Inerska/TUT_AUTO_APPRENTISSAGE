@@ -14,6 +14,7 @@ import org.arobase.infrastructure.dto.TokensDTO;
 import org.arobase.infrastructure.exception.AuthenticationException;
 import org.arobase.infrastructure.persistance.entity.Account;
 import org.arobase.infrastructure.persistance.repository.AccountRepository;
+import org.arobase.infrastructure.service.api.ProfileAPIService;
 
 /**
  * The auth service.
@@ -42,6 +43,8 @@ public class AuthService {
     @Inject
     TokenManagementService tokenManagementService;
 
+    @Inject
+    ProfileAPIService profileAPIService;
 
     /**
      * The login method.
@@ -82,16 +85,20 @@ public class AuthService {
                         throw new AuthenticationException(Response.Status.BAD_REQUEST, "Passwords do not match");
                     }
 
+                    String profileId = profileAPIService.createProfile(registerCredentials.username());
+
                     String hashedPassword = hashedPasswordService.hashPassword(registerCredentials.password());
                     TokensDTO tokens = tokenManagementService.getTokens(registerCredentials.mail());
 
-                    Account newAccount = new Account(registerCredentials.mail(), hashedPassword, tokens.accessToken(), tokens.refreshToken());
-
+                    Account newAccount = new Account(registerCredentials.mail(), hashedPassword, profileId, tokens.accessToken(), tokens.refreshToken());
 
                     return accountRepository.persistAndFlush(newAccount);
                 }));
-
     }
+
+
+
+
 
 
 

@@ -10,12 +10,14 @@ public class ExerciceSubmitRequest implements MessagingRequest {
     private final String code;
     private final String language;
     private final String exerciceId;
+    private final String profileId;
     private String exerciceResultObjectId;
 
-    public ExerciceSubmitRequest(String code, String language, String exerciceId, String exerciceResultObjectId) {
+    public ExerciceSubmitRequest(String code, String language, String exerciceId, String profileId, String exerciceResultObjectId) {
         this.code = code;
         this.language = language;
         this.exerciceId = exerciceId;
+        this.profileId = profileId;
         this.exerciceResultObjectId = exerciceResultObjectId;
     }
 
@@ -46,5 +48,9 @@ public class ExerciceSubmitRequest implements MessagingRequest {
 
     public String getExerciceId() {
         return exerciceId;
+    }
+
+    public String getProfileId() {
+        return profileId;
     }
 }

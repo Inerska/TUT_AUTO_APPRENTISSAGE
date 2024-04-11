@@ -30,9 +30,9 @@ export default function LoginPage() {
 
 			store.setAccessToken(response.data['access-token']);
 			store.setRefreshToken(response.data['refresh-token']);
-			store.setProfileId(response.data.profileId);
+			store.setProfileId(response.data['profile-id']);
 
-			router.push('/menu');
+			router.push('/');
 		} catch (error) {
 			setError('Échec de la connexion. Veuillez réessayer.');
 			console.error(error);

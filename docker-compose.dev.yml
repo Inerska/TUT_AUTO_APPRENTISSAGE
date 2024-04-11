@@ -17,6 +17,7 @@ services:
       - "traefik.http.middlewares.cors.headers.accessControlAllowOriginList=*"
       - "traefik.http.middlewares.cors.headers.accessControlAllowHeaders=Content-Type"
       - "traefik.http.middlewares.cors.headers.accessControlAllowCredentials=true"
+      - "traefik.docker.network=codelab-dev"
     networks:
       - codelab-dev
 
@@ -38,8 +39,11 @@ services:
       - "traefik.http.middlewares.cors.headers.accessControlAllowOriginList=*"
       - "traefik.http.middlewares.cors.headers.accessControlAllowHeaders=Content-Type"
       - "traefik.http.middlewares.cors.headers.accessControlAllowCredentials=true"
+      - "traefik.docker.network=codelab-dev"
     networks:
-      - codelab-dev
+      codelab-dev:
+        aliases:
+          - "exercices.codelab.local"
     environment:
       - quarkus.http.host=0.0.0.0
       - TESTCONTAINERS_RYUK_DISABLED=true

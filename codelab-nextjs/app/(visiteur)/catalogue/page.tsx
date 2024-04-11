@@ -5,7 +5,7 @@ import {Search} from "lucide-react";
 import Link from "next/link";
 import {useEffect, useState} from "react";
 import {useGetAllLanguages} from "@/utils/hooks/useGetAllLanguages";
-import {GetExerciseDetailsResponse, LanguageItemApi, Languages} from "@/utils/types";
+import {Exercise, LanguageItemApi} from "@/utils/types";
 import {useGetAllExercicesForSupportedLanguages} from "@/utils/hooks/useGetAllExercicesForSupportedLanguages";
 
 export default function CataloguePage() {
@@ -14,7 +14,7 @@ export default function CataloguePage() {
     const [sortDirection, setSortDirection] = useState('desc'); // Nouveau
     const [languageFilter, setLanguageFilter] = useState('');
 
-    const [exercices, setExercises] = useState<GetExerciseDetailsResponse[]>([]); //List exos
+    const [exercices, setExercises] = useState<Exercise[]>([]); //List exos
 
     const [languagesList, setLanguagesList] = useState<LanguageItemApi[]>([]);
 

@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { Exercise, LanguageItemApi, Languages, SubmitExerciseBody } from "@/utils/types";
+import {
+	CreateExerciseBody,
+	Exercise,
+	LanguageItemApi,
+	SubmitExerciseBody
+} from "@/utils/types";
 
 const baseUrl = 'http://exercices.codelab.local:81/api/v1';
 const API_URL = `${baseUrl}/exercices`;
@@ -51,22 +56,35 @@ export const getAllExercicesForSupportedLanguages = async (languages: LanguageIt
 		console.error(error);
 	}
 
-	// exercices.map(
-	// 	(exercise) => {
-	// 		return {
-	// 			title: exercise.title ?? "Titre python",
-	// 			description: "Description js",
-	// 			banner: exercise.banner ?? "https://via.placeholder.com/150x120",
-	// 			author: exercise.author,
-	// 			language: exercise.language,
-	// 			difficulty: "Facile",
-	// 			createdAt: exercise.createdAt ?? new Date(),
-	// 			id: exercise.id,
-	// 			tasks: ["Créer une méthode Hello World", "Vérifier une condition", "Afficher un message de bienvenue"],
-	// 			testCode: exercise.testCode,
-	// 			nbTest: 5
-	// 		};
-	// 	}
-	// );
 	return exercices;
 }
+
+export const getProfil = async (profilId: string) => {
+	try {
+		const response = await axios.get(`${baseUrl}/profil/${profilId}`);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export const createExercise = async (exerciseData: CreateExerciseBody) => {
+	try {
+		const response = await axios.post(`${API_URL}/create`, exerciseData);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		return null;
+	}
+};
+
+export const getAllDifficulties = async () => {
+	try {
+		const response = await axios.get(`${baseUrl}/difficulties`);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+

@@ -1,9 +1,12 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import {useAuthStore} from "@/store/authState";
 
 export const HeaderComponent = ({ admin }: { admin?: boolean }) => {
 	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+
+	const profile = useAuthStore().profileId;
 
 	return (
 		<header className="bg-white w-full">
@@ -40,8 +43,11 @@ export const HeaderComponent = ({ admin }: { admin?: boolean }) => {
 					{admin && (
 						<Link href={"/menu"} className="text-lg font-semibold leading-6 text-gray-900">Menu  <span aria-hidden="true">&rarr;</span></Link>
 					)}
-					{!admin && (
+					{!admin && !profile && (
 						<Link href={"/login"} className="text-lg font-semibold leading-6 text-gray-900">Connexion  <span aria-hidden="true">&rarr;</span></Link>
+					)}
+					{profile && (
+						<p  className="text-lg font-semibold leading-6 text-gray-900"> {profile} <span aria-hidden="true">&rarr;</span></p>
 					)}
 				</div>
 			</nav>

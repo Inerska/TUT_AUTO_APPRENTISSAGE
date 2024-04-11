@@ -4,9 +4,10 @@ import Editor, {Monaco} from "@monaco-editor/react";
 import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select";
 import {HeaderComponent} from "@/components/HeaderComponent";
 import {useGetExerciseDetails} from "@/utils/hooks/useGetExerciseDetails";
-import {GetExerciseDetailsResponse, Languages} from "@/utils/types";
+import {Exercise, Languages} from "@/utils/types";
 import {useSubmitExercise} from "@/utils/hooks/useSubmitExercise";
 import {useGetExerciseResults} from "@/utils/hooks/useGetExerciseResults";
+import {useAuthStore} from "@/store/authState";
 
 interface ConsoleEntry {
 	message: string;
@@ -30,7 +31,7 @@ export default function IdePage({ params }: { params: { exerciseId: string } }) 
 
 	const [loading, setLoading] = useState(false);
 
-	const [exercice, setExercice] = useState<GetExerciseDetailsResponse>(
+	const [exercice, setExercice] = useState<Exercise>(
 		{
 			id: "",
 			title: "Chargement...",
@@ -118,6 +119,7 @@ export default function IdePage({ params }: { params: { exerciseId: string } }) 
 		language: exercice.language.name,
 		code: sendCode,
 		exerciceId: exercice.id,
+		profileId: useAuthStore().profileId
 	});
 
 	const {

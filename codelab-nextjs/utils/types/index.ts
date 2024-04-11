@@ -3,7 +3,7 @@ import { LucideIcon } from "lucide-react";
 export type StatsItemProps = {
 	icon: LucideIcon;
 	label: string;
-	value: string;
+	value: number;
 };
 
 export type SidebarItem = {
@@ -15,13 +15,13 @@ export type SidebarItem = {
 
 export enum Languages {
 	PYTHON = "python",
-  // JAVASCRIPT = "javascript",
-  // JAVA = "java",
-  // CSHARP = "csharp",
-  // CPP = "cpp",
-  // RUBY = "ruby",
-  // GO = "go",
-  // TYPESCRIPT = "typescript",
+    JAVASCRIPT = "javascript",
+    JAVA = "java",
+    CSHARP = "csharp",
+    CPP = "cpp",
+    RUBY = "ruby",
+    GO = "go",
+    TYPESCRIPT = "typescript",
 }
 
 export type LanguageItemApi = {
@@ -30,13 +30,13 @@ export type LanguageItemApi = {
 }
 
 export interface AuthState {
-	profileId: string | null;
+	profileId: string;
 	accessToken: string;
 	refreshToken: string;
 }
 
 export interface AuthActions {
-	setProfileId: (profileId: string | null) => void;
+	setProfileId: (profileId: string ) => void;
 	setAccessToken: (accessToken: string) => void;
 	setRefreshToken: (refreshToken: string) => void;
 	logout: () => void;
@@ -50,7 +50,7 @@ export type LoginBody = {
 	password: string;
 };
 export type LoginResponse = {
-	profileId: string;
+	"profile-id": string;
 	"access-token": string;
 	"refresh-token": string;
 };
@@ -61,7 +61,7 @@ export type RegisterBody = {
 	"confirm-password": string;
 };
 export type RegisterResponse = {
-	profileId: string;
+	"profile-id": string;
 	"access-token": string;
 	"refresh-token": string;
 };
@@ -79,11 +79,7 @@ export type Exercise = {
 	title: string;
 	description: string;
 	instructions: string;
-	tasks: {
-		id: string;
-		content: string;
-		order: number;
-	}[];
+	tasks: Task[];
 	banner: string;
 	author: string;
 	testCode: string;
@@ -92,18 +88,27 @@ export type Exercise = {
 		name: Languages;
 		abbreviation: string;
 	};
-	difficulty: {
-		id: string;
-		name: string;
-	};
+	difficulty: Difficulty;
 	nbTests: number;
 	createdAt: string;
 }
+
+export type Task = {
+	id: string;
+	content: string;
+	order: number;
+};
+
+export type Difficulty = {
+	id: string;
+	name: string;
+};
 
 export type SubmitExerciseBody = {
 	language: Languages;
 	code: string;
 	exerciceId: string
+	profileId: string;
 };
 
 export type SubmitExerciseResponse = {
@@ -112,21 +117,35 @@ export type SubmitExerciseResponse = {
 };
 
 export type CreateExerciseBody = {
-	language: Languages;
-	testCode: string;
+	title: string;
+	description: string;
+	instructions: string;
+	tasks: { content: string; order: number }[];
+	banner: string;
 	author: string;
-};
+	testCode: string;
+	language: {name: Languages; abbreviation: string };
+	difficulty: { name: string };
+	nbTests: number;
+	createdAt: string;
+}
+
 export type CreateExerciseResponse = {
-	language: string;
-	testCode: string;
-	author: string;
+	id: string;
 };
 
 export type GetResultsExerciceResponse = {
 	id: string;
 	status: "PENDING"|"ERROR"|"COMPLETED";
 	result: string;
+	exercice: Exercise;
 	timestamp: string;
 	errorDetails: string|null;
 	additionalInfo: string|null;
 };
+
+export type GetUserProfileResponse = {
+	id: string;
+	username: string;
+	exercices: GetResultsExerciceResponse[];
+}

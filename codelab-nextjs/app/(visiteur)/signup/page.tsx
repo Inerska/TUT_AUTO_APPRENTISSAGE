@@ -46,9 +46,11 @@ export default function SignupPage() {
 
 			store.setAccessToken(response.data['access-token']);
 			store.setRefreshToken(response.data['refresh-token']);
-			store.setProfileId(response.data.profileId);
+			store.setProfileId(response.data['profile-id']);
 
-			router.push('/menu');
+			console.log(response);
+
+			router.push('/');
 
 
 		} catch (error: any) {

@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 public class ExerciceResults extends PanacheMongoEntity {
     public String status;
     public String result;
+    public Exercice exercice;
     public LocalDateTime timestamp = LocalDateTime.now();
     public String errorDetails;
     public String additionalInfo;

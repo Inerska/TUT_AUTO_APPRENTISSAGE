@@ -1,5 +1,6 @@
 package org.arobase.infrastructure.persistance.entity;
 
+import io.quarkus.hibernate.reactive.panache.PanacheEntity;
 import jakarta.persistence.*;
 
 /**
@@ -28,6 +29,12 @@ public class Account {
     private String password;
 
     /**
+     * The profile id of the account.
+     */
+    @Column
+    private String profileId;
+
+    /**
      * The access token of the account.
      */
     @Column(name = "access_token", columnDefinition = "TEXT")
@@ -41,9 +48,10 @@ public class Account {
 
     public Account(){}
 
-    public Account(String mail, String password, String accessToken, String refreshToken) {
+    public Account(String mail, String password, String profileId, String accessToken, String refreshToken) {
         this.mail = mail;
         this.password = password;
+        this.profileId = profileId;
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
     }
@@ -62,6 +70,14 @@ public class Account {
      */
     public String getPassword() {
         return password;
+    }
+
+    /**
+     * The profile id getter.
+     * @return The profile id.
+     */
+    public String getProfileId() {
+        return profileId;
     }
 
     /**

@@ -2,14 +2,14 @@
 import {HeaderComponent} from "@/components/HeaderComponent";
 import {useEffect, useState} from "react";
 import {useGetExerciseDetails} from "@/utils/hooks/useGetExerciseDetails";
-import {GetExerciseDetailsResponse, Languages} from "@/utils/types";
+import {Exercise, Languages} from "@/utils/types";
 import Link from "next/link";
 
 export default function ConsignePage({ params }: { params: { exerciseId: string } }) {
 
 	const exerciseId = params.exerciseId;
 
-	const [exercice, setExercice] = useState<GetExerciseDetailsResponse>({
+	const [exercice, setExercice] = useState<Exercise>({
 		id: "",
 		title: "Chargement...",
 		description: "Chargement...",
