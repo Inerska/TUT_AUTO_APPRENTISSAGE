@@ -14,7 +14,9 @@ export default function MenuPage() {
 
 	const { profile, loading, error } = useGetProfile(useAuthStore().profileId);
 
-	if (!profile) {
+	const currentProfile = useAuthStore()
+
+	if (currentProfile.profileId === "") {
 		redirect("/login")
 		return;
 	}
