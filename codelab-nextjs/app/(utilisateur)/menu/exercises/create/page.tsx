@@ -246,7 +246,7 @@ export default function MenuCreateExercise() {
 							id="difficulties"
 							className="w-full border rounded px-3 py-2"
 						>
-							{difficulties.map((difficulty) => (
+							{difficulties?.map((difficulty) => (
 								<option key={difficulty.id} value={difficulty.name}>
 									{difficulty.name}
 								</option>
