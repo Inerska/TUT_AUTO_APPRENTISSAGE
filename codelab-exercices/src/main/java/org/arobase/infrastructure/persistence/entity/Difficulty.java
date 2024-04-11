@@ -15,12 +15,6 @@ public class Difficulty extends PanacheMongoEntity {
      */
     public String name;
 
-    public ObjectId id;
-
-    public void setId(String validId) {
-        this.id = new ObjectId(validId);
-    }
-
     public String getName() {
         return name;
     }

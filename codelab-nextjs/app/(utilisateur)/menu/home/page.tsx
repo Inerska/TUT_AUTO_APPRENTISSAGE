@@ -9,9 +9,17 @@ import { Sidebar } from '@/components/Sidebar';
 import {useEffect, useState} from "react";
 import {useGetProfile} from "@/utils/hooks/useGetProfile";
 import {useAuthStore} from "@/store/authState";
+import {redirect} from "next/navigation";
 export default function MenuPage() {
 
 	const { profile, loading, error } = useGetProfile(useAuthStore().profileId);
+
+	const currentProfile = useAuthStore()
+
+	if (currentProfile.profileId === "") {
+		redirect("/login")
+		return;
+	}
 
 	const [stats, setStats] = useState([
 		{

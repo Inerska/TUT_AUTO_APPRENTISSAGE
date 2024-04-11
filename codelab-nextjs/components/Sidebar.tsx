@@ -43,6 +43,7 @@ export const Sidebar = ({ selected, admin }: { selected: string, admin?: boolean
 		{
 			icon: LogOut,
 			label: "Déconnexion",
+			link: "/logout",
 			separatorNext: `${admin}` ? true : false,
 		},
 	]

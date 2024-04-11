@@ -5,6 +5,9 @@ import { Sidebar } from '@/components/Sidebar';
 import {useCreateExercise} from "@/utils/hooks/useCreateExercise";
 import {useGetAllDifficulties} from "@/utils/hooks/useGetAllDifficulties";
 import {useGetAllLanguages} from "@/utils/hooks/useGetAllLanguages";
+import {redirect} from "next/navigation";
+import {useAuthStore} from "@/store/authState";
+import {useGetProfile} from "@/utils/hooks/useGetProfile";
 
 export default function MenuCreateExercise() {
 	const [exercise, setExercise] = useState<CreateExerciseBody>
@@ -110,7 +113,13 @@ export default function MenuCreateExercise() {
 		console.log(exercise);
 		setIsExerciseSubmitted(false);
 
+		redirect('/catalogue');
 	};
+
+	const { profile, loading, error } = useGetProfile(useAuthStore().profileId);
+
+	exercise.author = profile?.username
+	exercise.banner = 'https://picsum.photos/200/300';
 
 	return (
 		<div className="bg-lite-quinary text-black flex overflow-y-hidden overflow-x-hidden">
@@ -246,7 +255,7 @@ export default function MenuCreateExercise() {
 							id="difficulties"
 							className="w-full border rounded px-3 py-2"
 						>
-							{difficulties.map((difficulty) => (
+							{difficulties?.map((difficulty) => (
 								<option key={difficulty.id} value={difficulty.name}>
 									{difficulty.name}
 								</option>

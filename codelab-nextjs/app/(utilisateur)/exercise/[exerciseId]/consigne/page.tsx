@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import {useGetExerciseDetails} from "@/utils/hooks/useGetExerciseDetails";
 import {Exercise, Languages} from "@/utils/types";
 import Link from "next/link";
+import {useAuthStore} from "@/store/authState";
 
 export default function ConsignePage({ params }: { params: { exerciseId: string } }) {
 
@@ -40,6 +41,9 @@ export default function ConsignePage({ params }: { params: { exerciseId: string 
 		}
 	}, [dataExo]);
 
+	const authStore = useAuthStore();
+	const canStartExercise = authStore.profileId !== "";
+
 	return (
 		<div className="w-full h-screen bg-lite-quinary">
 			<HeaderComponent />
@@ -56,12 +60,18 @@ export default function ConsignePage({ params }: { params: { exerciseId: string 
 						</ul>
 						{/* //? tasks = tests unitaire ? */}
 					</div>
-					<Link legacyBehavior href={`/exercise/${exercice.id}/ide`}>
-						<a
-							className=" mx-auto w-full h-14 m-6 bg-primary rounded-xl hover:bg-slate-700 font-semibold text-xl text-white">
-							Commencer l'exercice
-						</a>
-					</Link>
+					{canStartExercise ? (
+						<Link legacyBehavior href={`/exercise/${exercice.id}/ide`}>
+							<a className="mx-auto w-full h-14 m-6 bg-primary rounded-xl hover:bg-slate-700 font-semibold text-xl text-white">
+								Commencer l'exercice
+							</a>
+						</Link>
+					) : (
+						<div className="mx-auto w-full h-14 m-6 bg-red-500 rounded-xl flex items-center justify-center text-white font-semibold text-xl">
+							Impossible de démarrer l'exercice pour le moment.
+						</div>
+					)}
+
 				</div>
 				{/* conteneur droit */}
 				<div className="flex flex-col">

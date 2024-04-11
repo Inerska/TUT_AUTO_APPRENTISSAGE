@@ -2,11 +2,12 @@
 import Link from "next/link";
 import { useState } from "react";
 import {useAuthStore} from "@/store/authState";
+import {useGetProfile} from "@/utils/hooks/useGetProfile";
 
 export const HeaderComponent = ({ admin }: { admin?: boolean }) => {
 	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
-	const profile = useAuthStore().profileId;
+	const { profile, loading, error } = useGetProfile(useAuthStore().profileId);
 
 	return (
 		<header className="bg-white w-full">
@@ -47,7 +48,7 @@ export const HeaderComponent = ({ admin }: { admin?: boolean }) => {
 						<Link href={"/login"} className="text-lg font-semibold leading-6 text-gray-900">Connexion  <span aria-hidden="true">&rarr;</span></Link>
 					)}
 					{profile && (
-						<p  className="text-lg font-semibold leading-6 text-gray-900"> {profile} <span aria-hidden="true">&rarr;</span></p>
+						<Link href={"/menu/home"} className="text-lg font-semibold leading-6 text-gray-900"> {profile.username} <span aria-hidden="true">&rarr;</span></Link>
 					)}
 				</div>
 			</nav>
