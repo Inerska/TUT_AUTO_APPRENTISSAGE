@@ -83,4 +83,28 @@ public class ExerciceController {
         return Response.ok("Exercice deleted successfully.").build();
     }
 
+    @PATCH
+    @Path("/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response modifyExercice(@PathParam("id") String id, ExerciceCreateRequest exerciceCreateRequest) {
+        logger.info("PATCH /api/v1/exercices/" + id + " called.");
+
+        bodyValidatorService.validateBody(exerciceCreateRequest);
+
+        exerciceService.modifyExercice(id, exerciceCreateRequest);
+
+        return Response.ok("Exercice modified successfully.").build();
+    }
+
+    //all exercise created by a user (profileId)
+    @GET
+    @Path("/profile/{profileId}")
+    public Response getExercicesByProfileId(@PathParam("profileId") String profileId) {
+        logger.info("GET /api/v1/exercices/profile/" + profileId + " called.");
+
+        final var exercices = exerciceService.listExercicesByProfileId(profileId);
+
+        return Response.ok(exercices).build();
+    }
+
 }

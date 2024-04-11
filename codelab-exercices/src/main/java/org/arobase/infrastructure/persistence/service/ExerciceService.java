@@ -1,5 +1,6 @@
 package org.arobase.infrastructure.persistence.service;
 
+import io.quarkus.mongodb.panache.PanacheMongoEntityBase;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.NotFoundException;
@@ -28,17 +29,20 @@ public final class ExerciceService {
 
     private final DifficultyRepository difficultyRepository;
 
+    private final TaskRepository taskRepository;
+
     private final Logger logger;
 
     @Channel("exercice-submitted")
     Emitter<ExerciceSubmitRequest> exerciceEmitter;
 
-    public ExerciceService(ExerciceResultsRepository exerciceResultsRepository, ExerciceRepository exerciceRepository, LanguageRepository languageRepository, ProfileRepository profileRepository, DifficultyRepository difficultyRepository, Logger logger) {
+    public ExerciceService(ExerciceResultsRepository exerciceResultsRepository, ExerciceRepository exerciceRepository, LanguageRepository languageRepository, ProfileRepository profileRepository, DifficultyRepository difficultyRepository, TaskRepository taskRepository, Logger logger) {
         this.exerciceResultsRepository = exerciceResultsRepository;
         this.exerciceRepository = exerciceRepository;
         this.languageRepository = languageRepository;
         this.profileRepository = profileRepository;
         this.difficultyRepository = difficultyRepository;
+        this.taskRepository = taskRepository;
         this.logger = logger;
     }
 
@@ -163,12 +167,18 @@ public final class ExerciceService {
             exercice.tasks.forEach(task -> task.persist());
 
             //if language used in exercice does not exist, create it otherwise update it to use existing one
-            var language = languageRepository.find("name", exercice.language.name).firstResultOptional();
-            exercice.language = language.orElseThrow(() -> new NotFoundException("Language not found."));
+            languageRepository.find("name", exercice.language.name)
+            .firstResultOptional().ifPresentOrElse(
+                    value -> exercice.language = value,
+                    () -> exercice.language.persist()
+            );
 
             //if difficulty used in exercice does not exist, create it otherwise update it to use existing one
-            var difficulty = difficultyRepository.find("name", exercice.difficulty.name).firstResultOptional();
-            exercice.difficulty = difficulty.orElseThrow(() -> new NotFoundException("Difficulty not found."));
+            difficultyRepository.find("name", exercice.difficulty.name).firstResultOptional()
+            .ifPresentOrElse(
+                    value -> exercice.difficulty = value,
+                    () -> exercice.difficulty.persist()
+            );
 
             exercice.persist();
 
@@ -220,5 +230,86 @@ public final class ExerciceService {
         exercice.delete();
     }
 
+    /**
+     * Modify an exercice by id.
+     * @param id the exercice id
+     * @param exerciceCreateRequest the exercice create request
+     */
+    public void modifyExercice(final String id, final ExerciceCreateRequest exerciceCreateRequest) {
+        final var exercice = exerciceRepository.findByIdOptional(new ObjectId(id)).orElseThrow(() -> new NotFoundException("Exercice not found."));
+
+        exercice.title = exerciceCreateRequest.getTitle();
+        exercice.description = exerciceCreateRequest.getDescription();
+        exercice.instructions = exerciceCreateRequest.getInstructions();
+        exercice.banner = exerciceCreateRequest.getBanner();
+        exercice.author = exerciceCreateRequest.getAuthor();
+        exercice.testCode = exerciceCreateRequest.getTestCode();
+        exercice.language = exerciceCreateRequest.getLanguage();
+        exercice.difficulty = exerciceCreateRequest.getDifficulty();
+        exercice.nbTests = exerciceCreateRequest.getNbTests();
+        exercice.createdAt = exerciceCreateRequest.getCreatedAt();
+
+        try {
+            //chage tasks only if they have been modified to avoid database spam
+                //for each task in exerciceCreateRequest
+                    //if id is present means it should be updated
+                        //find task, update content and order
+                    //if id is not present means it should be created
+                        //persist task
+                //delete all and add all tasks from exerciceCreateRequest
+                    //we should only have now the updated tasks
+
+            exerciceCreateRequest.getTasks().forEach(task -> {
+                if (task.id != null) {
+                    final var taskToUpdate = taskRepository.findByIdOptional(task.id).orElseThrow(() -> new NotFoundException("Task not found."));
+                    taskToUpdate.content = task.content;
+                    taskToUpdate.order = task.order;
+                    taskToUpdate.update();
+                } else {
+                    task.persist();
+                }
+            });
+
+            exercice.tasks.clear();
+
+            exercice.tasks.addAll(exerciceCreateRequest.getTasks());
+
+            //if language used in exercice does not exist, create it otherwise update it to use existing one
+            languageRepository.find("name", exercice.language.name)
+            .firstResultOptional().ifPresentOrElse(
+                    value -> exercice.language = value,
+                    () -> exercice.language.persist()
+            );
+
+            //if difficulty used in exercice does not exist, create it otherwise update it to use existing one
+            difficultyRepository.find("name", exercice.difficulty.name).firstResultOptional()
+            .ifPresentOrElse(
+                    value -> exercice.difficulty = value,
+                    () -> exercice.difficulty.persist()
+            );
+
+            exercice.update();
+        } catch (final Exception e) {
+            logger.error("Error while modifying exercice.", e);
+            throw new RuntimeException("Error while modifying exercice.");
+        }
+    }
+
+    /**
+     * Get exercices by profile id.
+     * @param profileId the profile id
+     * @return the list of exercices
+     */
+    public Uni<List<Exercice>> listExercicesByProfileId(final String profileId) {
+        //get user from profileId
+        //get all exercises where author = username in exercices
+        return Uni.createFrom().item(
+                () -> exerciceRepository.list("author",
+                    profileRepository.findByIdOptional(
+                            new ObjectId(profileId)
+                    ).orElseThrow(() -> new NotFoundException("Profile not found.")).username
+                )
+        );
+    }
 }
 
