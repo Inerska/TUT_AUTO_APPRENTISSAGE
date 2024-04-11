@@ -168,13 +168,13 @@ export default function IdePage({ params }: { params: { exerciseId: string } }) 
 	}
 
 	return (
-		<div className="">
+		<div className="flex flex-col min-h-screen">
 			<HeaderComponent />
-			<main className="flex  justify-center overflow-hidden h-screen bg-lite-quinary ">
-				<section className="flex flex-col  w-4/6 h-5/6 m-8 bg-white rounded-xl">
-					<div className="px-6">
-						<h2 className="text-xl font-semibold mb-2 mt-8">Editeur de code</h2>
-						<div className="flex gap-5 m-auto mb-2">
+			<main className="flex-grow flex justify-center bg-lite-quinary p-8">
+				<div className="flex flex-col lg:flex-row w-full max-w-7xl gap-8">
+					<section className="flex flex-col flex-grow bg-white rounded-xl p-6">
+						<h2 className="text-xl font-semibold mb-4">Editeur de code</h2>
+						<div className="flex gap-4 mb-4">
 							<Select onValueChange={(value) => setCurrentTheme(value)}>
 								<SelectTrigger className="w-64">
 									<SelectValue placeholder={currentTheme} />
@@ -188,57 +188,53 @@ export default function IdePage({ params }: { params: { exerciseId: string } }) 
 							</Select>
 						</div>
 						<Editor
-							onChange={
-								(value: any) => {
-									setEditorCode(value)
-									if (value !== savedCode && !isDirty) setIsDirty(true)
-									else if (value === savedCode) setIsDirty(false)
-								}
-							}
+							onChange={(value: any) => {
+								setEditorCode(value);
+								setIsDirty(value !== savedCode);
+							}}
 							language={exercice.language.name}
-							className="border border-black border-opacity-20 py-1 h-4/5 w-auto overflow-hidden"
+							className="border border-gray-200 rounded-md flex-grow"
 							defaultValue={editorCode}
 							theme={currentTheme}
 							onMount={handleEditorDidMount}
 						/>
-					</div>
-					<div className="px-6 h-auto">
-						<div className="bg-white p-4 text-black border border-black border-opacity-20">
-							<pre className="mb-2">
-								<code className="border-b border-black font-semibold">
-									Terminal
-								</code>
-							</pre>
-							<pre ref={consoleRef} className="flex flex-col overflow-y-scroll h-36">
-								{consoleOutput && consoleOutput.map((entry, index) => (
-									<code key={index} className={entry.isServer ? "text-green-700" : "text-blue-700"}>
-										{entry.isServer ? 'S:\\Serveur> ' : 'C:\\Users\\username> '}{entry.message}
-									</code>
-								))}
-							</pre>
+						<div className="mt-6">
+							<h3 className="text-lg font-semibold mb-2">Terminal</h3>
+							<div className="bg-gray-900 text-white p-4 rounded-md h-64 overflow-y-auto">
+              <pre ref={consoleRef}>
+                {consoleOutput.map((entry, index) => (
+					<code key={index} className={entry.isServer ? "text-green-400" : "text-blue-400"}>
+						{entry.isServer ? '/home/scruzlara/python> ' : '/home/user> '} {entry.message + "\n"}
+					</code>
+				))}
+              </pre>
+							</div>
 						</div>
-					</div>
-				</section>
-				<aside className="flex flex-col justify-between w-96 h-5/6 p-6 overflow-y-auto m-8 bg-white rounded-xl">
-					<div>
+					</section>
+					<aside className="lg:w-96 bg-white rounded-xl p-6">
 						<h2 className="text-xl font-semibold mb-4">{exercice.title}</h2>
-						<p className="text-gray-600 dark:text-gray-400">{exercice.instructions}</p>
-						<h3 className="text-lg font-semibold mt-6 mb-2">Objectifs</h3>
-						<ul className="list-inside text-gray-600 dark:text-gray-400 list-none">
+						<p className="text-gray-600 mb-6">{exercice.instructions}</p>
+						<h3 className="text-lg font-semibold mb-2">Objectifs</h3>
+						<ul className="list-none mb-6">
 							{exercice.tasks.map((task, index) => (
-								<li key={index} className="flex items-center"><span className="flex items-center justify-center border w-7 h-7 rounded-full mr-2 my-1">{index + 1}</span> {task.content}</li>
+								<li key={index} className="flex items-center mb-2">
+									<span className="flex items-center justify-center border w-7 h-7 rounded-full mr-2">{index + 1}</span>
+									{task.content}
+								</li>
 							))}
 						</ul>
-						<h3 className="text-lg font-semibold mt-6 mb-2">L'exercice sera terminé une fois tous les objectifs terminés</h3>
-						<p className="text-gray-600 dark:text-gray-400">Lorsque vous souhaiterez essayer votre code, appuyez sur le bouton "Tester le code".</p>
-						<p className="text-gray-600 dark:text-gray-400 mt-2">N'hésitez pas à sauvegarder régulièrement ! </p>
-					</div>
-
-					<div className="flex flex-col items-center py-4">
-						<button className="w-full bg-lite-primary py-2 my-2 rounded-xl text-white text-xl" onClick={handleSave}>Sauvegarder</button>
-						<button className="w-full bg-dark-secondary py-2 rounded-xl text-white text-xl" onClick={handleSubmit}>Tester le code</button>
-					</div>
-				</aside>
+						<p className="text-gray-600 mb-2">L'exercice sera terminé une fois tous les objectifs atteints.</p>
+						<p className="text-gray-600 mb-6">Lorsque vous souhaiterez essayer votre code, appuyez sur le bouton "Tester le code".</p>
+						<div className="flex flex-col gap-4">
+							<button className="bg-lite-primary text-white rounded-md py-2 px-4" onClick={handleSave}>
+								Sauvegarder
+							</button>
+							<button className="bg-dark-secondary text-white rounded-md py-2 px-4" onClick={handleSubmit}>
+								Tester le code
+							</button>
+						</div>
+					</aside>
+				</div>
 			</main>
 		</div>
 	);
