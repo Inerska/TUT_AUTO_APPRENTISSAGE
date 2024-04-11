@@ -15,13 +15,13 @@ export type SidebarItem = {
 
 export enum Languages {
 	PYTHON = "python",
-  // JAVASCRIPT = "javascript",
-  // JAVA = "java",
-  // CSHARP = "csharp",
-  // CPP = "cpp",
-  // RUBY = "ruby",
-  // GO = "go",
-  // TYPESCRIPT = "typescript",
+    JAVASCRIPT = "javascript",
+    JAVA = "java",
+    CSHARP = "csharp",
+    CPP = "cpp",
+    RUBY = "ruby",
+    GO = "go",
+    TYPESCRIPT = "typescript",
 }
 
 export type LanguageItemApi = {
@@ -79,11 +79,7 @@ export type Exercise = {
 	title: string;
 	description: string;
 	instructions: string;
-	tasks: {
-		id: string;
-		content: string;
-		order: number;
-	}[];
+	tasks: Task[];
 	banner: string;
 	author: string;
 	testCode: string;
@@ -92,13 +88,21 @@ export type Exercise = {
 		name: Languages;
 		abbreviation: string;
 	};
-	difficulty: {
-		id: string;
-		name: string;
-	};
+	difficulty: Difficulty;
 	nbTests: number;
 	createdAt: string;
 }
+
+export type Task = {
+	id: string;
+	content: string;
+	order: number;
+};
+
+export type Difficulty = {
+	id: string;
+	name: string;
+};
 
 export type SubmitExerciseBody = {
 	language: Languages;
@@ -113,14 +117,21 @@ export type SubmitExerciseResponse = {
 };
 
 export type CreateExerciseBody = {
-	language: Languages;
-	testCode: string;
+	title: string;
+	description: string;
+	instructions: string;
+	tasks: { content: string; order: number }[];
+	banner: string;
 	author: string;
-};
+	testCode: string;
+	language: {name: Languages; abbreviation: string };
+	difficulty: { name: string };
+	nbTests: number;
+	createdAt: string;
+}
+
 export type CreateExerciseResponse = {
-	language: string;
-	testCode: string;
-	author: string;
+	id: string;
 };
 
 export type GetResultsExerciceResponse = {

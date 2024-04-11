@@ -1,11 +1,14 @@
 "use client";
 import React, { useState } from 'react';
-import { Exercise, Languages } from '@/utils/types';
+import {CreateExerciseBody, Languages} from '@/utils/types';
 import { Sidebar } from '@/components/Sidebar';
+import {useCreateExercise} from "@/utils/hooks/useCreateExercise";
+import {useGetAllDifficulties} from "@/utils/hooks/useGetAllDifficulties";
+import {useGetAllLanguages} from "@/utils/hooks/useGetAllLanguages";
 
 export default function MenuCreateExercise() {
-	const [exercise, setExercise] = useState<Exercise>({
-		id: '',
+	const [exercise, setExercise] = useState<CreateExerciseBody>
+	({
 		title: '',
 		description: '',
 		instructions: '',
@@ -14,25 +17,47 @@ export default function MenuCreateExercise() {
 		author: '',
 		testCode: '',
 		language: {
-			id: '',
 			name: Languages.PYTHON,
 			abbreviation: '',
 		},
 		difficulty: {
-			id: '',
 			name: '',
 		},
 		nbTests: 0,
 		createdAt: '',
 	});
 
+	//const for difficutlies and languages
+
+	const { difficulties, loading: loadingDifficulties, error: errorDifficulties } = useGetAllDifficulties()
+
+	const { languages, loading: loadingLanguages, error: errorLanguages } = useGetAllLanguages()
+
 	const handleInputChange = (e: React.ChangeEvent<any>) => {
 		const { name, value } = e.target;
 
-		setExercise((prevExercise) => ({
-			...prevExercise,
-			[name]: value,
-		}));
+		if (name === 'language') {
+			setExercise((prevExercise) => ({
+				...prevExercise,
+				language: {
+					...prevExercise.language,
+					name: value,
+				},
+			}));
+		} else if (name === 'difficulty') {
+			setExercise((prevExercise) => ({
+				...prevExercise,
+				difficulty: {
+					...prevExercise.difficulty,
+					name: value,
+				},
+			}));
+		} else {
+			setExercise((prevExercise) => ({
+				...prevExercise,
+				[name]: value,
+			}));
+		}
 	};
 
 	const handleTaskChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +74,7 @@ export default function MenuCreateExercise() {
 	const addTask = () => {
 		setExercise((prevExercise) => ({
 			...prevExercise,
-			tasks: [...prevExercise.tasks, { id: '', content: '', order: prevExercise.tasks.length }],
+			tasks: [...prevExercise.tasks, {content: '', order: prevExercise.tasks.length }],
 		}));
 	};
 
@@ -60,11 +85,30 @@ export default function MenuCreateExercise() {
 		}));
 	};
 
+	const {
+		response: responseCreateExercise,
+		loading: loadingCreateExercise,
+		error: errorCreateExercise,
+		setIsExerciseSubmitted
+	} = useCreateExercise(exercise);
+
+
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log(exercise);
 
-		//TODO : créer l'exercice dans la base de données
+		exercise.createdAt = new Date().toISOString();
+
+		const foundLanguage = Object.values(languages).find(language => language.name == exercise.language.name);
+
+		if (foundLanguage) {
+			exercise.language.abbreviation = foundLanguage.abbreviation;
+		} else {
+			console.error('Language not found');
+			return;
+		}
+
+		console.log(exercise);
+		setIsExerciseSubmitted(false);
 
 	};
 
@@ -114,7 +158,7 @@ export default function MenuCreateExercise() {
 					<div>
 						<label className="block font-medium mb-1">Tâches</label>
 						{exercise.tasks.map((task, index) => (
-							<div key={task.id} className="flex items-center mb-2">
+							<div key={task.order} className="flex items-center mb-2">
 								<input
 									type="text"
 									name="content"
@@ -181,32 +225,33 @@ export default function MenuCreateExercise() {
 						<label htmlFor="language" className="block font-medium mb-1">
 							Langage
 						</label>
-						<select
-							id="language"
-							name="language.name"
-							value={exercise.language.name}
-							onChange={handleInputChange}
+						<input id="language" name="language" type="text" value={exercise.language.name} onChange={handleInputChange} list="languages" className="w-full border rounded px-3 py-2" />
+						<datalist
+							id="languages"
 							className="w-full border rounded px-3 py-2"
 						>
-							{Object.values(Languages).map((language) => (
-								<option key={language} value={language}>
-									{language}
+							{Object.values(languages).map((language) => (
+								<option key={language.name} value={language.name}>
+									{language.name}
 								</option>
 							))}
-						</select>
+						</datalist>
 					</div>
 					<div className="mb-4">
 						<label htmlFor="difficulty" className="block font-medium mb-1">
 							Difficulté
 						</label>
-						<input
-							type="text"
-							id="difficulty"
-							name="difficulty.name"
-							value={exercise.difficulty.name}
-							onChange={handleInputChange}
+						<input id="difficulty" name="difficulty" type="text" value={exercise.difficulty.name} onChange={handleInputChange} list="difficulties" className="w-full border rounded px-3 py-2" />
+						<datalist
+							id="difficulties"
 							className="w-full border rounded px-3 py-2"
-						/>
+						>
+							{difficulties.map((difficulty) => (
+								<option key={difficulty.id} value={difficulty.name}>
+									{difficulty.name}
+								</option>
+							))}
+						</datalist>
 					</div>
 					<div className="mb-4">
 						<label htmlFor="nbTests" className="block font-medium mb-1">

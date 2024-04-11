@@ -1,29 +1,31 @@
-import { useState } from 'react';
-import { CreateExerciseBody, CreateExerciseResponse } from '@/utils/types';
+import {useEffect, useState} from 'react';
+import {CreateExerciseBody, CreateExerciseResponse, Exercise} from '@/utils/types';
 import { createExercise } from '@/service/apiServiceExercise';
 
-export const useCreateExercise = () => {
+export const useCreateExercise = (exerciseData: CreateExerciseBody) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const [createdExercise, setCreatedExercise] = useState<CreateExerciseResponse | null>(null);
+    const [response, setResponse] = useState<CreateExerciseResponse | null>(null);
 
-    const createNewExercise = async (exerciseData: CreateExerciseBody) => {
-        setLoading(true);
-        setError(null);
-        try {
-            const response = await createExercise(exerciseData);
-            if (response) {
-                setCreatedExercise(response);
-            } else {
-                setError("Failed to create exercise");
-            }
-        } catch (error) {
-            console.error(error);
-            setError("An error occurred while creating the exercise");
-        } finally {
-            setLoading(false);
+    const [isExerciseSubmitted, setIsExerciseSubmitted] = useState(false);
+
+
+    useEffect(() => {
+        if (exerciseData.title !== "" && !isExerciseSubmitted) {
+            setLoading(true);
+            setIsExerciseSubmitted(true);
+            createExercise(exerciseData)
+                .then(data => {
+                    setResponse(data);
+                })
+                .catch((err) => {
+                    setError(err);
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
         }
-    };
+    }, [exerciseData, isExerciseSubmitted]);
 
-    return { createNewExercise, loading, error, createdExercise };
+    return {loading, error, response, setIsExerciseSubmitted};
 };

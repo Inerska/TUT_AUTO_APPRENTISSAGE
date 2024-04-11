@@ -1,9 +1,8 @@
 import axios from 'axios';
 import {
-	CreateExerciseBody, CreateExerciseResponse,
+	CreateExerciseBody,
 	Exercise,
 	LanguageItemApi,
-	Languages,
 	SubmitExerciseBody
 } from "@/utils/types";
 
@@ -69,9 +68,9 @@ export const getProfil = async (profilId: string) => {
 	}
 }
 
-export const createExercise = async (exerciseData: CreateExerciseBody): Promise<CreateExerciseResponse | null> => {
+export const createExercise = async (exerciseData: CreateExerciseBody) => {
 	try {
-		const response = await axios.post<CreateExerciseResponse>(API_URL, exerciseData);
+		const response = await axios.post(`${API_URL}/create`, exerciseData);
 		return response.data;
 	} catch (error) {
 		console.error(error);

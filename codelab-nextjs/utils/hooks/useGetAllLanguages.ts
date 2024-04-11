@@ -4,7 +4,7 @@ import { LanguageItemApi } from "@/utils/types";
 
 export function useGetAllLanguages() {
 
-	const [languages, setlanguages] = useState<LanguageItemApi[]>();
+	const [languages, setlanguages] = useState<LanguageItemApi[]>([]);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState();
 
