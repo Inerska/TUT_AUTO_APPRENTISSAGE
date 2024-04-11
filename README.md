@@ -1,5 +1,9 @@
 # TUT_AUTO_APPRENTISSAGE
 
+[Documentation service Exercices](https://github.com/Inerska/TUT_AUTO_APPRENTISSAGE/tree/main/codelab-exercices)
+[Documentation service Authentication](https://github.com/Inerska/TUT_AUTO_APPRENTISSAGE/tree/main/codelab-auth)
+
+
 ## Set up
 ## Production
 ### Build the API native image
