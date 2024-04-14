@@ -46,3 +46,8 @@ npm i
 ```bash
 docker-compose -f docker-compose.dev.yml up --build
 ```
+
+## Evolution 
+
+Read this : 
+https://github.com/Inerska/TUT_AUTO_APPRENTISSAGE/blob/Leonarddoo-patch-1/EVOLUTION.md
